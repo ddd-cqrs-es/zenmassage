@@ -3,6 +3,40 @@
   "version": 2,
   "targets": {
     "DNX,Version=v4.5.1": {
+      "Autofac/4.0.0-rc1-177": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net45/Autofac.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Autofac.dll": {}
+        }
+      },
+      "Autofac.Extensions.DependencyInjection/4.0.0-rc1-177": {
+        "type": "package",
+        "dependencies": {
+          "Autofac": "4.0.0-rc1-177",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-rc1-final"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net451/Autofac.Extensions.DependencyInjection.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Autofac.Extensions.DependencyInjection.dll": {}
+        }
+      },
       "Microsoft.ApplicationInsights/1.1.1-beta": {
         "type": "package",
         "compile": {
@@ -1891,6 +1925,46 @@
       }
     },
     "DNXCore,Version=v5.0": {
+      "Autofac/4.0.0-rc1-177": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.0.11-beta-23516",
+          "System.Collections.Concurrent": "4.0.11-beta-23516",
+          "System.ComponentModel": "4.0.1-beta-23516",
+          "System.Diagnostics.Debug": "4.0.11-beta-23516",
+          "System.Diagnostics.Tools": "4.0.1-beta-23516",
+          "System.Globalization": "4.0.11-beta-23516",
+          "System.Linq": "4.0.1-beta-23516",
+          "System.Linq.Expressions": "4.0.11-beta-23516",
+          "System.Reflection": "4.1.0-beta-23516",
+          "System.Reflection.Extensions": "4.0.1-beta-23516",
+          "System.Resources.ResourceManager": "4.0.1-beta-23516",
+          "System.Runtime": "4.0.21-beta-23516",
+          "System.Threading.Tasks": "4.0.11-beta-23516"
+        },
+        "compile": {
+          "lib/dnxcore50/Autofac.dll": {}
+        },
+        "runtime": {
+          "lib/dnxcore50/Autofac.dll": {}
+        }
+      },
+      "Autofac.Extensions.DependencyInjection/4.0.0-rc1-177": {
+        "type": "package",
+        "dependencies": {
+          "Autofac": "4.0.0-rc1-177",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-rc1-final",
+          "System.Collections": "4.0.11-beta-23516",
+          "System.Runtime": "4.0.21-beta-23516",
+          "System.Threading.Tasks": "4.0.11-beta-23516"
+        },
+        "compile": {
+          "lib/dotnet5.4/Autofac.Extensions.DependencyInjection.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/Autofac.Extensions.DependencyInjection.dll": {}
+        }
+      },
       "Microsoft.ApplicationInsights/1.1.1-beta": {
         "type": "package",
         "dependencies": {
@@ -3875,7 +3949,7 @@
           "ref/dotnet5.2/System.Net.Http.dll": {}
         }
       },
-      "System.Net.NameResolution/4.0.0-beta-23516": {
+      "System.Net.NameResolution/4.0.0-beta-23409": {
         "type": "package",
         "dependencies": {
           "System.Net.Primitives": "4.0.10",
@@ -3883,7 +3957,7 @@
           "System.Threading.Tasks": "4.0.0"
         },
         "compile": {
-          "ref/dotnet5.4/System.Net.NameResolution.dll": {}
+          "ref/dotnet/System.Net.NameResolution.dll": {}
         }
       },
       "System.Net.Primitives/4.0.11-beta-23516": {
@@ -4549,6 +4623,40 @@
       }
     },
     "DNX,Version=v4.5.1/win7-x86": {
+      "Autofac/4.0.0-rc1-177": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net45/Autofac.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Autofac.dll": {}
+        }
+      },
+      "Autofac.Extensions.DependencyInjection/4.0.0-rc1-177": {
+        "type": "package",
+        "dependencies": {
+          "Autofac": "4.0.0-rc1-177",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-rc1-final"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net451/Autofac.Extensions.DependencyInjection.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Autofac.Extensions.DependencyInjection.dll": {}
+        }
+      },
       "Microsoft.ApplicationInsights/1.1.1-beta": {
         "type": "package",
         "compile": {
@@ -6440,6 +6548,40 @@
       }
     },
     "DNX,Version=v4.5.1/win7-x64": {
+      "Autofac/4.0.0-rc1-177": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net45/Autofac.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Autofac.dll": {}
+        }
+      },
+      "Autofac.Extensions.DependencyInjection/4.0.0-rc1-177": {
+        "type": "package",
+        "dependencies": {
+          "Autofac": "4.0.0-rc1-177",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-rc1-final"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net451/Autofac.Extensions.DependencyInjection.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Autofac.Extensions.DependencyInjection.dll": {}
+        }
+      },
       "Microsoft.ApplicationInsights/1.1.1-beta": {
         "type": "package",
         "compile": {
@@ -8331,6 +8473,46 @@
       }
     },
     "DNXCore,Version=v5.0/win7-x86": {
+      "Autofac/4.0.0-rc1-177": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.0.11-beta-23516",
+          "System.Collections.Concurrent": "4.0.11-beta-23516",
+          "System.ComponentModel": "4.0.1-beta-23516",
+          "System.Diagnostics.Debug": "4.0.11-beta-23516",
+          "System.Diagnostics.Tools": "4.0.1-beta-23516",
+          "System.Globalization": "4.0.11-beta-23516",
+          "System.Linq": "4.0.1-beta-23516",
+          "System.Linq.Expressions": "4.0.11-beta-23516",
+          "System.Reflection": "4.1.0-beta-23516",
+          "System.Reflection.Extensions": "4.0.1-beta-23516",
+          "System.Resources.ResourceManager": "4.0.1-beta-23516",
+          "System.Runtime": "4.0.21-beta-23516",
+          "System.Threading.Tasks": "4.0.11-beta-23516"
+        },
+        "compile": {
+          "lib/dnxcore50/Autofac.dll": {}
+        },
+        "runtime": {
+          "lib/dnxcore50/Autofac.dll": {}
+        }
+      },
+      "Autofac.Extensions.DependencyInjection/4.0.0-rc1-177": {
+        "type": "package",
+        "dependencies": {
+          "Autofac": "4.0.0-rc1-177",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-rc1-final",
+          "System.Collections": "4.0.11-beta-23516",
+          "System.Runtime": "4.0.21-beta-23516",
+          "System.Threading.Tasks": "4.0.11-beta-23516"
+        },
+        "compile": {
+          "lib/dotnet5.4/Autofac.Extensions.DependencyInjection.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/Autofac.Extensions.DependencyInjection.dll": {}
+        }
+      },
       "Microsoft.ApplicationInsights/1.1.1-beta": {
         "type": "package",
         "dependencies": {
@@ -10004,10 +10186,10 @@
           "runtimes/win7/lib/DNXCore50/System.Net.Http.dll": {}
         }
       },
-      "runtime.win7.System.Net.NameResolution/4.0.0-beta-23516": {
+      "runtime.win7.System.Net.NameResolution/4.0.0-beta-23409": {
         "type": "package",
         "dependencies": {
-          "System.Private.Networking": "4.0.1-beta-23516"
+          "System.Private.Networking": "4.0.1-beta-23409"
         },
         "compile": {
           "ref/dotnet/_._": {}
@@ -10435,14 +10617,14 @@
           "lib/DNXCore50/System.Globalization.dll": {}
         }
       },
-      "System.Globalization.Calendars/4.0.1-beta-23516": {
+      "System.Globalization.Calendars/4.0.0": {
         "type": "package",
         "dependencies": {
           "System.Globalization": "4.0.0",
           "System.Runtime": "4.0.0"
         },
         "compile": {
-          "ref/dotnet5.1/System.Globalization.Calendars.dll": {}
+          "ref/dotnet/System.Globalization.Calendars.dll": {}
         },
         "runtime": {
           "lib/DNXCore50/System.Globalization.Calendars.dll": {}
@@ -10619,7 +10801,7 @@
           "ref/dotnet5.2/System.Net.Http.dll": {}
         }
       },
-      "System.Net.NameResolution/4.0.0-beta-23516": {
+      "System.Net.NameResolution/4.0.0-beta-23409": {
         "type": "package",
         "dependencies": {
           "System.Net.Primitives": "4.0.10",
@@ -10627,7 +10809,7 @@
           "System.Threading.Tasks": "4.0.0"
         },
         "compile": {
-          "ref/dotnet5.4/System.Net.NameResolution.dll": {}
+          "ref/dotnet/System.Net.NameResolution.dll": {}
         }
       },
       "System.Net.Primitives/4.0.11-beta-23516": {
@@ -10952,7 +11134,7 @@
           "lib/DNXCore50/System.Runtime.Loader.dll": {}
         }
       },
-      "System.Runtime.Numerics/4.0.1-beta-23516": {
+      "System.Runtime.Numerics/4.0.0": {
         "type": "package",
         "dependencies": {
           "System.Globalization": "4.0.10",
@@ -10961,10 +11143,10 @@
           "System.Runtime.Extensions": "4.0.10"
         },
         "compile": {
-          "ref/dotnet5.2/System.Runtime.Numerics.dll": {}
+          "ref/dotnet/System.Runtime.Numerics.dll": {}
         },
         "runtime": {
-          "lib/dotnet5.4/System.Runtime.Numerics.dll": {}
+          "lib/dotnet/System.Runtime.Numerics.dll": {}
         }
       },
       "System.Runtime.Serialization.Primitives/4.0.11-beta-23409": {
@@ -11310,6 +11492,46 @@
       }
     },
     "DNXCore,Version=v5.0/win7-x64": {
+      "Autofac/4.0.0-rc1-177": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.0.11-beta-23516",
+          "System.Collections.Concurrent": "4.0.11-beta-23516",
+          "System.ComponentModel": "4.0.1-beta-23516",
+          "System.Diagnostics.Debug": "4.0.11-beta-23516",
+          "System.Diagnostics.Tools": "4.0.1-beta-23516",
+          "System.Globalization": "4.0.11-beta-23516",
+          "System.Linq": "4.0.1-beta-23516",
+          "System.Linq.Expressions": "4.0.11-beta-23516",
+          "System.Reflection": "4.1.0-beta-23516",
+          "System.Reflection.Extensions": "4.0.1-beta-23516",
+          "System.Resources.ResourceManager": "4.0.1-beta-23516",
+          "System.Runtime": "4.0.21-beta-23516",
+          "System.Threading.Tasks": "4.0.11-beta-23516"
+        },
+        "compile": {
+          "lib/dnxcore50/Autofac.dll": {}
+        },
+        "runtime": {
+          "lib/dnxcore50/Autofac.dll": {}
+        }
+      },
+      "Autofac.Extensions.DependencyInjection/4.0.0-rc1-177": {
+        "type": "package",
+        "dependencies": {
+          "Autofac": "4.0.0-rc1-177",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-rc1-final",
+          "System.Collections": "4.0.11-beta-23516",
+          "System.Runtime": "4.0.21-beta-23516",
+          "System.Threading.Tasks": "4.0.11-beta-23516"
+        },
+        "compile": {
+          "lib/dotnet5.4/Autofac.Extensions.DependencyInjection.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/Autofac.Extensions.DependencyInjection.dll": {}
+        }
+      },
       "Microsoft.ApplicationInsights/1.1.1-beta": {
         "type": "package",
         "dependencies": {
@@ -12983,10 +13205,10 @@
           "runtimes/win7/lib/DNXCore50/System.Net.Http.dll": {}
         }
       },
-      "runtime.win7.System.Net.NameResolution/4.0.0-beta-23516": {
+      "runtime.win7.System.Net.NameResolution/4.0.0-beta-23409": {
         "type": "package",
         "dependencies": {
-          "System.Private.Networking": "4.0.1-beta-23516"
+          "System.Private.Networking": "4.0.1-beta-23409"
         },
         "compile": {
           "ref/dotnet/_._": {}
@@ -13414,14 +13636,14 @@
           "lib/DNXCore50/System.Globalization.dll": {}
         }
       },
-      "System.Globalization.Calendars/4.0.1-beta-23516": {
+      "System.Globalization.Calendars/4.0.0": {
         "type": "package",
         "dependencies": {
           "System.Globalization": "4.0.0",
           "System.Runtime": "4.0.0"
         },
         "compile": {
-          "ref/dotnet5.1/System.Globalization.Calendars.dll": {}
+          "ref/dotnet/System.Globalization.Calendars.dll": {}
         },
         "runtime": {
           "lib/DNXCore50/System.Globalization.Calendars.dll": {}
@@ -13598,7 +13820,7 @@
           "ref/dotnet5.2/System.Net.Http.dll": {}
         }
       },
-      "System.Net.NameResolution/4.0.0-beta-23516": {
+      "System.Net.NameResolution/4.0.0-beta-23409": {
         "type": "package",
         "dependencies": {
           "System.Net.Primitives": "4.0.10",
@@ -13606,7 +13828,7 @@
           "System.Threading.Tasks": "4.0.0"
         },
         "compile": {
-          "ref/dotnet5.4/System.Net.NameResolution.dll": {}
+          "ref/dotnet/System.Net.NameResolution.dll": {}
         }
       },
       "System.Net.Primitives/4.0.11-beta-23516": {
@@ -13931,7 +14153,7 @@
           "lib/DNXCore50/System.Runtime.Loader.dll": {}
         }
       },
-      "System.Runtime.Numerics/4.0.1-beta-23516": {
+      "System.Runtime.Numerics/4.0.0": {
         "type": "package",
         "dependencies": {
           "System.Globalization": "4.0.10",
@@ -13940,10 +14162,10 @@
           "System.Runtime.Extensions": "4.0.10"
         },
         "compile": {
-          "ref/dotnet5.2/System.Runtime.Numerics.dll": {}
+          "ref/dotnet/System.Runtime.Numerics.dll": {}
         },
         "runtime": {
-          "lib/dotnet5.4/System.Runtime.Numerics.dll": {}
+          "lib/dotnet/System.Runtime.Numerics.dll": {}
         }
       },
       "System.Runtime.Serialization.Primitives/4.0.11-beta-23409": {
@@ -14290,6 +14512,38 @@
     }
   },
   "libraries": {
+    "Autofac/4.0.0-rc1-177": {
+      "type": "package",
+      "sha512": "cTSfTca0qWl3Zd68iMl2bH8e4RyGL/Q7EUT0PmAzCSoitSlrHu4zmByhP/f+KGGSuRqWHFYoMEEOanvTviEr4g==",
+      "files": [
+        "Autofac.4.0.0-rc1-177.nupkg",
+        "Autofac.4.0.0-rc1-177.nupkg.sha512",
+        "Autofac.nuspec",
+        "lib/dnxcore50/Autofac.dll",
+        "lib/dnxcore50/Autofac.xml",
+        "lib/dotnet5.2/Autofac.dll",
+        "lib/dotnet5.2/Autofac.xml",
+        "lib/net45/Autofac.dll",
+        "lib/net45/Autofac.xml",
+        "lib/win/Autofac.dll",
+        "lib/win/Autofac.xml"
+      ]
+    },
+    "Autofac.Extensions.DependencyInjection/4.0.0-rc1-177": {
+      "type": "package",
+      "sha512": "FEmKbGpwAza4MW3Az8v+8V42wuRYDFX+8LpTl8XzLi9VcdLNlWvErdk2q74u4+a4UHbvpAQ62tfh5ctMnDa9yA==",
+      "files": [
+        "Autofac.Extensions.DependencyInjection.4.0.0-rc1-177.nupkg",
+        "Autofac.Extensions.DependencyInjection.4.0.0-rc1-177.nupkg.sha512",
+        "Autofac.Extensions.DependencyInjection.nuspec",
+        "lib/dotnet5.4/Autofac.Extensions.DependencyInjection.dll",
+        "lib/dotnet5.4/Autofac.Extensions.DependencyInjection.xml",
+        "lib/net451/Autofac.Extensions.DependencyInjection.dll",
+        "lib/net451/Autofac.Extensions.DependencyInjection.xml",
+        "lib/netcore50/Autofac.Extensions.DependencyInjection.dll",
+        "lib/netcore50/Autofac.Extensions.DependencyInjection.xml"
+      ]
+    },
     "Microsoft.ApplicationInsights/1.1.1-beta": {
       "type": "package",
       "sha512": "aqtQ8KNFMGBFCmU3kkkEM7PlyPFvfh/1uKTxixD+myMzB9EjYeGOf0LvFnpkT1sp3voXfU8MUN+eYets8TutdQ==",
@@ -15806,15 +16060,15 @@
         "runtimes/win7/lib/netcore50/System.Net.Http.dll"
       ]
     },
-    "runtime.win7.System.Net.NameResolution/4.0.0-beta-23516": {
+    "runtime.win7.System.Net.NameResolution/4.0.0-beta-23409": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sjnMrhRMhiPcZN2VZY0RMTNoBJSwvmdvh1O1ngX7zAUY2zP1R5/5Db+NZcBM+WuoYXSiYoXeE65AR95hchmDlA==",
+      "sha512": "AWBa/n54te5ZOp1aTt4shtjqL4tdMie0LyiP03fphqyY4B9pvnU1XfOzljS1DFZyHhWdlUtNfMHDcGwMYYmggQ==",
       "files": [
         "lib/DNXCore50/System.Net.NameResolution.dll",
         "ref/dotnet/_._",
-        "runtime.win7.System.Net.NameResolution.4.0.0-beta-23516.nupkg",
-        "runtime.win7.System.Net.NameResolution.4.0.0-beta-23516.nupkg.sha512",
+        "runtime.win7.System.Net.NameResolution.4.0.0-beta-23409.nupkg",
+        "runtime.win7.System.Net.NameResolution.4.0.0-beta-23409.nupkg.sha512",
         "runtime.win7.System.Net.NameResolution.nuspec"
       ]
     },
@@ -16983,10 +17237,9 @@
         "System.Globalization.nuspec"
       ]
     },
-    "System.Globalization.Calendars/4.0.1-beta-23516": {
+    "System.Globalization.Calendars/4.0.0": {
       "type": "package",
-      "serviceable": true,
-      "sha512": "ma+ZpRFsTqOYIGHGUMSZ+qETQlMpYzIyEDd9DWUXdgT8WX90g7CgSr8UAYpcHVNyB/lqCJqcPTjXjmDlMHjhaQ==",
+      "sha512": "cL6WrdGKnNBx9W/iTr+jbffsEO4RLjEtOYcpVSzPNDoli6X5Q6bAfWtJYbJNOPi8Q0fXgBEvKK1ncFL/3FTqlA==",
       "files": [
         "lib/DNXCore50/System.Globalization.Calendars.dll",
         "lib/MonoAndroid10/_._",
@@ -16995,25 +17248,25 @@
         "lib/netcore50/System.Globalization.Calendars.dll",
         "lib/xamarinios10/_._",
         "lib/xamarinmac20/_._",
-        "ref/dotnet5.1/de/System.Globalization.Calendars.xml",
-        "ref/dotnet5.1/es/System.Globalization.Calendars.xml",
-        "ref/dotnet5.1/fr/System.Globalization.Calendars.xml",
-        "ref/dotnet5.1/it/System.Globalization.Calendars.xml",
-        "ref/dotnet5.1/ja/System.Globalization.Calendars.xml",
-        "ref/dotnet5.1/ko/System.Globalization.Calendars.xml",
-        "ref/dotnet5.1/ru/System.Globalization.Calendars.xml",
-        "ref/dotnet5.1/System.Globalization.Calendars.dll",
-        "ref/dotnet5.1/System.Globalization.Calendars.xml",
-        "ref/dotnet5.1/zh-hans/System.Globalization.Calendars.xml",
-        "ref/dotnet5.1/zh-hant/System.Globalization.Calendars.xml",
+        "ref/dotnet/de/System.Globalization.Calendars.xml",
+        "ref/dotnet/es/System.Globalization.Calendars.xml",
+        "ref/dotnet/fr/System.Globalization.Calendars.xml",
+        "ref/dotnet/it/System.Globalization.Calendars.xml",
+        "ref/dotnet/ja/System.Globalization.Calendars.xml",
+        "ref/dotnet/ko/System.Globalization.Calendars.xml",
+        "ref/dotnet/ru/System.Globalization.Calendars.xml",
+        "ref/dotnet/System.Globalization.Calendars.dll",
+        "ref/dotnet/System.Globalization.Calendars.xml",
+        "ref/dotnet/zh-hans/System.Globalization.Calendars.xml",
+        "ref/dotnet/zh-hant/System.Globalization.Calendars.xml",
         "ref/MonoAndroid10/_._",
         "ref/MonoTouch10/_._",
         "ref/net46/System.Globalization.Calendars.dll",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
         "runtimes/win8-aot/lib/netcore50/System.Globalization.Calendars.dll",
-        "System.Globalization.Calendars.4.0.1-beta-23516.nupkg",
-        "System.Globalization.Calendars.4.0.1-beta-23516.nupkg.sha512",
+        "System.Globalization.Calendars.4.0.0.nupkg",
+        "System.Globalization.Calendars.4.0.0.nupkg.sha512",
         "System.Globalization.Calendars.nuspec"
       ]
     },
@@ -17511,35 +17764,25 @@
         "System.Net.Http.nuspec"
       ]
     },
-    "System.Net.NameResolution/4.0.0-beta-23516": {
+    "System.Net.NameResolution/4.0.0-beta-23409": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sJZX/WaQhyJ5zT/TgTE8aosIsqdenog6ew9m9py9RvEyBJ9nt9zVCumr9Xas64u+dL9hUDrQL59XaywWKtpHkQ==",
+      "sha512": "c3hPApsOGHYYWFaTcMjCNzHY8+oGYWkC91xy/M4ME0zW6hkhYJzcHSgYYL2+BYWxtGHRTiYdWXj6HQM7ykZ7iw==",
       "files": [
         "lib/MonoAndroid10/_._",
         "lib/MonoTouch10/_._",
         "lib/net46/System.Net.NameResolution.dll",
         "lib/xamarinios10/_._",
         "lib/xamarinmac20/_._",
-        "ref/dotnet5.4/de/System.Net.NameResolution.xml",
-        "ref/dotnet5.4/es/System.Net.NameResolution.xml",
-        "ref/dotnet5.4/fr/System.Net.NameResolution.xml",
-        "ref/dotnet5.4/it/System.Net.NameResolution.xml",
-        "ref/dotnet5.4/ja/System.Net.NameResolution.xml",
-        "ref/dotnet5.4/ko/System.Net.NameResolution.xml",
-        "ref/dotnet5.4/ru/System.Net.NameResolution.xml",
-        "ref/dotnet5.4/System.Net.NameResolution.dll",
-        "ref/dotnet5.4/System.Net.NameResolution.xml",
-        "ref/dotnet5.4/zh-hans/System.Net.NameResolution.xml",
-        "ref/dotnet5.4/zh-hant/System.Net.NameResolution.xml",
+        "ref/dotnet/System.Net.NameResolution.dll",
         "ref/MonoAndroid10/_._",
         "ref/MonoTouch10/_._",
         "ref/net46/System.Net.NameResolution.dll",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
         "runtime.json",
-        "System.Net.NameResolution.4.0.0-beta-23516.nupkg",
-        "System.Net.NameResolution.4.0.0-beta-23516.nupkg.sha512",
+        "System.Net.NameResolution.4.0.0-beta-23409.nupkg",
+        "System.Net.NameResolution.4.0.0-beta-23409.nupkg.sha512",
         "System.Net.NameResolution.nuspec"
       ]
     },
@@ -18678,43 +18921,34 @@
         "System.Runtime.Loader.nuspec"
       ]
     },
-    "System.Runtime.Numerics/4.0.1-beta-23516": {
+    "System.Runtime.Numerics/4.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "SwkIAaT/Fq9ey7aUESEqWw1cbz2+WKqO/Zo5qabjsRGI1WGe4KMgWx/WUuoYbttCSRB5Lhy3auWGwCRc4q2kmg==",
+      "sha512": "aAYGEOE01nabQLufQ4YO8WuSyZzOqGcksi8m1BRW8ppkmssR7en8TqiXcBkB2gTkCnKG/Ai2NQY8CgdmgZw/fw==",
       "files": [
-        "lib/dotnet5.4/System.Runtime.Numerics.dll",
+        "lib/dotnet/System.Runtime.Numerics.dll",
         "lib/net45/_._",
         "lib/netcore50/System.Runtime.Numerics.dll",
         "lib/win8/_._",
         "lib/wpa81/_._",
-        "ref/dotnet5.2/de/System.Runtime.Numerics.xml",
-        "ref/dotnet5.2/es/System.Runtime.Numerics.xml",
-        "ref/dotnet5.2/fr/System.Runtime.Numerics.xml",
-        "ref/dotnet5.2/it/System.Runtime.Numerics.xml",
-        "ref/dotnet5.2/ja/System.Runtime.Numerics.xml",
-        "ref/dotnet5.2/ko/System.Runtime.Numerics.xml",
-        "ref/dotnet5.2/ru/System.Runtime.Numerics.xml",
-        "ref/dotnet5.2/System.Runtime.Numerics.dll",
-        "ref/dotnet5.2/System.Runtime.Numerics.xml",
-        "ref/dotnet5.2/zh-hans/System.Runtime.Numerics.xml",
-        "ref/dotnet5.2/zh-hant/System.Runtime.Numerics.xml",
+        "ref/dotnet/de/System.Runtime.Numerics.xml",
+        "ref/dotnet/es/System.Runtime.Numerics.xml",
+        "ref/dotnet/fr/System.Runtime.Numerics.xml",
+        "ref/dotnet/it/System.Runtime.Numerics.xml",
+        "ref/dotnet/ja/System.Runtime.Numerics.xml",
+        "ref/dotnet/ko/System.Runtime.Numerics.xml",
+        "ref/dotnet/ru/System.Runtime.Numerics.xml",
+        "ref/dotnet/System.Runtime.Numerics.dll",
+        "ref/dotnet/System.Runtime.Numerics.xml",
+        "ref/dotnet/zh-hans/System.Runtime.Numerics.xml",
+        "ref/dotnet/zh-hant/System.Runtime.Numerics.xml",
         "ref/net45/_._",
-        "ref/netcore50/de/System.Runtime.Numerics.xml",
-        "ref/netcore50/es/System.Runtime.Numerics.xml",
-        "ref/netcore50/fr/System.Runtime.Numerics.xml",
-        "ref/netcore50/it/System.Runtime.Numerics.xml",
-        "ref/netcore50/ja/System.Runtime.Numerics.xml",
-        "ref/netcore50/ko/System.Runtime.Numerics.xml",
-        "ref/netcore50/ru/System.Runtime.Numerics.xml",
         "ref/netcore50/System.Runtime.Numerics.dll",
         "ref/netcore50/System.Runtime.Numerics.xml",
-        "ref/netcore50/zh-hans/System.Runtime.Numerics.xml",
-        "ref/netcore50/zh-hant/System.Runtime.Numerics.xml",
         "ref/win8/_._",
         "ref/wpa81/_._",
-        "System.Runtime.Numerics.4.0.1-beta-23516.nupkg",
-        "System.Runtime.Numerics.4.0.1-beta-23516.nupkg.sha512",
+        "System.Runtime.Numerics.4.0.0.nupkg",
+        "System.Runtime.Numerics.4.0.0.nupkg.sha512",
         "System.Runtime.Numerics.nuspec"
       ]
     },
@@ -19738,6 +19972,8 @@
   },
   "projectFileDependencyGroups": {
     "": [
+      "Autofac >= 4.0.0-rc1-177",
+      "Autofac.Extensions.DependencyInjection >= 4.0.0-rc1-177",
       "Microsoft.ApplicationInsights.AspNet >= 1.0.0-rc1",
       "Microsoft.AspNet.Authentication.Cookies >= 1.0.0-rc1-final",
       "Microsoft.AspNet.Authentication.OpenIdConnect >= 1.0.0-rc1-final",

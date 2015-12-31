@@ -9,6 +9,8 @@ using Microsoft.AspNet.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 
 namespace Zen.Massage.Site
 {
@@ -16,7 +18,7 @@ namespace Zen.Massage.Site
     {
         public Startup(IHostingEnvironment env)
         {
-            // Set up configuration sources.
+            // Set up configuration sources
             var builder = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
@@ -25,9 +27,9 @@ namespace Zen.Massage.Site
             {
                 // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
                 builder.AddUserSecrets();
-
                 builder.AddApplicationInsightsSettings(developerMode: true);
             }
+
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
         }
@@ -35,12 +37,18 @@ namespace Zen.Massage.Site
         public IConfigurationRoot Configuration { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            // Add framework services.
+            // Add framework services
             services.AddApplicationInsightsTelemetry(Configuration);
-
             services.AddMvc();
+
+            // Setup autofac dependency injection
+            var builder = new ContainerBuilder();
+            builder.RegisterModule<SiteIocModule>();
+            builder.Populate(services);
+            var container = builder.Build();
+            return container.Resolve<IServiceProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
