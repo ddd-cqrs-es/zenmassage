@@ -1,6 +1,7 @@
 ﻿{
   "compilerOptions": {
     "target": "es6",
+    "module": "system",
     "sourceMap": true
   }
 }
