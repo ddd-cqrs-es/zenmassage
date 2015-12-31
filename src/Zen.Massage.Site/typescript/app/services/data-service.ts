@@ -1,4 +1,6 @@
-﻿module demoApp {
+﻿import {Http} from 'angular2/http';
+
+module demoApp {
 
     export interface ICustomer {
         id: number;
@@ -13,8 +15,7 @@
 
     export class DataService {
 
-        static $inject = ['$http'];
-        constructor(private $http: ng.IHttpService) { }
+        constructor(private http: Http) { }
 
         getCustomers(): ng.IPromise<ICustomer[]> {
             return this.$http.get('customers.json').then(response => {
