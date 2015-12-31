@@ -19,10 +19,9 @@ Feel free to contribute, comment and reuse all that you see here.
 3. NodeJS (currently using version 5.3.0)
 
 # Next Steps
-1. -Integration of IoC for server-side code (likely using Autofac)-
-2. Integration of unit testing of both server-side and client-side code (likely using xUnit and mocha)
-3. Fleshing out Angular logic and adding some nice bells and whistles
-4. Making the Bootstrap UI look a little nicer
+1. Integration of unit testing of both server-side and client-side code (likely using xUnit and mocha)
+2. Fleshing out Angular logic and adding some nice bells and whistles
+3. Making the Bootstrap UI look a little nicer
 
 # Credits
 Big thanks to Dan Wahlin for the Angular 2 starting point.
