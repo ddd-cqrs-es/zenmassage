@@ -1,0 +1,52 @@
+{
+  "name": "Zen.Massage.Site",
+  "version": "0.1.0",
+  "description": "Example of a massage centric CRM system",
+  "contributors": [
+    {
+      "name": "Adrian Lewis"
+    }
+  ],
+  "private": true,
+  "devDependencies": {
+    "del": "2.2.0",
+    "gulp": "3.9.0",
+    "gulp-concat": "2.6.0",
+    "gulp-copy": "0.0.2",
+    "gulp-cssmin": "0.1.7",
+    "gulp-debug": "2.1.2",
+    "gulp-environments": "0.1.1",
+    "gulp-inject": "3.0.0",
+    "gulp-sass": "^2.1.1",
+    "gulp-sass-lint": "^1.1.0",
+    "gulp-sourcemaps": "1.6.0",
+    "gulp-tsd": "0.0.4",
+    "gulp-tslint": "^4.2.2",
+    "gulp-typescript": "2.10.0",
+    "gulp-uglify": "1.5.1",
+    "merge2": "^0.3.6",
+    "node-sass": "^3.4.2",
+    "rimraf": "^2.5.0",
+    "sass-lint": "^1.4.0",
+    "systemjs-builder": "^0.14.15",
+    "tsd": "0.6.5",
+    "tslint": "3.2.1",
+    "typescript": "1.7.5"
+  },
+  "dependencies": {
+    "angular2": "2.0.0-beta.0",
+    "bootstrap": "4.0.0-alpha.2",
+    "es6-promise": "^3.0.2",
+    "es6-shim": "^0.33.13",
+    "jquery": "^2.1.4",
+    "reflect-metadata": "0.1.2",
+    "rxjs": "5.0.0-beta.0",
+    "systemjs": "^0.19.9",
+    "tether": "^1.1.1",
+    "zone.js": "0.5.10"
+  },
+  "keywords": [
+    "angularjs",
+    "typescript"
+  ]
+}
