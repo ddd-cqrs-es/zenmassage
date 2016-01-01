@@ -163,8 +163,9 @@ ClientBin/
 node_modules/
 bower_components/
 src/Zen.Massage.Site/typescript/typings/
-wwwroot/js/
-wwwroot/css/
+src/Zen.Massage.Site/wwwroot/_references.js
+src/Zen.Massage.Site/wwwroot/js/
+src/Zen.Massage.Site/wwwroot/css/
 
 # RIA/Silverlight projects
 Generated_Code/
@@ -197,4 +198,3 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
-src/Zen.Massage.Site/wwwroot/_references.js
