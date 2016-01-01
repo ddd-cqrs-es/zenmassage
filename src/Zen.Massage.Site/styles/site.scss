@@ -2,7 +2,9 @@
 @import 'tether';
 @import 'tether-theme-basic';
 
-body {
-  padding-top: 0px;
-  padding-bottom: 0px;
-}
+@import '_body.scss';
+@import '_main.scss';
+@import '_header.scss';
+@import '_footer.scss';
+
+@import '_featurelist.scss';

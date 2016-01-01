@@ -1,0 +1,13 @@
+﻿// Flexbox enabled sticky footer
+
+footer[role="contentinfo"] {
+  flex: none;
+  height: 40px;
+  background: #FF9D3C;
+  vertical-align: middle;
+  align-items: center;
+}
+
+.copyright {
+
+}

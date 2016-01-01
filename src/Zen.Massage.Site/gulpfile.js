@@ -150,4 +150,4 @@ gulp.task('watch', function () {
     gulp.watch([config.paths.tsAppSelector], ['lint:ts', 'compile:ts']);
 });
 
-gulp.task('default', ['lint:ts', 'compile:ts']);
+gulp.task('default', ['lint:ts', 'compile:sitecore', 'compile:ts', 'compile:sass']);

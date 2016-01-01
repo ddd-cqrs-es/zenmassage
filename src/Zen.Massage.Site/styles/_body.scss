@@ -1,0 +1,28 @@
+﻿html,
+body,
+.container {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  display: table;
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+  width: 100%;
+}
+
+.row {
+  display: table-row;
+  display: -moz-box; // FF42
+}
+
+.inner-wrap {
+  padding-left: 20px;
+  padding-right: 20px;
+}

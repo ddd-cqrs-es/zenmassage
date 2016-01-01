@@ -162,7 +162,7 @@ ClientBin/
 *.publishsettings
 node_modules/
 bower_components/
-typescript/typings/
+src/Zen.Massage.Site/typescript/typings/
 wwwroot/js/
 wwwroot/css/
 
