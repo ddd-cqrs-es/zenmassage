@@ -1,0 +1,41 @@
+﻿@{
+    Layout = "~/Views/Shared/_PebbleLayout.cshtml";
+}
+
+<div class="item-container">
+    <div class="item-container-content">
+        <div class="item">
+            Zen Massage configuration panel allows you
+            to setup your Pebble Watch to work with so
+            you can keep track of your massage sessions
+        </div>
+    </div>
+</div>
+<div class="item-container">
+    <div class="item-container-header">Session Length</div>
+    <div class="item-container-content">
+        <div class="item">
+            Double click for 30min
+            <input type="checkbox" class="item-toggle" name="toggle-fast30" />
+        </div>
+        <div class="item">
+            Triple click for 60min
+            <input type="checkbox" class="item-toggle" name="toggle-fast60" />
+        </div>
+    </div>
+    <div class="item-container-header">Session Markers</div>
+    <div class="item-container-content">
+        <div class="item">
+            Vibrate once 10min
+            <input type="checkbox" class="item-toggle" name="toggle-vibe10" />
+        </div>
+        <div class="item">
+            Vibrate twice 30min
+            <input type="checkbox" class="item-toggle" name="toggle-vibe30" />
+        </div>
+        <div class="item">
+            Vibrate thrice last 15min
+            <input type="checkbox" class="item-toggle" name="toggle-vibe-last15" />
+        </div>
+    </div>
+</div>
