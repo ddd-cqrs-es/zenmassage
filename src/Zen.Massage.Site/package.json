@@ -34,6 +34,7 @@
     "typescript": "1.7.5"
   },
   "dependencies": {
+    "Slate": "git://github.com/pebble/slate.git",
     "angular2": "2.0.0-beta.0",
     "bootstrap": "4.0.0-alpha.2",
     "es6-promise": "^3.0.2",

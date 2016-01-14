@@ -44,9 +44,15 @@ gulp.task('copy:fromnode', function () {
         gulp.src([
             config.paths.nodeModulesRoot + 'jquery/dist/jquery.js',
             config.paths.nodeModulesRoot + 'tether/dist/js/tether.js',
-            config.paths.nodeModulesRoot + 'bootstrap/dist/js/bootstrap.js'
+            config.paths.nodeModulesRoot + 'bootstrap/dist/js/bootstrap.js',
+            config.paths.nodeModulesRoot + 'Slate/dist/js/slate.js'
             ])
             .pipe(copy(config.paths.jsLibPath, { prefix: 10 }))
+            .pipe(gulp.dest('.')),
+        gulp.src([
+            config.paths.nodeModulesRoot + 'Slate/dist/css/slate.css'
+            ])
+            .pipe(copy(config.paths.sassOutputPath, { prefix: 10 }))
             .pipe(gulp.dest('.'))
     ]);
 });
