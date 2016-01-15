@@ -54,8 +54,9 @@ gulp.task('copy:fromnode', function () {
             ])
             .pipe(gulp.dest(config.paths.jsLibPath + 'bootstrap/')),
         gulp.src([
-            config.paths.nodeModulesRoot + 'Slate/dist/js/slate.js'
-            ])
+            config.paths.nodeModulesRoot + 'Slate/dist/js/slate.js',
+            config.paths.nodeModulesRoot + 'Slate/dist/js/slate.min.js'
+        ])
             .pipe(gulp.dest(config.paths.jsLibPath + 'slate/')),
 
         gulp.src([
