@@ -30,17 +30,9 @@ if (!development() && !production()) {
 // Pull configuration
 var config = new Config();
 
-// Copy angular2 typescript source to typings folder
+// Copy library components to wwwroot folders
 gulp.task('copy:fromnode', function () {
     return merge([
-        // This deals with Angular2 typings (putting them with our other TSD typings)
-        gulp.src(config.paths.nodeModulesRoot + 'angular2/**/*.ts')
-            .pipe(copy(config.paths.tsTypings + 'angular2/', {
-                prefix: 2
-            }))
-            .pipe(gulp.dest('.')),
-
-        // This deals with library components
         gulp.src([
             config.paths.nodeModulesRoot + 'jquery/dist/jquery.js'
             ])
@@ -56,7 +48,7 @@ gulp.task('copy:fromnode', function () {
         gulp.src([
             config.paths.nodeModulesRoot + 'Slate/dist/js/slate.js',
             config.paths.nodeModulesRoot + 'Slate/dist/js/slate.min.js'
-        ])
+            ])
             .pipe(gulp.dest(config.paths.jsLibPath + 'slate/')),
 
         gulp.src([
