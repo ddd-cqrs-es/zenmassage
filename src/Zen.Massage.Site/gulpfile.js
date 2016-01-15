@@ -103,9 +103,9 @@ gulp.task('clean:ts', function (cb) {
 gulp.task('compile:sitecore', function (cb) {
     var builder = new Builder(config.paths.webroot, config.paths.root + 'system.config.js');
     builder.buildStatic(
-        config.paths.jsLibPath + 'jquery.js + ' +
-        config.paths.jsLibPath + 'tether.js + ' +
-        config.paths.jsLibPath + 'bootstrap.js',
+        config.paths.jsLibPath + 'jquery/jquery.js + ' +
+        config.paths.jsLibPath + 'tether/tether.js + ' +
+        config.paths.jsLibPath + 'bootstrap/bootstrap.js',
         config.paths.tsOutputPath + 'sitecore.js')
     .then(function () {
         cb();
