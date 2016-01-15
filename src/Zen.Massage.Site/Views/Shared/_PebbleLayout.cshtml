@@ -32,10 +32,10 @@
 
     <script src="~/js/sitecore.js"></script>
     <environment names="Development">
-        <script src="~/js/slate.js" asp-append-version="true"></script>
+        <script src="~/js/lib/slate/slate.js" asp-append-version="true"></script>
     </environment>
     <environment names="Staging,Production">
-        <script src="~/js/slate.min.js" asp-append-version="true"></script>
+        <script src="~/js/lib/slate/slate.min.js" asp-append-version="true"></script>
     </environment>
 
     @RenderSection("scripts", required: false)

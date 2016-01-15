@@ -23,6 +23,8 @@ var GulpConfig = (function () {
         this.paths.sassApp = this.paths.sassRoot;
         this.paths.sassAppSelector = this.paths.sassApp + '**/*.scss';
         this.paths.sassOutputPath = this.paths.webroot + 'css/';
+
+        this.paths.fontsOutputPath = this.paths.webroot + 'fonts/';
     }
     return gulpConfig;
 })();

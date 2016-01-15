@@ -42,18 +42,31 @@ gulp.task('copy:fromnode', function () {
 
         // This deals with library components
         gulp.src([
-            config.paths.nodeModulesRoot + 'jquery/dist/jquery.js',
-            config.paths.nodeModulesRoot + 'tether/dist/js/tether.js',
-            config.paths.nodeModulesRoot + 'bootstrap/dist/js/bootstrap.js',
+            config.paths.nodeModulesRoot + 'jquery/dist/jquery.js'
+            ])
+            .pipe(gulp.dest(config.paths.jsLibPath + 'jquery/')),
+        gulp.src([
+            config.paths.nodeModulesRoot + 'tether/dist/js/tether.js'
+            ])
+            .pipe(gulp.dest(config.paths.jsLibPath + 'tether/')),
+        gulp.src([
+            config.paths.nodeModulesRoot + 'bootstrap/dist/js/bootstrap.js'
+            ])
+            .pipe(gulp.dest(config.paths.jsLibPath + 'bootstrap/')),
+        gulp.src([
             config.paths.nodeModulesRoot + 'Slate/dist/js/slate.js'
             ])
-            .pipe(copy(config.paths.jsLibPath, { prefix: 10 }))
-            .pipe(gulp.dest('.')),
+            .pipe(gulp.dest(config.paths.jsLibPath + 'slate/')),
+
         gulp.src([
             config.paths.nodeModulesRoot + 'Slate/dist/css/slate.css'
             ])
-            .pipe(copy(config.paths.sassOutputPath, { prefix: 10 }))
-            .pipe(gulp.dest('.'))
+            .pipe(gulp.dest(config.paths.sassOutputPath)),
+
+        gulp.src([
+            config.paths.nodeModulesRoot + 'Slate/dist/fonts/*.*'
+            ])
+            .pipe(gulp.dest(config.paths.fontsOutputPath))
     ]);
 });
 
