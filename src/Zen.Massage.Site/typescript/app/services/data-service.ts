@@ -1,4 +1,4 @@
-﻿import {Http} from 'angular2/http';
+﻿/*import {Http} from 'angular2/http';
 
 module demoApp {
 
@@ -33,4 +33,4 @@ module demoApp {
     angular.module('demoApp')
         .service('demoApp.dataService', DataService);
 
-}
+}*/

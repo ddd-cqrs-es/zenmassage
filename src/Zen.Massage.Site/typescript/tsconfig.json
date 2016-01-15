@@ -1,0 +1,19 @@
+﻿{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "system",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": false,
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "declarationFiles": true,
+    "noExternalResolve": false
+  },
+  "exclude": [
+    "node_modules",
+    "wwwroot"
+  ]
+}

@@ -1,4 +1,4 @@
-﻿module demoApp.directives {
+﻿/*module demoApp.directives {
 
     class FilterTextbox implements ng.IDirective {
 
@@ -34,3 +34,4 @@
     angular.module('demoApp').directive('filterTextbox', FilterTextbox.instance);
 
 }
+*/

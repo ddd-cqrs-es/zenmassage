@@ -11,14 +11,14 @@ var del = require('del'),
     environments = require('gulp-environments'),
     inject = require('gulp-inject'),
     tsc = require('gulp-typescript'),
-    tslint = require('gulp-tslint'),
+    //tslint = require('gulp-tslint'),
     sourcemaps = require('gulp-sourcemaps'),
     uglify = require('gulp-uglify'),
     sass = require('gulp-sass'),
     sassLint = require('gulp-sass-lint'),
     Builder = require('systemjs-builder'),
     Config = require('./gulpfile.config'),
-    tsProject = tsc.createProject('tsconfig.json');
+    tsProject = tsc.createProject('./typescript/tsconfig.json');
 
 // Determine runtime environment (default to DEV for now)
 var development = environments.development;
@@ -159,7 +159,7 @@ gulp.task('clean:sass', function (cb) {
 
 gulp.task('watch', function () {
     gulp.watch([config.paths.sassAppSelector], ['compile:sass']);
-    gulp.watch([config.paths.tsAppSelector], ['lint:ts', 'compile:ts']);
+    gulp.watch([config.paths.tsAppSelector], ['compile:ts']);
 });
 
-gulp.task('default', ['lint:ts', 'compile:sitecore', 'compile:ts', 'compile:sass']);
+gulp.task('default', ['compile:sitecore', 'compile:ts', 'compile:sass']);

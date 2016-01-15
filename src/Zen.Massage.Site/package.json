@@ -21,7 +21,6 @@
     "gulp-sass-lint": "^1.1.0",
     "gulp-sourcemaps": "1.6.0",
     "gulp-tsd": "0.0.4",
-    "gulp-tslint": "^4.2.2",
     "gulp-typescript": "2.10.0",
     "gulp-uglify": "1.5.1",
     "merge2": "^0.3.6",
@@ -30,7 +29,6 @@
     "sass-lint": "^1.4.0",
     "systemjs-builder": "^0.14.15",
     "tsd": "0.6.5",
-    "tslint": "3.2.1",
     "typescript": "1.7.5"
   },
   "dependencies": {

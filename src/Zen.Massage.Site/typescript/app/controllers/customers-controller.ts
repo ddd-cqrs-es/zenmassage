@@ -1,4 +1,4 @@
-﻿module demoApp {
+﻿/*module demoApp {
     'use strict';
 
     class CustomersController {
@@ -17,3 +17,4 @@
         .controller('demoApp.CustomersController', CustomersController);
 
 }
+*/
