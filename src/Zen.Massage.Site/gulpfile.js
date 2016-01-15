@@ -52,7 +52,8 @@ gulp.task('copy:fromnode', function () {
             .pipe(gulp.dest(config.paths.jsLibPath + 'slate/')),
 
         gulp.src([
-            config.paths.nodeModulesRoot + 'Slate/dist/css/slate.css'
+            config.paths.nodeModulesRoot + 'Slate/dist/css/slate.css',
+            config.paths.nodeModulesRoot + 'Slate/dist/css/slate.min.css'
             ])
             .pipe(gulp.dest(config.paths.sassOutputPath)),
 
