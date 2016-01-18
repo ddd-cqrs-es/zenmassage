@@ -1,0 +1,130 @@
+﻿@model BaseVm
+@{
+    Layout = "~/Views/Shared/_PebbleLayout.cshtml";
+}
+
+<h1 class="title">@Model.Title</h1>
+<div class="item-container">
+    <div class="item-container-content">
+        <div class="item">
+            Zen Massage configuration panel allows you
+            to setup your Pebble Watch to work with so
+            you can keep track of your massage sessions
+        </div>
+    </div>
+</div>
+<div class="item-container">
+    <div class="item-container-header">Session Length</div>
+    <div class="item-container-content">
+        <div class="item">
+            Double click for 30min
+            <input type="checkbox" class="item-toggle" name="toggle-fast30" />
+        </div>
+        <div class="item">
+            Triple click for 60min
+            <input type="checkbox" class="item-toggle" name="toggle-fast60" />
+        </div>
+    </div>
+    <div class="item-container-header">Session Markers</div>
+    <div class="item-container-content">
+        <div class="item">
+            Vibrate once 10min
+            <input type="checkbox" class="item-toggle" name="toggle-vibe10" />
+        </div>
+        <div class="item">
+            Vibrate twice 30min
+            <input type="checkbox" class="item-toggle" name="toggle-vibe30" />
+        </div>
+        <div class="item">
+            Vibrate thrice last 15min
+            <input type="checkbox" class="item-toggle" name="toggle-vibe-last15" />
+        </div>
+    </div>
+</div>
+
+<div class='item-container'>
+    <div class='button-container'>
+        <input id='submit_button' type='button' class='item-button' value='SUBMIT'>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        function getConfigData() {
+            var toggleFast30 = document.getElementById('toggle-fast30');
+            var toggleFast60 = document.getElementById('toggle-fast60');
+
+            var toggleVibe10 = document.getElementById('toggle-vibe10');
+            var toggleVibe30 = document.getElementById('toggle-vibe30');
+            var toggleVibeLast15 = document.getElementById('toggle-vibe-last15');
+
+            var sessionOptions = {
+                'toggle-fast30': toggleFast30.checked,
+                'toggle-fast60': toggleFast60.checked
+            };
+
+            var notifyOptions = {
+                'toggle-vibe10': toggleVibe10.checked,
+                'toggle-vibe30': toggleVibe30.checked,
+                'toggle-vibe-last15': toggleVibeLast15.checked
+            };
+
+            var options = {
+                'sessionOptions': sessionOptions,
+                'vibeOptions': notifyOptions
+            };
+
+            // Save for next launch
+            localStorage['sessionOptions-toggle-fast30'] = options.sessionOptions['toggle-fast30'];
+            localStorage['sessionOptions-toggle-fast60'] = options.sessionOptions['toggle-fast60'];
+            localStorage['vibeOptions-toggle-vibe10'] = options.vibeOptions['toggle-vibe10'];
+            localStorage['vibeOptions-toggle-vibe30'] = options.vibeOptions['toggle-vibe30'];
+            localStorage['vibeOptions-toggle-vibe-last15'] = options.vibeOptions['toggle-vibe-last15'];
+            console.log('Got options: ' + JSON.stringify(options));
+            return options;
+        }
+
+        function getQueryParam(variable, defaultValue) {
+            var query = location.search.substring(1);
+            var vars = query.split('&');
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split('=');
+                if (pair[0] === variable) {
+                    return decodeURIComponent(pair[1]);
+                }
+            }
+            return defaultValue || false;
+        }
+
+        function setCheckStateFromLocalStorage(element, variableName) {
+            if (localStorage[variableName]) {
+                element.checked = JSON.parse(localStorage[variableName]);
+            }
+        }
+
+        var submitButton = document.getElementById('submit_button');
+        submitButton.addEventListener('click', function () {
+            console.log('Submit');
+
+            // Set the return URL depending on the runtime environment
+            var returnToUri = getQueryParam('return_to', 'pebblejs://close#');
+            document.location = returnToUri + encodeURIComponent(JSON.stringify(getConfigData()));
+        });
+
+        (function () {
+            var toggleFast30 = document.getElementById('toggle-fast30');
+            var toggleFast60 = document.getElementById('toggle-fast60');
+            var toggleVibe10 = document.getElementById('toggle-vibe10');
+            var toggleVibe30 = document.getElementById('toggle-vibe30');
+            var toggleVibeLast15 = document.getElementById('toggle-vibe-last15');
+
+            // Load any previously saved configuration, if available
+            setCheckStateFromLocalStorage(toggleFast30, 'sessionOptions-toggle-fast30');
+            setCheckStateFromLocalStorage(toggleFast60, 'sessionOptions-toggle-fast60');
+            setCheckStateFromLocalStorage(toggleVibe10, 'vibeOptions-toggle-vibe10');
+            setCheckStateFromLocalStorage(toggleVibe30, 'vibeOptions-toggle-vibe30');
+            setCheckStateFromLocalStorage(toggleVibeLast15, 'vibeOptions-toggle-vibe-last15');
+        })();
+    </script>
+}

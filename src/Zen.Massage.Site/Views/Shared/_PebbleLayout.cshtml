@@ -1,0 +1,58 @@
+﻿@model BaseVm
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@Model.Title - Zen Massage</title>
+    <meta name="title" content="@Model.MetaTitle" />
+    <meta name="description" content="@Model.MetaDescription" />
+    <meta name="keywords" content="@Model.MetaKeywords" />
+
+    <environment names="Development">
+        <link rel="stylesheet" href="~/css/slate.css" />
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/css/slate.min.css" asp-append-version="true" />
+    </environment>
+    <style>
+        .title {
+            padding: 15px 10px;
+            text-transform: uppercase;
+            font-family: 'PT Sans', sans-serif;
+            font-size: 1.2em;
+            font-weight: 500;
+            color: #888888;
+            text-align: center;
+        }
+    </style>
+
+    @Html.ApplicationInsightsJavaScript(TelemetryConfiguration)
+</head>
+<body>
+    <div class="container">
+        <header class="row" role="banner">
+        </header>
+
+        <main class="row" role="main">
+            @RenderBody()
+        </main>
+
+        <footer class="row" role="contentinfo">
+            <hr />
+            <div class="inner-wrap">
+                <p class="copyright">&copy; Zen Design Software 2015</p>
+            </div>
+        </footer>
+    </div>
+
+    <environment names="Development">
+        <script src="~/js/lib/slate/slate.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/js/lib/slate/slate.min.js" asp-append-version="true"></script>
+    </environment>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>
