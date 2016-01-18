@@ -32,23 +32,15 @@ var config = new Config();
 
 // Copy angular2 typescript source to typings folder
 gulp.task('copy:fromnode', function () {
-    return merge([
-        // This deals with Angular2 typings (putting them with our other TSD typings)
-        gulp.src(config.paths.nodeModulesRoot + 'angular2/**/*.ts')
-            .pipe(copy(config.paths.tsTypings + 'angular2/', {
-                prefix: 2
-            }))
-            .pipe(gulp.dest('.')),
-
-        // This deals with library components
-        gulp.src([
-            config.paths.nodeModulesRoot + 'jquery/dist/jquery.js',
-            config.paths.nodeModulesRoot + 'tether/dist/js/tether.js',
-            config.paths.nodeModulesRoot + 'bootstrap/dist/js/bootstrap.js'
-            ])
-            .pipe(copy(config.paths.jsLibPath, { prefix: 10 }))
-            .pipe(gulp.dest('.'))
-    ]);
+    // This deals with library components
+	gulp.src([config.paths.nodeModulesRoot + 'jquery/dist/jquery.js'])
+		.pipe(copy(config.paths.jsLibPath + 'jquery/', { prefix: 10 }));
+	gulp.src([config.paths.nodeModulesRoot + 'tether/dist/js/tether.js'])
+		.pipe(copy(config.paths.jsLibPath + 'tether/', { prefix: 10 }));
+	gulp.src([config.paths.nodeModulesRoot + 'bootstrap/dist/js/bootstrap.js'])
+		.pipe(copy(config.paths.jsLibPath + 'bootstrap/', { prefix: 10 }));
+	gulp.src([config.paths.nodeModulesRoot + 'angular2/bundles/**/*.js'])
+		.pipe(copy(config.paths.jsLibPath + 'angular2/', { prefix: 3 }));
 });
 
 // Lint all custom TypeScript files.
@@ -63,7 +55,8 @@ gulp.task('lint:ts', function () {
 gulp.task('compile:ts', ['copy:fromnode'], function () {
     var sourceFiles = [
         config.paths.tsAppSelector,
-        config.paths.tsTypingsSelector
+        config.paths.tsTypingsSelector,
+		config.paths.nodeModulesRoot + 'angular2/*.d.ts'
     ];
 
     var tsResult = gulp
@@ -91,9 +84,9 @@ gulp.task('clean:ts', function (cb) {
 gulp.task('compile:sitecore', function (cb) {
     var builder = new Builder(config.paths.webroot, config.paths.root + 'system.config.js');
     builder.buildStatic(
-        config.paths.jsLibPath + 'jquery.js + ' +
-        config.paths.jsLibPath + 'tether.js + ' +
-        config.paths.jsLibPath + 'bootstrap.js',
+        config.paths.jsLibPath + 'jquery/jquery.js + ' +
+        config.paths.jsLibPath + 'tether/tether.js + ' +
+        config.paths.jsLibPath + 'bootstrap/bootstrap.js',
         config.paths.tsOutputPath + 'sitecore.js')
     .then(function () {
         cb();

@@ -1,7 +1,16 @@
 ﻿{
+  "version": "1.0.0",
   "compilerOptions": {
     "target": "es6",
     "module": "system",
     "sourceMap": true
-  }
+  },
+  "filesGlob": [
+    "./typescript/app/**/*.ts",
+    "!./node_modules/**/*.ts"
+  ],
+  "files": [
+    "./typescript/app/**/*.ts",
+    "./typescript/typings/*.d.ts"
+  ]
 }
