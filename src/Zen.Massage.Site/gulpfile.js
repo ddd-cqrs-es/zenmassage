@@ -11,14 +11,14 @@ var del = require('del'),
     environments = require('gulp-environments'),
     inject = require('gulp-inject'),
     tsc = require('gulp-typescript'),
-    tslint = require('gulp-tslint'),
+    //tslint = require('gulp-tslint'),
     sourcemaps = require('gulp-sourcemaps'),
     uglify = require('gulp-uglify'),
     sass = require('gulp-sass'),
     sassLint = require('gulp-sass-lint'),
     Builder = require('systemjs-builder'),
     Config = require('./gulpfile.config'),
-    tsProject = tsc.createProject('tsconfig.json');
+    tsProject = tsc.createProject('./typescript/tsconfig.json');
 
 // Determine runtime environment (default to DEV for now)
 var development = environments.development;
@@ -30,17 +30,38 @@ if (!development() && !production()) {
 // Pull configuration
 var config = new Config();
 
-// Copy angular2 typescript source to typings folder
+// Copy library components to wwwroot folders
 gulp.task('copy:fromnode', function () {
-    // This deals with library components
-	gulp.src([config.paths.nodeModulesRoot + 'jquery/dist/jquery.js'])
-		.pipe(copy(config.paths.jsLibPath + 'jquery/', { prefix: 10 }));
-	gulp.src([config.paths.nodeModulesRoot + 'tether/dist/js/tether.js'])
-		.pipe(copy(config.paths.jsLibPath + 'tether/', { prefix: 10 }));
-	gulp.src([config.paths.nodeModulesRoot + 'bootstrap/dist/js/bootstrap.js'])
-		.pipe(copy(config.paths.jsLibPath + 'bootstrap/', { prefix: 10 }));
-	gulp.src([config.paths.nodeModulesRoot + 'angular2/bundles/**/*.js'])
-		.pipe(copy(config.paths.jsLibPath + 'angular2/', { prefix: 3 }));
+    return merge([
+        gulp.src([
+            config.paths.nodeModulesRoot + 'jquery/dist/jquery.js'
+            ])
+            .pipe(gulp.dest(config.paths.jsLibPath + 'jquery/')),
+        gulp.src([
+            config.paths.nodeModulesRoot + 'tether/dist/js/tether.js'
+            ])
+            .pipe(gulp.dest(config.paths.jsLibPath + 'tether/')),
+        gulp.src([
+            config.paths.nodeModulesRoot + 'bootstrap/dist/js/bootstrap.js'
+            ])
+            .pipe(gulp.dest(config.paths.jsLibPath + 'bootstrap/')),
+        gulp.src([
+            config.paths.nodeModulesRoot + 'Slate/dist/js/slate.js',
+            config.paths.nodeModulesRoot + 'Slate/dist/js/slate.min.js'
+            ])
+            .pipe(gulp.dest(config.paths.jsLibPath + 'slate/')),
+
+        gulp.src([
+            config.paths.nodeModulesRoot + 'Slate/dist/css/slate.css',
+            config.paths.nodeModulesRoot + 'Slate/dist/css/slate.min.css'
+            ])
+            .pipe(gulp.dest(config.paths.sassOutputPath)),
+
+        gulp.src([
+            config.paths.nodeModulesRoot + 'Slate/dist/fonts/*.*'
+            ])
+            .pipe(gulp.dest(config.paths.fontsOutputPath))
+    ]);
 });
 
 // Lint all custom TypeScript files.
@@ -55,8 +76,7 @@ gulp.task('lint:ts', function () {
 gulp.task('compile:ts', ['copy:fromnode'], function () {
     var sourceFiles = [
         config.paths.tsAppSelector,
-        config.paths.tsTypingsSelector,
-		config.paths.nodeModulesRoot + 'angular2/*.d.ts'
+        config.paths.tsTypingsSelector
     ];
 
     var tsResult = gulp
@@ -140,7 +160,7 @@ gulp.task('clean:sass', function (cb) {
 
 gulp.task('watch', function () {
     gulp.watch([config.paths.sassAppSelector], ['compile:sass']);
-    gulp.watch([config.paths.tsAppSelector], ['lint:ts', 'compile:ts']);
+    gulp.watch([config.paths.tsAppSelector], ['compile:ts']);
 });
 
-gulp.task('default', ['lint:ts', 'compile:sitecore', 'compile:ts', 'compile:sass']);
+gulp.task('default', ['compile:sitecore', 'compile:ts', 'compile:sass']);

@@ -4,10 +4,9 @@
         jquery: 'js/lib/jquery/jquery.js',
         tether: 'js/lib/tether/tether.js',
         bootstrap: '/js/lib/bootstrap/bootstrap.js'
-		angular2: 'js/lib/angular2'
     },
     meta: {
-        'js/lib/tether.js': {
+        'js/lib/tether/tether.js': {
             format: 'global',
             exports: 'Tether'
         }
