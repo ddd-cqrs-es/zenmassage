@@ -1,4 +1,4 @@
-﻿module demoApp {
+﻿/*module demoApp {
 
     class OrdersController {
 
@@ -19,4 +19,4 @@
     angular.module('demoApp')
         .controller('demoApp.OrdersController', OrdersController);
 
-}
+}*/

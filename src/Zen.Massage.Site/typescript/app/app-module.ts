@@ -1,4 +1,4 @@
-﻿((): void => {
+﻿/*((): void => {
 
     var app = angular.module('demoApp', ['ngRoute', 'ngAnimate']);
 
@@ -18,3 +18,4 @@
     }]);
 
 })();
+*/
