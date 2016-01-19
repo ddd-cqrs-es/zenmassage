@@ -16,7 +16,7 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Zen.Massage.Site", "src\Zen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zen.Massage.Site.UnitTests", "src\Zen.Massage.Site.UnitTests\Zen.Massage.Site.UnitTests.csproj", "{B0B23E52-E0E4-430C-B073-AC9A251E1E00}"
 EndProject
-Project("{262852C6-CD72-467D-83FE-5EEB1973A190}") = "ZenMassageApp", "ZenMassageApp\ZenMassageApp.jsproj", "{E1E8CE89-5172-42AA-805B-89C90B6ABFBC}"
+Project("{262852C6-CD72-467D-83FE-5EEB1973A190}") = "ZenMassageApp", "src\ZenMassageApp\ZenMassageApp.jsproj", "{E1E8CE89-5172-42AA-805B-89C90B6ABFBC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
