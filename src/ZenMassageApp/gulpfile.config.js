@@ -17,7 +17,7 @@ var GulpConfig = (function () {
         this.paths.tsTypings = this.paths.tsRoot + 'typings/';
         this.paths.tsTypingsSelector = this.paths.tsTypings + '**/*.ts';
 
-        this.paths.jsLibPath = this.paths.tsOutputPath + 'lib/';
+        this.paths.libPath = this.paths.webroot + 'lib/';
 
         this.paths.sassRoot = './styles/';
         this.paths.sassApp = this.paths.sassRoot;

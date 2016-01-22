@@ -4,21 +4,24 @@
 var del = require('del'),
     merge = require('merge2'),
     gulp = require('gulp'),
+    autoprefixer = require('gulp-autoprefixer'),
     concat = require('gulp-concat'),
     copy = require('gulp-copy'),
     cssmin = require('gulp-cssmin'),
     debug = require('gulp-debug'),
     environments = require('gulp-environments'),
     inject = require('gulp-inject'),
+    plumber = require('gulp-plumber'),
     tsc = require('gulp-typescript'),
     //tslint = require('gulp-tslint'),
     sourcemaps = require('gulp-sourcemaps'),
     uglify = require('gulp-uglify'),
+    rename = require('gulp-rename'),
     sass = require('gulp-sass'),
     sassLint = require('gulp-sass-lint'),
-    Builder = require('systemjs-builder'),
+    stylus = require('gulp-stylus'),
     Config = require('./gulpfile.config'),
-    tsProject = tsc.createProject('./typescript/tsconfig.json');
+    tsProject = tsc.createProject('./scripts/tsconfig.json');
 
 // Determine runtime environment (default to DEV for now)
 var development = environments.development;
@@ -36,44 +39,85 @@ gulp.task('copy:fromnode', function () {
         gulp.src([
             config.paths.nodeModulesRoot + 'jquery/dist/jquery.js'
             ])
-            .pipe(gulp.dest(config.paths.jsLibPath + 'jquery/')),
+            .pipe(gulp.dest(config.paths.libPath + 'jquery/')),
         gulp.src([
-            config.paths.nodeModulesRoot + 'tether/dist/js/tether.js'
+            config.paths.nodeModulesRoot + 'angular/angular.js',
+            config.paths.nodeModulesRoot + 'angular/angular.min.js'
             ])
-            .pipe(gulp.dest(config.paths.jsLibPath + 'tether/')),
+            .pipe(gulp.dest(config.paths.libPath + 'angular/')),
         gulp.src([
-            config.paths.nodeModulesRoot + 'bootstrap/dist/js/bootstrap.js'
+            config.paths.nodeModulesRoot + 'onsenui/css/**/*.*'
             ])
-            .pipe(gulp.dest(config.paths.jsLibPath + 'bootstrap/')),
+            .pipe(gulp.dest(config.paths.libPath + 'onsen/css/')),
         gulp.src([
-            config.paths.nodeModulesRoot + 'Slate/dist/js/slate.js',
-            config.paths.nodeModulesRoot + 'Slate/dist/js/slate.min.js'
+            config.paths.nodeModulesRoot + 'onsenui/js/angular-onsenui.js',
+            config.paths.nodeModulesRoot + 'onsenui/js/angular-onsenui.min.js',
+            config.paths.nodeModulesRoot + 'onsenui/js/onsenui.js',
+            config.paths.nodeModulesRoot + 'onsenui/js/onsenui.min.js'
             ])
-            .pipe(gulp.dest(config.paths.jsLibPath + 'slate/')),
+            .pipe(gulp.dest(config.paths.libPath + 'onsen/js/'))
+        //gulp.src([
+        //    config.paths.nodeModulesRoot + 'tether/dist/js/tether.js'
+        //    ])
+        //    .pipe(gulp.dest(config.paths.jsLibPath + 'tether/')),
+        //gulp.src([
+        //    config.paths.nodeModulesRoot + 'bootstrap/dist/js/bootstrap.js'
+        //    ])
+        //    .pipe(gulp.dest(config.paths.jsLibPath + 'bootstrap/')),
+        //gulp.src([
+        //    config.paths.nodeModulesRoot + 'Slate/dist/js/slate.js',
+        //    config.paths.nodeModulesRoot + 'Slate/dist/js/slate.min.js'
+        //    ])
+        //    .pipe(gulp.dest(config.paths.jsLibPath + 'slate/')),
 
-        gulp.src([
-            config.paths.nodeModulesRoot + 'Slate/dist/css/slate.css',
-            config.paths.nodeModulesRoot + 'Slate/dist/css/slate.min.css'
-            ])
-            .pipe(gulp.dest(config.paths.sassOutputPath)),
+        //gulp.src([
+        //    config.paths.nodeModulesRoot + 'Slate/dist/css/slate.css',
+        //    config.paths.nodeModulesRoot + 'Slate/dist/css/slate.min.css'
+        //    ])
+        //    .pipe(gulp.dest(config.paths.sassOutputPath)),
 
-        gulp.src([
-            config.paths.nodeModulesRoot + 'Slate/dist/fonts/*.*'
-            ])
-            .pipe(gulp.dest(config.paths.fontsOutputPath))
+        //gulp.src([
+        //    config.paths.nodeModulesRoot + 'Slate/dist/fonts/*.*'
+        //    ])
+        //    .pipe(gulp.dest(config.paths.fontsOutputPath))
     ]);
 });
 
-// Lint all custom TypeScript files.
-gulp.task('lint:ts', function () {
-    return gulp
-        .src(config.paths.tsAppSelector)
-        .pipe(tslint())
-        .pipe(tslint.report('prose'));
+// Build onsen ui stylus files
+gulp.task('compile:stylus', function () {
+    return gulp.src([
+        config.paths.nodeModulesRoot + 'onsenui/stylus/*-theme.styl'])
+      .pipe(plumber())
+      .pipe(stylus({ errors: true, define: { mylighten: mylighten } }))
+      .pipe(autoprefixer('> 1%', 'last 2 version', 'ff 12', 'ie 11', 'opera 12', 'chrome 12', 'safari 12', 'android 2'))
+      .pipe(rename(function (path) {
+          path.dirname = '.';
+          path.basename = 'onsen-css-components-' + path.basename;
+          path.ext = 'css';
+      }))
+      .pipe(gulp.dest(config.paths.libPath + 'onsen/css/'));
+
+    // needs for compile
+    function mylighten(param) {
+        if (param.rgba) {
+            var result = param.clone();
+            result.rgba.a = 0.2;
+            return result;
+        }
+        throw new Error('mylighten() first argument must be color.');
+    }
 });
 
+// Lint all custom TypeScript files.
+//gulp.task('lint:ts', function () {
+//    return gulp
+//        .src(config.paths.tsAppSelector)
+//        .pipe(tslint())
+//        .pipe(tslint.report('prose'));
+//});
+
 // Compile all TypeScript and include references to library
-gulp.task('compile:ts', ['copy:fromnode'], function () {
+gulp.task('compile:ts', function () {
     var sourceFiles = [
         config.paths.tsAppSelector,
         config.paths.tsTypingsSelector
@@ -94,26 +138,10 @@ gulp.task('compile:ts', ['copy:fromnode'], function () {
 gulp.task('clean:ts', function (cb) {
     var files = [
         config.paths.tsOutputPath + '**/*.js',
-        config.paths.tsOutputPath + '**/*.js.map',
-        '!' + config.paths.tsOutputPath + 'lib'
+        config.paths.tsOutputPath + '**/*.js.map'
     ];
 
     del(files, cb);
-});
-
-gulp.task('compile:sitecore', function (cb) {
-    var builder = new Builder(config.paths.webroot, config.paths.root + 'system.config.js');
-    builder.buildStatic(
-        config.paths.jsLibPath + 'jquery/jquery.js + ' +
-        config.paths.jsLibPath + 'tether/tether.js + ' +
-        config.paths.jsLibPath + 'bootstrap/bootstrap.js',
-        config.paths.tsOutputPath + 'sitecore.js')
-    .then(function () {
-        cb();
-    })
-    .catch(function (ex) {
-        cb(ex);
-    });
 });
 
 // Lint CSS
@@ -163,4 +191,4 @@ gulp.task('watch', function () {
     gulp.watch([config.paths.tsAppSelector], ['compile:ts']);
 });
 
-gulp.task('default', ['compile:sitecore', 'compile:ts', 'compile:sass']);
+gulp.task('default', ['compile:ts', 'compile:sass']);

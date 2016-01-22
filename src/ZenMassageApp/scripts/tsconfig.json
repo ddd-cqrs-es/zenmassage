@@ -6,7 +6,6 @@
     "sourceMap": true,
     "inlineSources": true,
     "moduleResolution": "node",
-    "out": "www/scripts/appBundle.js",
     "target": "es5"
   }
 }
