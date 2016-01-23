@@ -5,6 +5,7 @@
     "removeComments": false,
     "sourceMap": true,
     "inlineSources": true,
+    "experimentalDecorators": true,
     "moduleResolution": "node",
     "target": "es5"
   }
