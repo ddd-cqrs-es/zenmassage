@@ -1,4 +1,4 @@
-﻿/// <binding Clean='clean' />
+﻿/// <binding AfterBuild='compile' Clean='clean' />
 'use strict';
 
 var del = require('del'),
@@ -185,6 +185,10 @@ gulp.task('clean:sass', function (cb) {
 
     del(files, cb);
 });
+
+gulp.task('clean', ['clean:sass', 'clean:ts']);
+
+gulp.task('compile', ['compile:sass', 'compile:ts']);
 
 gulp.task('watch', function () {
     gulp.watch([config.paths.sassAppSelector], ['compile:sass']);
