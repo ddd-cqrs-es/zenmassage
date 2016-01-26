@@ -46,6 +46,26 @@ gulp.task('copy:fromnode', function () {
             ])
             .pipe(gulp.dest(config.paths.libPath + 'angular/')),
         gulp.src([
+            config.paths.nodeModulesRoot + 'angular-cookie/angular-cookie.js',
+            config.paths.nodeModulesRoot + 'angular-cookie/angular-cookie.min.js'
+            ])
+            .pipe(gulp.dest(config.paths.libPath + 'angular/')),
+        gulp.src([
+            config.paths.nodeModulesRoot + 'angular-resource/angular-resource.js',
+            config.paths.nodeModulesRoot + 'angular-resource/angular-resource.min.js'
+            ])
+            .pipe(gulp.dest(config.paths.libPath + 'angular/')),
+        gulp.src([
+            config.paths.nodeModulesRoot + 'angular-route/angular-route.js',
+            config.paths.nodeModulesRoot + 'angular-route/angular-route.min.js'
+            ])
+            .pipe(gulp.dest(config.paths.libPath + 'angular/')),
+        gulp.src([
+            config.paths.nodeModulesRoot + 'angular-sanitize/angular-sanitize.js',
+            config.paths.nodeModulesRoot + 'angular-sanitize/angular-sanitize.min.js'
+            ])
+            .pipe(gulp.dest(config.paths.libPath + 'angular/')),
+        gulp.src([
             config.paths.nodeModulesRoot + 'onsenui/css/**/*.*'
             ])
             .pipe(gulp.dest(config.paths.libPath + 'onsen/css/')),
@@ -56,30 +76,6 @@ gulp.task('copy:fromnode', function () {
             config.paths.nodeModulesRoot + 'onsenui/js/onsenui.min.js'
             ])
             .pipe(gulp.dest(config.paths.libPath + 'onsen/js/'))
-        //gulp.src([
-        //    config.paths.nodeModulesRoot + 'tether/dist/js/tether.js'
-        //    ])
-        //    .pipe(gulp.dest(config.paths.jsLibPath + 'tether/')),
-        //gulp.src([
-        //    config.paths.nodeModulesRoot + 'bootstrap/dist/js/bootstrap.js'
-        //    ])
-        //    .pipe(gulp.dest(config.paths.jsLibPath + 'bootstrap/')),
-        //gulp.src([
-        //    config.paths.nodeModulesRoot + 'Slate/dist/js/slate.js',
-        //    config.paths.nodeModulesRoot + 'Slate/dist/js/slate.min.js'
-        //    ])
-        //    .pipe(gulp.dest(config.paths.jsLibPath + 'slate/')),
-
-        //gulp.src([
-        //    config.paths.nodeModulesRoot + 'Slate/dist/css/slate.css',
-        //    config.paths.nodeModulesRoot + 'Slate/dist/css/slate.min.css'
-        //    ])
-        //    .pipe(gulp.dest(config.paths.sassOutputPath)),
-
-        //gulp.src([
-        //    config.paths.nodeModulesRoot + 'Slate/dist/fonts/*.*'
-        //    ])
-        //    .pipe(gulp.dest(config.paths.fontsOutputPath))
     ]);
 });
 
@@ -87,15 +83,15 @@ gulp.task('copy:fromnode', function () {
 gulp.task('compile:stylus', function () {
     return gulp.src([
         config.paths.nodeModulesRoot + 'onsenui/stylus/*-theme.styl'])
-      .pipe(plumber())
-      .pipe(stylus({ errors: true, define: { mylighten: mylighten } }))
-      .pipe(autoprefixer('> 1%', 'last 2 version', 'ff 12', 'ie 11', 'opera 12', 'chrome 12', 'safari 12', 'android 2'))
-      .pipe(rename(function (path) {
-          path.dirname = '.';
-          path.basename = 'onsen-css-components-' + path.basename;
-          path.ext = 'css';
-      }))
-      .pipe(gulp.dest(config.paths.libPath + 'onsen/css/'));
+        .pipe(plumber())
+        .pipe(stylus({ errors: true, define: { mylighten: mylighten } }))
+        .pipe(autoprefixer('> 1%', 'last 2 version', 'ff 12', 'ie 11', 'opera 12', 'chrome 12', 'safari 12', 'android 2'))
+        .pipe(rename(function (path) {
+            path.dirname = '.';
+            path.basename = 'onsen-css-components-' + path.basename;
+            path.ext = 'css';
+        }))
+        .pipe(gulp.dest(config.paths.libPath + 'onsen/css/'));
 
     // needs for compile
     function mylighten(param) {
@@ -106,6 +102,49 @@ gulp.task('compile:stylus', function () {
         }
         throw new Error('mylighten() first argument must be color.');
     }
+});
+
+// Lint CSS
+gulp.task('lint:sass', function () {
+    return gulp
+        .src(config.paths.sassAppSelector)
+        .pipe(sassLint())
+        .pipe(sassLint.format())
+        .pipe(sassLint.failOnError());
+});
+
+gulp.task('compile:sass', function () {
+    var sourceFiles = [
+        config.paths.sassAppSelector
+    ];
+    var includePaths = [
+        config.paths.nodeModulesRoot + 'bootstrap/scss/',
+        config.paths.nodeModulesRoot + 'tether/src/css/'
+    ];
+    return gulp
+        .src(sourceFiles)
+        .pipe(sourcemaps.init())
+        .pipe(development(sass({
+            outputStyle: 'expanded',
+            includePaths: includePaths
+        }).on('error', sass.logError)))
+        .pipe(production(sass({
+            outputStyle: 'compressed',
+            includePaths: includePaths
+        }).on('error', sass.logError)))
+        .pipe(autoprefixer('> 1%', 'last 2 version', 'ff 12', 'ie 11', 'opera 12', 'chrome 12', 'safari 12', 'android 2'))
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest(config.paths.sassOutputPath));
+});
+
+gulp.task('clean:sass', function (cb) {
+    var files = [
+        config.paths.sassOutputPath + '**/*.css',
+        config.paths.sassOutputPath + '**/*.css.map',
+        '!' + config.paths.sassOutputPath + 'lib'
+    ];
+
+    del(files, cb);
 });
 
 // Lint all custom TypeScript files.
@@ -139,48 +178,6 @@ gulp.task('clean:ts', function (cb) {
     var files = [
         config.paths.tsOutputPath + '**/*.js',
         config.paths.tsOutputPath + '**/*.js.map'
-    ];
-
-    del(files, cb);
-});
-
-// Lint CSS
-gulp.task('lint:sass', function () {
-    return gulp
-        .src(config.paths.sassAppSelector)
-        .pipe(sassLint())
-        .pipe(sassLint.format())
-        .pipe(sassLint.failOnError());
-});
-
-gulp.task('compile:sass', function () {
-    var sourceFiles = [
-        config.paths.sassAppSelector
-    ];
-    var includePaths = [
-        config.paths.nodeModulesRoot + 'bootstrap/scss/',
-        config.paths.nodeModulesRoot + 'tether/src/css/'
-    ];
-    return gulp
-        .src(sourceFiles)
-        .pipe(sourcemaps.init())
-        .pipe(development(sass({
-            outputStyle: 'expanded',
-            includePaths: includePaths
-        }).on('error', sass.logError)))
-        .pipe(production(sass({
-            outputStyle: 'compressed',
-            includePaths: includePaths
-        }).on('error', sass.logError)))
-        .pipe(sourcemaps.write())
-        .pipe(gulp.dest(config.paths.sassOutputPath));
-});
-
-gulp.task('clean:sass', function (cb) {
-    var files = [
-        config.paths.sassOutputPath + '**/*.css',
-        config.paths.sassOutputPath + '**/*.css.map',
-        '!' + config.paths.sassOutputPath + 'lib'
     ];
 
     del(files, cb);

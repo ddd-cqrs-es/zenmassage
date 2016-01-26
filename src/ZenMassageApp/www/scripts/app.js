@@ -1,12 +1,8 @@
-var ZenMassageApp;
-(function (ZenMassageApp) {
+(function () {
     'use strict';
-    var MassageApp = (function () {
-        function MassageApp() {
-        }
-        return MassageApp;
-    })();
-    angular.module('app', [], MassageApp);
-})(ZenMassageApp || (ZenMassageApp = {}));
+    angular.module('app', [
+        'app.core'
+    ]);
+})();
 
 //# sourceMappingURL=app.js.map
