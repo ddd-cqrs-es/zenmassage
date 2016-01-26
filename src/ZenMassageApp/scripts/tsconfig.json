@@ -8,6 +8,6 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "target": "es5",
-    "outDir": "/www/scripts"
+    "outDir": "www/scripts"
   }
 }

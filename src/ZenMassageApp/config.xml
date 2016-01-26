@@ -10,7 +10,6 @@
   <preference name="windows-target-version" value="10.0" />
   <preference name="android-minSdkVersion" value="21" />
   <preference name="android-targetSdkVersion" value="22" />
-
   <!-- Support for Cordova 5.0.0 plugin system -->
   <plugin name="cordova-plugin-whitelist" version="1" />
   <allow-intent href="http://*/*" />
@@ -112,4 +111,10 @@
       <vs:name>Zen Massage</vs:name>
     </vs:platformSpecificWidget>
   </vs:platformSpecificValues>
+  <preference name="KeepRunning" value="True" />
+  <preference name="ShowTitle" value="True" />
+  <preference name="InAppBrowserStorageEnabled" value="True" />
+  <preference name="SuppressesIncrementalRendering" value="True" />
+  <plugin name="cordova-plugin-dialogs" version="1.2.0" />
+  <plugin name="cordova-plugin-statusbar" version="2.1.0" />
 </widget>

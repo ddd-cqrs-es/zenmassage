@@ -13,6 +13,15 @@
     },
     "angularjs/angular-cookies.d.ts": {
       "commit": "46719185c564694c5583c4b7ad94dbb786ecad46"
+    },
+    "angularjs/angular-route.d.ts": {
+      "commit": "46719185c564694c5583c4b7ad94dbb786ecad46"
+    },
+    "angularjs/angular-sanitize.d.ts": {
+      "commit": "46719185c564694c5583c4b7ad94dbb786ecad46"
+    },
+    "angularjs/angular-resource.d.ts": {
+      "commit": "46719185c564694c5583c4b7ad94dbb786ecad46"
     }
   }
 }
