@@ -1,5 +1,0 @@
-﻿module ZenMassageApp {
-    'use strict';
-
-
-}

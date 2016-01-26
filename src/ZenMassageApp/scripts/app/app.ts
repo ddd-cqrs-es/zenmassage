@@ -1,12 +1,8 @@
-﻿module ZenMassageApp {
+﻿((): void => {
     'use strict';
 
-    class MassageApp {
-        
-        constructor() {
-        }
-
-    }
-
-    angular.module('app', [], MassageApp);
-}
+    angular.module(
+        'app', [
+            'app.core'
+        ]);
+})();

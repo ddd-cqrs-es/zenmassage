@@ -46,6 +46,21 @@ gulp.task('copy:fromnode', function () {
             ])
             .pipe(gulp.dest(config.paths.libPath + 'angular/')),
         gulp.src([
+            config.paths.nodeModulesRoot + 'angular-resource/angular-resource.js',
+            config.paths.nodeModulesRoot + 'angular-resource/angular-resource.min.js'
+            ])
+            .pipe(gulp.dest(config.paths.libPath + 'angular/')),
+        gulp.src([
+            config.paths.nodeModulesRoot + 'angular-route/angular-route.js',
+            config.paths.nodeModulesRoot + 'angular-route/angular-route.min.js'
+            ])
+            .pipe(gulp.dest(config.paths.libPath + 'angular/')),
+        gulp.src([
+            config.paths.nodeModulesRoot + 'angular-sanitize/angular-sanitize.js',
+            config.paths.nodeModulesRoot + 'angular-sanitize/angular-sanitize.min.js'
+            ])
+            .pipe(gulp.dest(config.paths.libPath + 'angular/')),
+        gulp.src([
             config.paths.nodeModulesRoot + 'onsenui/css/**/*.*'
             ])
             .pipe(gulp.dest(config.paths.libPath + 'onsen/css/')),
