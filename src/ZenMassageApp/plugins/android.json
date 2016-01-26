@@ -1,0 +1,21 @@
+{
+  "prepare_queue": {
+    "installed": [ ],
+    "uninstalled": [ ]
+  },
+  "config_munge": {
+    "files": { }
+  },
+  "installed_plugins": {
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.zendesignsoftware.aero.massage"
+    },
+    "cordova-plugin-vs-taco-support": {
+      "PACKAGE_NAME": "com.zendesignsoftware.aero.massage"
+    },
+    "cordova-pebble": {
+      "PACKAGE_NAME": "com.zendesignsoftware.aero.massage"
+    }
+  },
+  "dependent_plugins": { }
+}
