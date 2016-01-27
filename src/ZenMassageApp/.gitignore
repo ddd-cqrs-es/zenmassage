@@ -6,5 +6,6 @@
 [Pp]lugins/remote_ios.json
 [Pp]latforms/
 
-www/scripts/**/*.js
-www/scripts/**/*.js.map
+www/css/
+www/lib/
+www/scripts/
