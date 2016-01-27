@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "dependencies": {
     "angular": "^1.4.9",
-    "angular-cookie": "^4.0.10",
+    "angular-cookies": "^1.4.9",
     "angular-resource": "^1.4.9",
     "angular-route": "^1.4.9",
     "angular-sanitize": "^1.4.9",

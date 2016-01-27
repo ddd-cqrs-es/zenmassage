@@ -3,7 +3,7 @@
 
     angular.module(
         'app.core', [
-            'ngCookie',
+            'ngCookies',
             'ngRoute',
             'ngResource',
             'ngSanitize'

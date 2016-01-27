@@ -46,8 +46,8 @@ gulp.task('copy:fromnode', function () {
             ])
             .pipe(gulp.dest(config.paths.libPath + 'angular/')),
         gulp.src([
-            config.paths.nodeModulesRoot + 'angular-cookie/angular-cookie.js',
-            config.paths.nodeModulesRoot + 'angular-cookie/angular-cookie.min.js'
+            config.paths.nodeModulesRoot + 'angular-cookies/angular-cookies.js',
+            config.paths.nodeModulesRoot + 'angular-cookies/angular-cookies.min.js'
             ])
             .pipe(gulp.dest(config.paths.libPath + 'angular/')),
         gulp.src([
@@ -183,13 +183,21 @@ gulp.task('clean:ts', function (cb) {
     del(files, cb);
 });
 
-gulp.task('clean', ['clean:sass', 'clean:ts']);
+gulp.task('clean:lib', function(cb) {
+    var files = [
+        config.paths.libPath + '**/*.*'
+    ];
 
-gulp.task('compile', ['compile:sass', 'compile:ts']);
+    del(files, cb);
+});
+
+gulp.task('clean', ['clean:lib', 'clean:sass', 'clean:ts']);
+
+gulp.task('compile', ['compile:stylus', 'compile:sass', 'compile:ts']);
 
 gulp.task('watch', function () {
     gulp.watch([config.paths.sassAppSelector], ['compile:sass']);
     gulp.watch([config.paths.tsAppSelector], ['compile:ts']);
 });
 
-gulp.task('default', ['compile:ts', 'compile:sass']);
+gulp.task('default', ['compile']);
