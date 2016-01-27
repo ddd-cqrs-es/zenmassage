@@ -42,5 +42,6 @@ module ZenMassageApp {
 
     window.onload = function () {
         Application.initialize();
+        ons.bootstrap('app');
     }
 }

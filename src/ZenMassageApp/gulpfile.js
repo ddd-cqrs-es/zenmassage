@@ -46,6 +46,11 @@ gulp.task('copy:fromnode', function () {
             ])
             .pipe(gulp.dest(config.paths.libPath + 'angular/')),
         gulp.src([
+            config.paths.nodeModulesRoot + 'angular-animate/angular-animate.js',
+            config.paths.nodeModulesRoot + 'angular-animate/angular-animate.min.js'
+	        ])
+            .pipe(gulp.dest(config.paths.libPath + 'angular/')),
+        gulp.src([
             config.paths.nodeModulesRoot + 'angular-cookies/angular-cookies.js',
             config.paths.nodeModulesRoot + 'angular-cookies/angular-cookies.min.js'
             ])
