@@ -1,4 +1,4 @@
-﻿/// <binding AfterBuild='compile' Clean='clean' />
+/// <binding BeforeBuild='copy:fromnode, compile' Clean='clean' ProjectOpened='copy:fromnode' />
 'use strict';
 
 var del = require('del'),
