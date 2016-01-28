@@ -3,7 +3,7 @@
 module ZenMassageApp {
     "use strict";
 
-    export module Application {
+    /*export module Application {
         export function initialize() {
             document.addEventListener('deviceready', onDeviceReady, false);
         }
@@ -14,8 +14,8 @@ module ZenMassageApp {
             document.addEventListener('resume', onResume, false);
 
             // TODO: Cordova has been loaded. Perform any initialization that requires Cordova here.
-            var pebble = cordova.require('cordova-pebble.Pebble');
-            if (typeof pebble !== 'undefined') {
+            var pebble: Pebble = cordova.require('cordova-pebble.Pebble');
+            if (typeof pebble !== 'undefined' && pebble !== null) {
                 pebble.setAppUUID(
                     '29207e29-1f35-4f89-9871-0a579e84d105',
                     (info): void => {
@@ -43,5 +43,5 @@ module ZenMassageApp {
 
     window.onload = function () {
         Application.initialize();
-    }
+    }*/
 }

@@ -1,10 +1,10 @@
 ﻿// Typescript definitions for PebbleKit v3.0 plugin for Cordova.
 
 interface Plugins {
-    Pebble: Pebble
+    Pebble: IPebble
 }
 
-interface Pebble {
+interface IPebble {
     setAppUUID(uuid: string, success: (event: any) => any, failure: (event: any) => any): void;
 
     onConnect(success: (event: any) => any, failure: (event: any) => any): void;

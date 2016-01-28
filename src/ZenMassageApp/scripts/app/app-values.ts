@@ -6,8 +6,17 @@
         pebbleUserId?: string;
     }
 
+    export interface IPebbleServices {
+        pebble?: IPebble
+    }
+
     var currentUser: ICurrentUser = {
     };
 
-    angular.module('app').value('currentUser', currentUser);
+    var pebbleServices: IPebbleServices = {
+    };
+
+    angular.module('app')
+        .value('currentUser', currentUser)
+        .value('pebbleServices', pebbleServices);
 }
