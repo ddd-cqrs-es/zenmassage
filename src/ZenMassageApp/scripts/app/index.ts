@@ -16,7 +16,7 @@ module ZenMassageApp {
             document.addEventListener('resume', onResume, false);
 
             // TODO: Cordova has been loaded. Perform any initialization that requires Cordova here.
-            window.plugins.Pebble.setAppUUID(
+            /*window.plugins.Pebble.setAppUUID(
                 '29207e29-1f35-4f89-9871-0a579e84d105',
                 (info): void => {
                     navigator.notification.alert(
@@ -27,7 +27,7 @@ module ZenMassageApp {
                     navigator.notification.alert(
                         'watch app not linked',
                         () => { });
-                });
+                });*/
         }
 
         function onPause() {
