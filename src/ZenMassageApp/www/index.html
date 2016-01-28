@@ -1,27 +1,22 @@
 ﻿<!DOCTYPE html>
-<html lang="en" ng-app="app">
+<html lang="en" ng-app="app" ng-csp>
 <head>
     <meta charset="utf-8" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
-
-    <!--
-        Customize the content security policy in the meta tag below as needed. Add 'unsafe-inline' to default-src to enable inline JavaScript.
-        For details, see http://go.microsoft.com/fwlink/?LinkID=617521
-    -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
     <title>Zen Massage</title>
 
     <!-- ZenMassageApp references -->
     <link rel="stylesheet" href="lib/onsen/css/onsenui.css" />
     <link rel="stylesheet" href="lib/onsen/css/onsen-css-components-blue-basic-theme.css" />
-    <link href="css/index.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/index.css" />
 </head>
-<body ng-csp>
+<body>
     <div ons-loading-placeholder="home.html">
         Loading...
     </div>
-    <ons-tabbar>
+    <ons-tabbar var="tabbar" animation="fade">
         <ons-tab page="home.html" active="true">
             <div class="tab">
                 <ons-icon icon="ion-home" class="tab-icon"></ons-icon>

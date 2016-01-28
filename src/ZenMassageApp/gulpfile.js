@@ -20,6 +20,7 @@ var del = require('del'),
     sass = require('gulp-sass'),
     sassLint = require('gulp-sass-lint'),
     stylus = require('gulp-stylus'),
+    teamBuild = require('taco-team-build'),
     Config = require('./gulpfile.config'),
     tsProject = tsc.createProject('./scripts/tsconfig.json');
 
@@ -176,6 +177,22 @@ gulp.task('compile:ts', function () {
     return tsResult.js
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(config.paths.tsOutputPath));
+});
+
+gulp.task('build:android', function () {
+    var buildArgs = [];
+    if (development()) {
+        buildArgs.push('--debug');
+    } else {
+        buildArgs.push('--release');
+    }
+    buildArgs.push('--gradleArg=--no-daemon');
+
+    return teamBuild
+        .buildProject("android", buildArgs)
+        .then(function() {
+            return teamBuild.packageProject("android");
+        });
 });
 
 // Remove all generated JavaScript files from TS compilation
