@@ -8,9 +8,9 @@
     "angular-resource": "^1.4.9",
     "angular-route": "^1.4.9",
     "angular-sanitize": "^1.4.9",
-    "jquery": "^2.1.4",
+    "jquery": "^2.2.0",
     "ng-cordova": "^0.1.24-alpha",
-    "onsenui": "^2.0.0-beta.5"
+    "onsenui": "^2.0.0-beta.6"
   },
   "devDependencies": {
     "angular-typescript": "0.0.8",

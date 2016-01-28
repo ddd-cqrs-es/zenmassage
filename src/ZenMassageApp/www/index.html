@@ -37,31 +37,29 @@
         </ons-tab>
     </ons-tabbar>
     <ons-template id="home.html">
-        <ons-navigator>
-            <ons-page>
-                <ons-toolbar>
-                    <div class="left"><ons-toolbar-button ng-click="doSomething()"><ons-icon icon="ion-compose"></ons-icon></ons-toolbar-button></div>
-                    <div class="center">Home</div>
-                    <div class="right"></div>
-                </ons-toolbar>
-                <ons-list style="margin: -1px 0">
-                    <ons-list-item modifier="chevron" class="item" ng-repeat="i in [1,2,3,4,5]" ng-click="doSomething()">
-                        <ons-row>
-                            <ons-col width="60px">
-                                <div class="item-thum"></div>
-                            </ons-col>
-                            <ons-col>
-                                <header>
-                                    <span class="item-title">Rorem Ipsum</span>
-                                    <span class="item-label">5h</span>
-                                </header>
-                                <p class="item-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                            </ons-col>
-                        </ons-row>
-                    </ons-list-item>
-                </ons-list>
-            </ons-page>
-        </ons-navigator>
+        <ons-page>
+            <ons-toolbar>
+                <div class="left"><ons-toolbar-button ng-click="doSomething()"><ons-icon icon="ion-compose"></ons-icon></ons-toolbar-button></div>
+                <div class="center">Home</div>
+                <div class="right"></div>
+            </ons-toolbar>
+            <ons-list style="margin: -1px 0">
+                <ons-list-item modifier="chevron" class="item" ng-repeat="i in [1,2,3,4,5]" ng-click="doSomething()">
+                    <ons-row>
+                        <ons-col width="60px">
+                            <div class="item-thum"></div>
+                        </ons-col>
+                        <ons-col>
+                            <header>
+                                <span class="item-title">Rorem Ipsum</span>
+                                <span class="item-label">5h</span>
+                            </header>
+                            <p class="item-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </ons-col>
+                    </ons-row>
+                </ons-list-item>
+            </ons-list>
+        </ons-page>
     </ons-template>
     <ons-template id="sessions.html">
         <ons-page>
