@@ -13,30 +13,30 @@
     <link rel="stylesheet" href="css/index.css" />
 </head>
 <body>
-    <div ons-loading-placeholder="home.html">
+    <div ons-loading-placeholder="booking.html">
         Loading...
     </div>
-    <ons-tabbar var="tabbar" animation="fade">
-        <ons-tab page="home.html" active="true">
+    <ons-tabbar var="tabbar" animation="fade" ng-controller="mainnav as vm">
+        <ons-tab page="booking.html" ng-attr-active="{{ vm.isBookingTabActive }}">
             <div class="tab">
                 <ons-icon icon="ion-home" class="tab-icon"></ons-icon>
-                <div class="tab-label">Timeline</div>
+                <div class="tab-label">Bookings</div>
             </div>
         </ons-tab>
-        <ons-tab page="sessions.html">
+        <ons-tab page="sessions.html" ng-attr-active="{{ vm.isSessionTabActive }}">
             <div class="tab">
                 <ons-icon icon="ion-gear-a" class="tab-icon"></ons-icon>
                 <div class="tab-label">Sessions</div>
             </div>
         </ons-tab>
-        <ons-tab page="settings.html">
+        <ons-tab page="settings.html" ng-attr-active="{{ vm.isSettingTabActive }}">
             <div class="tab">
                 <ons-icon icon="ion-gear-a" class="tab-icon"></ons-icon>
                 <div class="tab-label">Settings</div>
             </div>
         </ons-tab>
     </ons-tabbar>
-    <ons-template id="home.html">
+    <ons-template id="booking.html">
         <ons-page>
             <ons-toolbar>
                 <div class="left"><ons-toolbar-button ng-click="doSomething()"><ons-icon icon="ion-compose"></ons-icon></ons-toolbar-button></div>
@@ -167,11 +167,16 @@
     <script src="lib/angular/angular-sanitize.js"></script>
     <script src="lib/onsen/js/angular-onsenui.js"></script>
 
-    <!-- Lastly our application bundle -->
+    <!-- Application core bundles -->
     <script src="scripts/blocks/app-core-module.js"></script>
     <script src="scripts/app.js"></script>
     <script src="scripts/app-config.js"></script>
     <script src="scripts/app-values.js"></script>
+
+    <!-- Page controllers/models/directives -->
+    <script src="scripts/globals/mainnav-controller.js"></script>
+
+    <!-- Application bootstrap -->
     <script src="scripts/app-run.js"></script>
     <script src="scripts/index.js"></script>
 </body>

@@ -28,13 +28,13 @@
         }
 
         initialize(): void {
-            document.addEventListener('deviceready', this.onDeviceReady, false);
+            document.addEventListener('deviceready', (): void=> { this.onDeviceReady(); }, false);
         }
 
         onDeviceReady(): void {
             // Handle the Cordova pause and resume events
-            document.addEventListener('pause', this.onPause, false);
-            document.addEventListener('resume', this.onResume, false);
+            document.addEventListener('pause', (): void=> { this.onPause(); }, false);
+            document.addEventListener('resume', (): void => { this.onResume(); }, false);
 
             // TODO: Cordova has been loaded. Perform any initialization that requires Cordova here.
             var pebble: IPebble = cordova.require('cordova-pebble.Pebble');
@@ -47,12 +47,12 @@
                     (info): void => {
                         navigator.notification.alert(
                             'watch app linked',
-                            () => { });
+                            (): void => { });
                     },
                     (error): void => {
                         navigator.notification.alert(
                             'watch app not linked',
-                            () => { });
+                            (): void => { });
                     });
             }
         }
@@ -64,12 +64,20 @@
         onResume(): void {
             // TODO: This application has been reactivated. Restore application state here.
         }
-        
+
     }
 
 
     ApplicationStartup.$inject = ['$rootScope', '$window', '$cookies', 'currentUser', 'pebbleServices'];
     angular
         .module('app')
-        .run(ApplicationStartup);
+        .run((
+            $rootScope: ng.IRootScopeService,
+            $window: ng.IWindowService,
+            $cookies: IAppCookieService,
+            currentUser: ICurrentUser,
+            pebbleServices: IPebbleServices) => {
+
+            return new ApplicationStartup($rootScope, $window, $cookies, currentUser, pebbleServices);
+        });
 }
