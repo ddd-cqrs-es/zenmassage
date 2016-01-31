@@ -8,6 +8,9 @@
     }
 
     class TreatmentController implements ITreatmentController {
+        bookingReference: string;
+        startTime: Date;
+        durationInMinutes: number;
         
     }
 
