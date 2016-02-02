@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 
@@ -11,6 +9,19 @@ namespace Zen.Massage.Site.Controllers.V1
     [Route("api/bookings")]
     public class BookingApiController : Controller
     {
+        public Task<IActionResult> GetUserBookings()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class ResultDto<T>
+    {
+        public int StatusCode { get; set; }
+        
+        public string StatusDescription { get; set; }
+
+        public T Result { get; set; }
     }
 
     public class BookingItemDto
