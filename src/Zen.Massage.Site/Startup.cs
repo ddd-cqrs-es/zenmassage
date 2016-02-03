@@ -75,19 +75,19 @@ namespace Zen.Massage.Site
 
             app.UseStaticFiles();
 
-            //app.UseCookieAuthentication(options =>
-            //{
-            //    options.AutomaticAuthenticate = true;
-            //});
+            app.UseCookieAuthentication(options =>
+            {
+                options.AutomaticAuthenticate = true;
+            });
 
-            //app.UseOpenIdConnectAuthentication(options =>
-            //{
-            //    options.AutomaticChallenge = true;
-            //    options.ClientId = Configuration["Authentication:AzureAd:ClientId"];
-            //    options.Authority = Configuration["Authentication:AzureAd:AADInstance"] + Configuration["Authentication:AzureAd:TenantId"];
-            //    options.PostLogoutRedirectUri = Configuration["Authentication:AzureAd:PostLogoutRedirectUri"];
-            //    options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            //});
+            app.UseOpenIdConnectAuthentication(options =>
+            {
+                options.AutomaticChallenge = true;
+                options.ClientId = Configuration["Authentication:AzureAd:ClientId"];
+                options.Authority = Configuration["Authentication:AzureAd:AADInstance"] + Configuration["Authentication:AzureAd:TenantId"];
+                options.PostLogoutRedirectUri = Configuration["Authentication:AzureAd:PostLogoutRedirectUri"];
+                options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            });
 
             app.UseMvc(routes =>
             {
