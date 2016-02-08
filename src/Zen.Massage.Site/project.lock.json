@@ -37,6 +37,21 @@
           "lib/net451/Autofac.Extensions.DependencyInjection.dll": {}
         }
       },
+      "AutoMapper/4.2.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net45/AutoMapper.dll": {}
+        },
+        "runtime": {
+          "lib/net45/AutoMapper.dll": {}
+        }
+      },
       "Microsoft.ApplicationInsights/1.1.1-beta": {
         "type": "package",
         "compile": {
@@ -1963,6 +1978,40 @@
         },
         "runtime": {
           "lib/dotnet5.4/Autofac.Extensions.DependencyInjection.dll": {}
+        }
+      },
+      "AutoMapper/4.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.0.0",
+          "System.Collections": "4.0.10",
+          "System.Collections.Concurrent": "4.0.10",
+          "System.Collections.Specialized": "4.0.0",
+          "System.ComponentModel.TypeConverter": "4.0.0",
+          "System.Diagnostics.Debug": "4.0.10",
+          "System.Dynamic.Runtime": "4.0.10",
+          "System.Globalization": "4.0.10",
+          "System.Linq": "4.0.0",
+          "System.Linq.Expressions": "4.0.10",
+          "System.Linq.Queryable": "4.0.0",
+          "System.ObjectModel": "4.0.10",
+          "System.Reflection": "4.0.10",
+          "System.Reflection.Emit": "4.0.0",
+          "System.Reflection.Emit.ILGeneration": "4.0.0",
+          "System.Reflection.Extensions": "4.0.0",
+          "System.Reflection.Primitives": "4.0.0",
+          "System.Reflection.TypeExtensions": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Text.RegularExpressions": "4.0.10",
+          "System.Threading": "4.0.10",
+          "System.Threading.Tasks": "4.0.10"
+        },
+        "compile": {
+          "lib/dotnet5.1/AutoMapper.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.1/AutoMapper.dll": {}
         }
       },
       "Microsoft.ApplicationInsights/1.1.1-beta": {
@@ -3936,6 +3985,24 @@
           "ref/dotnet5.4/System.Linq.Expressions.dll": {}
         }
       },
+      "System.Linq.Queryable/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.0.10",
+          "System.Linq": "4.0.0",
+          "System.Linq.Expressions": "4.0.10",
+          "System.Reflection": "4.0.10",
+          "System.Reflection.Extensions": "4.0.0",
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20"
+        },
+        "compile": {
+          "ref/dotnet/System.Linq.Queryable.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/System.Linq.Queryable.dll": {}
+        }
+      },
       "System.Net.Http/4.0.1-beta-23516": {
         "type": "package",
         "dependencies": {
@@ -4655,6 +4722,21 @@
         },
         "runtime": {
           "lib/net451/Autofac.Extensions.DependencyInjection.dll": {}
+        }
+      },
+      "AutoMapper/4.2.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net45/AutoMapper.dll": {}
+        },
+        "runtime": {
+          "lib/net45/AutoMapper.dll": {}
         }
       },
       "Microsoft.ApplicationInsights/1.1.1-beta": {
@@ -6580,6 +6662,21 @@
         },
         "runtime": {
           "lib/net451/Autofac.Extensions.DependencyInjection.dll": {}
+        }
+      },
+      "AutoMapper/4.2.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net45/AutoMapper.dll": {}
+        },
+        "runtime": {
+          "lib/net45/AutoMapper.dll": {}
         }
       },
       "Microsoft.ApplicationInsights/1.1.1-beta": {
@@ -8513,6 +8610,40 @@
           "lib/dotnet5.4/Autofac.Extensions.DependencyInjection.dll": {}
         }
       },
+      "AutoMapper/4.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.0.0",
+          "System.Collections": "4.0.10",
+          "System.Collections.Concurrent": "4.0.10",
+          "System.Collections.Specialized": "4.0.0",
+          "System.ComponentModel.TypeConverter": "4.0.0",
+          "System.Diagnostics.Debug": "4.0.10",
+          "System.Dynamic.Runtime": "4.0.10",
+          "System.Globalization": "4.0.10",
+          "System.Linq": "4.0.0",
+          "System.Linq.Expressions": "4.0.10",
+          "System.Linq.Queryable": "4.0.0",
+          "System.ObjectModel": "4.0.10",
+          "System.Reflection": "4.0.10",
+          "System.Reflection.Emit": "4.0.0",
+          "System.Reflection.Emit.ILGeneration": "4.0.0",
+          "System.Reflection.Extensions": "4.0.0",
+          "System.Reflection.Primitives": "4.0.0",
+          "System.Reflection.TypeExtensions": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Text.RegularExpressions": "4.0.10",
+          "System.Threading": "4.0.10",
+          "System.Threading.Tasks": "4.0.10"
+        },
+        "compile": {
+          "lib/dotnet5.1/AutoMapper.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.1/AutoMapper.dll": {}
+        }
+      },
       "Microsoft.ApplicationInsights/1.1.1-beta": {
         "type": "package",
         "dependencies": {
@@ -10788,6 +10919,24 @@
           "ref/dotnet5.4/System.Linq.Expressions.dll": {}
         }
       },
+      "System.Linq.Queryable/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.0.10",
+          "System.Linq": "4.0.0",
+          "System.Linq.Expressions": "4.0.10",
+          "System.Reflection": "4.0.10",
+          "System.Reflection.Extensions": "4.0.0",
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20"
+        },
+        "compile": {
+          "ref/dotnet/System.Linq.Queryable.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/System.Linq.Queryable.dll": {}
+        }
+      },
       "System.Net.Http/4.0.1-beta-23516": {
         "type": "package",
         "dependencies": {
@@ -11530,6 +11679,40 @@
         },
         "runtime": {
           "lib/dotnet5.4/Autofac.Extensions.DependencyInjection.dll": {}
+        }
+      },
+      "AutoMapper/4.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.0.0",
+          "System.Collections": "4.0.10",
+          "System.Collections.Concurrent": "4.0.10",
+          "System.Collections.Specialized": "4.0.0",
+          "System.ComponentModel.TypeConverter": "4.0.0",
+          "System.Diagnostics.Debug": "4.0.10",
+          "System.Dynamic.Runtime": "4.0.10",
+          "System.Globalization": "4.0.10",
+          "System.Linq": "4.0.0",
+          "System.Linq.Expressions": "4.0.10",
+          "System.Linq.Queryable": "4.0.0",
+          "System.ObjectModel": "4.0.10",
+          "System.Reflection": "4.0.10",
+          "System.Reflection.Emit": "4.0.0",
+          "System.Reflection.Emit.ILGeneration": "4.0.0",
+          "System.Reflection.Extensions": "4.0.0",
+          "System.Reflection.Primitives": "4.0.0",
+          "System.Reflection.TypeExtensions": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Text.RegularExpressions": "4.0.10",
+          "System.Threading": "4.0.10",
+          "System.Threading.Tasks": "4.0.10"
+        },
+        "compile": {
+          "lib/dotnet5.1/AutoMapper.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.1/AutoMapper.dll": {}
         }
       },
       "Microsoft.ApplicationInsights/1.1.1-beta": {
@@ -13807,6 +13990,24 @@
           "ref/dotnet5.4/System.Linq.Expressions.dll": {}
         }
       },
+      "System.Linq.Queryable/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.0.10",
+          "System.Linq": "4.0.0",
+          "System.Linq.Expressions": "4.0.10",
+          "System.Reflection": "4.0.10",
+          "System.Reflection.Extensions": "4.0.0",
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20"
+        },
+        "compile": {
+          "ref/dotnet/System.Linq.Queryable.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/System.Linq.Queryable.dll": {}
+        }
+      },
       "System.Net.Http/4.0.1-beta-23516": {
         "type": "package",
         "dependencies": {
@@ -14542,6 +14743,21 @@
         "lib/net451/Autofac.Extensions.DependencyInjection.xml",
         "lib/netcore50/Autofac.Extensions.DependencyInjection.dll",
         "lib/netcore50/Autofac.Extensions.DependencyInjection.xml"
+      ]
+    },
+    "AutoMapper/4.2.0": {
+      "type": "package",
+      "sha512": "8U0T1cD7z1oQRaKvaFTp2ufN3mG10Hbmoq30AHPhy4uWLl3Vx1/7BV6QhYtFo7rKrMkTKWgUAVDUDlc9Pd5TSA==",
+      "files": [
+        "AutoMapper.4.2.0.nupkg",
+        "AutoMapper.4.2.0.nupkg.sha512",
+        "AutoMapper.nuspec",
+        "lib/dotnet5.1/AutoMapper.dll",
+        "lib/dotnet5.1/AutoMapper.xml",
+        "lib/net45/AutoMapper.dll",
+        "lib/net45/AutoMapper.xml",
+        "lib/portable-net45+win+wpa81+MonoAndroid10+Xamarin.iOS10+MonoTouch10/AutoMapper.dll",
+        "lib/portable-net45+win+wpa81+MonoAndroid10+Xamarin.iOS10+MonoTouch10/AutoMapper.xml"
       ]
     },
     "Microsoft.ApplicationInsights/1.1.1-beta": {
@@ -17725,6 +17941,39 @@
         "System.Linq.Expressions.nuspec"
       ]
     },
+    "System.Linq.Queryable/4.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "DIlvCNn3ucFvwMMzXcag4aFnFJ1fdxkQ5NqwJe9Nh7y8ozzhDm07YakQL/yoF3P1dLzY1T2cTpuwbAmVSdXyBA==",
+      "files": [
+        "lib/dotnet/System.Linq.Queryable.dll",
+        "lib/net45/_._",
+        "lib/netcore50/System.Linq.Queryable.dll",
+        "lib/win8/_._",
+        "lib/wp80/_._",
+        "lib/wpa81/_._",
+        "ref/dotnet/de/System.Linq.Queryable.xml",
+        "ref/dotnet/es/System.Linq.Queryable.xml",
+        "ref/dotnet/fr/System.Linq.Queryable.xml",
+        "ref/dotnet/it/System.Linq.Queryable.xml",
+        "ref/dotnet/ja/System.Linq.Queryable.xml",
+        "ref/dotnet/ko/System.Linq.Queryable.xml",
+        "ref/dotnet/ru/System.Linq.Queryable.xml",
+        "ref/dotnet/System.Linq.Queryable.dll",
+        "ref/dotnet/System.Linq.Queryable.xml",
+        "ref/dotnet/zh-hans/System.Linq.Queryable.xml",
+        "ref/dotnet/zh-hant/System.Linq.Queryable.xml",
+        "ref/net45/_._",
+        "ref/netcore50/System.Linq.Queryable.dll",
+        "ref/netcore50/System.Linq.Queryable.xml",
+        "ref/win8/_._",
+        "ref/wp80/_._",
+        "ref/wpa81/_._",
+        "System.Linq.Queryable.4.0.0.nupkg",
+        "System.Linq.Queryable.4.0.0.nupkg.sha512",
+        "System.Linq.Queryable.nuspec"
+      ]
+    },
     "System.Net.Http/4.0.1-beta-23516": {
       "type": "package",
       "serviceable": true,
@@ -19974,6 +20223,7 @@
     "": [
       "Autofac >= 4.0.0-rc1-177",
       "Autofac.Extensions.DependencyInjection >= 4.0.0-rc1-177",
+      "AutoMapper >= 4.2.0",
       "Microsoft.ApplicationInsights.AspNet >= 1.0.0-rc1",
       "Microsoft.AspNet.Authentication.Cookies >= 1.0.0-rc1-final",
       "Microsoft.AspNet.Authentication.OpenIdConnect >= 1.0.0-rc1-final",

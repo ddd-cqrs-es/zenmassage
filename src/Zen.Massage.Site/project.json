@@ -8,6 +8,7 @@
   "dependencies": {
     "Autofac": "4.0.0-rc1-177",
     "Autofac.Extensions.DependencyInjection": "4.0.0-rc1-177",
+    "AutoMapper": "4.2.0",
     "Microsoft.ApplicationInsights.AspNet": "1.0.0-rc1",
     "Microsoft.AspNet.Authentication.Cookies": "1.0.0-rc1-final",
     "Microsoft.AspNet.Authentication.OpenIdConnect": "1.0.0-rc1-final",
