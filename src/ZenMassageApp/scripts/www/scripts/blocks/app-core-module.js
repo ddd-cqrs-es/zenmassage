@@ -1,10 +1,12 @@
 (function () {
     'use strict';
     angular.module('app.core', [
-        'ngCookie',
+        'ngAnimate',
+        'ngCookies',
         'ngRoute',
         'ngResource',
-        'ngSanitize'
+        'ngSanitize',
+        'onsen'
     ]);
 })();
 //# sourceMappingURL=app-core-module.js.map

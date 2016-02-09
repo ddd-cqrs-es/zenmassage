@@ -49,9 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BookingEntityContext.cs" />
-    <Compile Include="DbBooking.cs" />
-    <Compile Include="DbTherapistBooking.cs" />
+    <Compile Include="DataAccess\BookingEntityContext.cs" />
+    <Compile Include="DataAccess\DbBooking.cs" />
+    <Compile Include="DataAccess\DbTherapistBooking.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

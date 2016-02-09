@@ -2,6 +2,9 @@ var ZenMassageApp;
 (function (ZenMassageApp) {
     'use strict';
     var currentUser = {};
-    angular.module('app').value('currentUser', currentUser);
+    var pebbleServices = {};
+    angular.module('app')
+        .value('currentUser', currentUser)
+        .value('pebbleServices', pebbleServices);
 })(ZenMassageApp || (ZenMassageApp = {}));
 //# sourceMappingURL=app-values.js.map
