@@ -1,0 +1,231 @@
+{
+  "locked": false,
+  "version": 2,
+  "targets": {
+    "DNX,Version=v4.5.1": {
+      "AggregateSource/0.0.300": {
+        "type": "package",
+        "compile": {
+          "lib/net45/AggregateSource.dll": {}
+        },
+        "runtime": {
+          "lib/net45/AggregateSource.dll": {}
+        }
+      },
+      "AggregateSource.NEventStore/0.0.300": {
+        "type": "package",
+        "dependencies": {
+          "AggregateSource": "0.0.300",
+          "NEventStore": "5.1.0"
+        },
+        "compile": {
+          "lib/net45/AggregateSource.NEventStore.dll": {}
+        },
+        "runtime": {
+          "lib/net45/AggregateSource.NEventStore.dll": {}
+        }
+      },
+      "NEventStore/5.2.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/NEventStore.dll": {}
+        },
+        "runtime": {
+          "lib/net40/NEventStore.dll": {}
+        }
+      },
+      "Zen.Massage.Domain/1.0.0": {
+        "type": "project",
+        "framework": "DNX,Version=v4.5.1",
+        "dependencies": {
+          "Zen.Massage.Domain.Events": "1.0.0",
+          "Zen.Massage.Domain.Interfaces": "1.0.0"
+        }
+      },
+      "Zen.Massage.Domain.Events/1.0.0": {
+        "type": "project",
+        "framework": "DNX,Version=v4.5.1",
+        "dependencies": {
+          "Zen.Massage.Domain.Interfaces": "1.0.0"
+        }
+      },
+      "Zen.Massage.Domain.Interfaces/1.0.0": {
+        "type": "project",
+        "framework": "DNX,Version=v4.5.1",
+        "dependencies": {
+          "AggregateSource": "0.0.300"
+        }
+      }
+    },
+    "DNX,Version=v4.5.1/win7-x86": {
+      "AggregateSource/0.0.300": {
+        "type": "package",
+        "compile": {
+          "lib/net45/AggregateSource.dll": {}
+        },
+        "runtime": {
+          "lib/net45/AggregateSource.dll": {}
+        }
+      },
+      "AggregateSource.NEventStore/0.0.300": {
+        "type": "package",
+        "dependencies": {
+          "AggregateSource": "0.0.300",
+          "NEventStore": "5.1.0"
+        },
+        "compile": {
+          "lib/net45/AggregateSource.NEventStore.dll": {}
+        },
+        "runtime": {
+          "lib/net45/AggregateSource.NEventStore.dll": {}
+        }
+      },
+      "NEventStore/5.2.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/NEventStore.dll": {}
+        },
+        "runtime": {
+          "lib/net40/NEventStore.dll": {}
+        }
+      },
+      "Zen.Massage.Domain/1.0.0": {
+        "type": "project",
+        "framework": "DNX,Version=v4.5.1",
+        "dependencies": {
+          "Zen.Massage.Domain.Events": "1.0.0",
+          "Zen.Massage.Domain.Interfaces": "1.0.0"
+        }
+      },
+      "Zen.Massage.Domain.Events/1.0.0": {
+        "type": "project",
+        "framework": "DNX,Version=v4.5.1",
+        "dependencies": {
+          "Zen.Massage.Domain.Interfaces": "1.0.0"
+        }
+      },
+      "Zen.Massage.Domain.Interfaces/1.0.0": {
+        "type": "project",
+        "framework": "DNX,Version=v4.5.1",
+        "dependencies": {
+          "AggregateSource": "0.0.300"
+        }
+      }
+    },
+    "DNX,Version=v4.5.1/win7-x64": {
+      "AggregateSource/0.0.300": {
+        "type": "package",
+        "compile": {
+          "lib/net45/AggregateSource.dll": {}
+        },
+        "runtime": {
+          "lib/net45/AggregateSource.dll": {}
+        }
+      },
+      "AggregateSource.NEventStore/0.0.300": {
+        "type": "package",
+        "dependencies": {
+          "AggregateSource": "0.0.300",
+          "NEventStore": "5.1.0"
+        },
+        "compile": {
+          "lib/net45/AggregateSource.NEventStore.dll": {}
+        },
+        "runtime": {
+          "lib/net45/AggregateSource.NEventStore.dll": {}
+        }
+      },
+      "NEventStore/5.2.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/NEventStore.dll": {}
+        },
+        "runtime": {
+          "lib/net40/NEventStore.dll": {}
+        }
+      },
+      "Zen.Massage.Domain/1.0.0": {
+        "type": "project",
+        "framework": "DNX,Version=v4.5.1",
+        "dependencies": {
+          "Zen.Massage.Domain.Events": "1.0.0",
+          "Zen.Massage.Domain.Interfaces": "1.0.0"
+        }
+      },
+      "Zen.Massage.Domain.Events/1.0.0": {
+        "type": "project",
+        "framework": "DNX,Version=v4.5.1",
+        "dependencies": {
+          "Zen.Massage.Domain.Interfaces": "1.0.0"
+        }
+      },
+      "Zen.Massage.Domain.Interfaces/1.0.0": {
+        "type": "project",
+        "framework": "DNX,Version=v4.5.1",
+        "dependencies": {
+          "AggregateSource": "0.0.300"
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Zen.Massage.Domain/1.0.0": {
+      "type": "project",
+      "path": "../Zen.Massage.Domain/project.json"
+    },
+    "Zen.Massage.Domain.Events/1.0.0": {
+      "type": "project",
+      "path": "../Zen.Massage.Domain.Events/project.json"
+    },
+    "Zen.Massage.Domain.Interfaces/1.0.0": {
+      "type": "project",
+      "path": "../Zen.Massage.Domain.Interfaces/project.json"
+    },
+    "AggregateSource/0.0.300": {
+      "type": "package",
+      "sha512": "OQrm2U5F5gvaMSSekOKhACWub/KTmrA1NR81fOd9I7rKNEnJDg7WWa6A3D8nNWlyy2HXSN2MlqXvUraN9/Xveg==",
+      "files": [
+        "AggregateSource.0.0.300.nupkg",
+        "AggregateSource.0.0.300.nupkg.sha512",
+        "AggregateSource.nuspec",
+        "lib/net40/AggregateSource.dll",
+        "lib/net40/AggregateSource.xml",
+        "lib/net45/AggregateSource.dll",
+        "lib/net45/AggregateSource.xml"
+      ]
+    },
+    "AggregateSource.NEventStore/0.0.300": {
+      "type": "package",
+      "sha512": "zQs5VYCB979Q6d+wTkCto9a01VHy5+0YqdioGNSGWKPRC7S4RG3ttSdEJuw+3b9ZA1sv+qKxwrxQHuvw8AO4SA==",
+      "files": [
+        "AggregateSource.NEventStore.0.0.300.nupkg",
+        "AggregateSource.NEventStore.0.0.300.nupkg.sha512",
+        "AggregateSource.NEventStore.nuspec",
+        "lib/net40/AggregateSource.NEventStore.dll",
+        "lib/net40/AggregateSource.NEventStore.xml",
+        "lib/net45/AggregateSource.NEventStore.dll",
+        "lib/net45/AggregateSource.NEventStore.xml"
+      ]
+    },
+    "NEventStore/5.2.0": {
+      "type": "package",
+      "sha512": "3ev22hhinX0lKkn5OQI+q61bLVWUv9mjUgjpMKFlwasmpwuKT2yU3jtQJK1uSTh0zoAoShjGRLrvAUduJwXxlA==",
+      "files": [
+        "lib/net40/NEventStore.dll",
+        "lib/net40/NEventStore.pdb",
+        "lib/net40/NEventStore.xml",
+        "NEventStore.5.2.0.nupkg",
+        "NEventStore.5.2.0.nupkg.sha512",
+        "NEventStore.nuspec"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    "": [
+      "AggregateSource.NEventStore >= 0.0.300",
+      "NEventStore >= 5.2.0",
+      "Zen.Massage.Domain >= 1.0.0"
+    ],
+    "DNX,Version=v4.5.1": []
+  }
+}

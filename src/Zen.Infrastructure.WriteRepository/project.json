@@ -1,4 +1,4 @@
-﻿{
+{
   "version": "1.0.0",
   "description": "Class Library",
   "authors": [ "Zen Design Software" ],
@@ -7,6 +7,8 @@
   "licenseUrl": "",
 
   "dependencies": {
+    "AggregateSource.NEventStore": "0.0.300",
+    "NEventStore": "5.2.0",
     "Zen.Massage.Domain": "1.0.0"
   },
 

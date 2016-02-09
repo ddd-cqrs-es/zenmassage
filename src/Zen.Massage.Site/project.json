@@ -33,8 +33,17 @@
   },
 
   "frameworks": {
-    "dnx451": { },
-    "dnxcore50": { }
+    "dnx451": {
+      "dependencies": {
+        "Zen.Infrastructure.ReadRepository": "1.0.0",
+        "Zen.Infrastructure.WriteRepository": "1.0.0",
+        "Zen.Massage.Application": "1.0.0-*",
+        "Zen.Massage.Application.Interfaces": "1.0.0-*",
+        "Zen.Massage.Domain": "1.0.0",
+        "Zen.Massage.Domain.Events": "1.0.0",
+        "Zen.Massage.Domain.Interfaces": "1.0.0"
+      }
+    }
   },
 
   "exclude": [

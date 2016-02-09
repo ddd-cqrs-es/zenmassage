@@ -1,4 +1,4 @@
-﻿{
+{
   "version": "1.0.0",
   "description": "Class Library",
   "authors": [ "Zen Design Software" ],
@@ -7,6 +7,7 @@
   "licenseUrl": "",
 
   "dependencies": {
+    "EntityFramework": "6.1.3",
     "Zen.Massage.Domain.Interfaces": "1.0.0"
   },
 

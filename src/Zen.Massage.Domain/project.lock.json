@@ -1,0 +1,111 @@
+{
+  "locked": false,
+  "version": 2,
+  "targets": {
+    "DNX,Version=v4.5.1": {
+      "AggregateSource/0.0.300": {
+        "type": "package",
+        "compile": {
+          "lib/net45/AggregateSource.dll": {}
+        },
+        "runtime": {
+          "lib/net45/AggregateSource.dll": {}
+        }
+      },
+      "Zen.Massage.Domain.Events/1.0.0": {
+        "type": "project",
+        "framework": "DNX,Version=v4.5.1",
+        "dependencies": {
+          "Zen.Massage.Domain.Interfaces": "1.0.0"
+        }
+      },
+      "Zen.Massage.Domain.Interfaces/1.0.0": {
+        "type": "project",
+        "framework": "DNX,Version=v4.5.1",
+        "dependencies": {
+          "AggregateSource": "0.0.300"
+        }
+      }
+    },
+    "DNX,Version=v4.5.1/win7-x86": {
+      "AggregateSource/0.0.300": {
+        "type": "package",
+        "compile": {
+          "lib/net45/AggregateSource.dll": {}
+        },
+        "runtime": {
+          "lib/net45/AggregateSource.dll": {}
+        }
+      },
+      "Zen.Massage.Domain.Events/1.0.0": {
+        "type": "project",
+        "framework": "DNX,Version=v4.5.1",
+        "dependencies": {
+          "Zen.Massage.Domain.Interfaces": "1.0.0"
+        }
+      },
+      "Zen.Massage.Domain.Interfaces/1.0.0": {
+        "type": "project",
+        "framework": "DNX,Version=v4.5.1",
+        "dependencies": {
+          "AggregateSource": "0.0.300"
+        }
+      }
+    },
+    "DNX,Version=v4.5.1/win7-x64": {
+      "AggregateSource/0.0.300": {
+        "type": "package",
+        "compile": {
+          "lib/net45/AggregateSource.dll": {}
+        },
+        "runtime": {
+          "lib/net45/AggregateSource.dll": {}
+        }
+      },
+      "Zen.Massage.Domain.Events/1.0.0": {
+        "type": "project",
+        "framework": "DNX,Version=v4.5.1",
+        "dependencies": {
+          "Zen.Massage.Domain.Interfaces": "1.0.0"
+        }
+      },
+      "Zen.Massage.Domain.Interfaces/1.0.0": {
+        "type": "project",
+        "framework": "DNX,Version=v4.5.1",
+        "dependencies": {
+          "AggregateSource": "0.0.300"
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Zen.Massage.Domain.Events/1.0.0": {
+      "type": "project",
+      "path": "../Zen.Massage.Domain.Events/project.json"
+    },
+    "Zen.Massage.Domain.Interfaces/1.0.0": {
+      "type": "project",
+      "path": "../Zen.Massage.Domain.Interfaces/project.json"
+    },
+    "AggregateSource/0.0.300": {
+      "type": "package",
+      "sha512": "OQrm2U5F5gvaMSSekOKhACWub/KTmrA1NR81fOd9I7rKNEnJDg7WWa6A3D8nNWlyy2HXSN2MlqXvUraN9/Xveg==",
+      "files": [
+        "AggregateSource.0.0.300.nupkg",
+        "AggregateSource.0.0.300.nupkg.sha512",
+        "AggregateSource.nuspec",
+        "lib/net40/AggregateSource.dll",
+        "lib/net40/AggregateSource.xml",
+        "lib/net45/AggregateSource.dll",
+        "lib/net45/AggregateSource.xml"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    "": [
+      "Zen.Massage.Domain.Events >= 1.0.0",
+      "Zen.Massage.Domain.Interfaces >= 1.0.0"
+    ],
+    "DNX,Version=v4.5.1": []
+  }
+}
