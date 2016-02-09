@@ -1,6 +1,6 @@
 ﻿{
   "version": "1.0.0-*",
-  "description": "Class Library",
+  "description": "Zen.Massage.Domain Class Library",
   "authors": [ "Zen Design Software" ],
   "tags": [ "" ],
   "projectUrl": "",
@@ -10,7 +10,6 @@
   },
 
   "frameworks": {
-    "dnx451": { },
-    "dnxcore50": { }
+    "dnx451": { }
   }
 }
