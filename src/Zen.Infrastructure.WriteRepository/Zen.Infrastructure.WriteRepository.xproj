@@ -8,19 +8,11 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6B32E124-34BC-4DDD-9D30-DC31836D2A6C}</ProjectGuid>
     <RootNamespace>Zen.Infrastructure.WriteRepository</RootNamespace>
-    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'==''">..\artifacts\obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
-    <OutputPath Condition="'$(OutputPath)'==''">..\artifacts\bin\$(MSBuildProjectName)</OutputPath>
+    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'==''">..\..\artifacts\obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
+    <OutputPath Condition="'$(OutputPath)'==''">..\..\artifacts\bin\$(MSBuildProjectName)</OutputPath>
   </PropertyGroup>
   <PropertyGroup>
     <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="BaseRepository.cs" />
-    <Compile Include="BookingWriteRepository.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="project.json" />
-  </ItemGroup>
   <Import Project="$(VSToolsPath)\DNX\Microsoft.DNX.targets" Condition="'$(VSToolsPath)' != ''" />
 </Project>

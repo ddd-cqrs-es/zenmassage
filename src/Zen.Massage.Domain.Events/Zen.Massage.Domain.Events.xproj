@@ -8,25 +8,11 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3BAD1FEA-D039-4B15-954C-F56FC94E325F}</ProjectGuid>
     <RootNamespace>Zen.Massage.Domain</RootNamespace>
-    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'==''">..\artifacts\obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
-    <OutputPath Condition="'$(OutputPath)'==''">..\artifacts\bin\$(MSBuildProjectName)</OutputPath>
+    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'==''">..\..\artifacts\obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
+    <OutputPath Condition="'$(OutputPath)'==''">..\..\artifacts\bin\$(MSBuildProjectName)</OutputPath>
   </PropertyGroup>
   <PropertyGroup>
     <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="BookingContext\BookingBidEvent.cs" />
-    <Compile Include="BookingContext\BookingCancelledEvent.cs" />
-    <Compile Include="BookingContext\BookingCreatedEvent.cs" />
-    <Compile Include="BookingContext\BookingEvent.cs" />
-    <Compile Include="BookingContext\BookingTenderEvent.cs" />
-    <Compile Include="BookingContext\TherapistBookingAcceptedEvent.cs" />
-    <Compile Include="BookingContext\TherapistBookingConfirmedEvent.cs" />
-    <Compile Include="BookingContext\TherapistBookingEvent.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="project.json" />
-  </ItemGroup>
   <Import Project="$(VSToolsPath)\DNX\Microsoft.DNX.targets" Condition="'$(VSToolsPath)' != ''" />
 </Project>

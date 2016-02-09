@@ -8,24 +8,11 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{0D13EFD9-9215-4100-934F-6A12159CF591}</ProjectGuid>
     <RootNamespace>Zen.Infrastructure.ReadRepository</RootNamespace>
-    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'==''">..\artifacts\obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
-    <OutputPath Condition="'$(OutputPath)'==''">..\artifacts\bin\$(MSBuildProjectName)</OutputPath>
+    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'==''">..\..\artifacts\obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
+    <OutputPath Condition="'$(OutputPath)'==''">..\..\artifacts\bin\$(MSBuildProjectName)</OutputPath>
   </PropertyGroup>
   <PropertyGroup>
     <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="BookingReadRepository.cs" />
-    <Compile Include="DataAccess\BookingEntityContext.cs" />
-    <Compile Include="DataAccess\DbBooking.cs" />
-    <Compile Include="DataAccess\DbTherapistBooking.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReadBooking.cs" />
-    <Compile Include="ReadTherapistBooking.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="project.json" />
-  </ItemGroup>
   <Import Project="$(VSToolsPath)\DNX\Microsoft.DNX.targets" Condition="'$(VSToolsPath)' != ''" />
 </Project>
