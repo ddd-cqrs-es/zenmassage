@@ -49,14 +49,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BookingReadRepository.cs" />
     <Compile Include="DataAccess\BookingEntityContext.cs" />
     <Compile Include="DataAccess\DbBooking.cs" />
     <Compile Include="DataAccess\DbTherapistBooking.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReadBooking.cs" />
+    <Compile Include="ReadTherapistBooking.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Zen.Massage.Domain.Interfaces\Zen.Massage.Domain.Interfaces.csproj">
+      <Project>{FBC29A5D-B009-4630-9EFE-D04D409DAB67}</Project>
+      <Name>Zen.Massage.Domain.Interfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

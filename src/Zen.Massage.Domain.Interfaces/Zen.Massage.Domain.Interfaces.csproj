@@ -45,6 +45,8 @@
     <Compile Include="BookingContext\IBookingFactory.cs" />
     <Compile Include="BookingContext\IBookingReadRepository.cs" />
     <Compile Include="BookingContext\IBookingWriteRepository.cs" />
+    <Compile Include="BookingContext\IReadBooking.cs" />
+    <Compile Include="BookingContext\IReadTherapistBooking.cs" />
     <Compile Include="BookingContext\ITherapistBooking.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
