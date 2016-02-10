@@ -1716,6 +1716,28 @@
           "lib/dnx451/Microsoft.VisualStudio.Web.BrowserLink.Loader.dll": {}
         }
       },
+      "NanoMessageBus/2.0.50": {
+        "type": "package",
+        "compile": {
+          "lib/net40/NanoMessageBus.dll": {}
+        },
+        "runtime": {
+          "lib/net40/NanoMessageBus.dll": {}
+        }
+      },
+      "NanoMessageBus.Autofac/2.0.50": {
+        "type": "package",
+        "dependencies": {
+          "Autofac": "[3.1.5]",
+          "NanoMessageBus": "2.0.50"
+        },
+        "compile": {
+          "lib/net40/NanoMessageBus.Autofac.dll": {}
+        },
+        "runtime": {
+          "lib/net40/NanoMessageBus.Autofac.dll": {}
+        }
+      },
       "NEventStore/5.2.0": {
         "type": "package",
         "compile": {
@@ -3746,6 +3768,28 @@
         },
         "runtime": {
           "lib/dnx451/Microsoft.VisualStudio.Web.BrowserLink.Loader.dll": {}
+        }
+      },
+      "NanoMessageBus/2.0.50": {
+        "type": "package",
+        "compile": {
+          "lib/net40/NanoMessageBus.dll": {}
+        },
+        "runtime": {
+          "lib/net40/NanoMessageBus.dll": {}
+        }
+      },
+      "NanoMessageBus.Autofac/2.0.50": {
+        "type": "package",
+        "dependencies": {
+          "Autofac": "[3.1.5]",
+          "NanoMessageBus": "2.0.50"
+        },
+        "compile": {
+          "lib/net40/NanoMessageBus.Autofac.dll": {}
+        },
+        "runtime": {
+          "lib/net40/NanoMessageBus.Autofac.dll": {}
         }
       },
       "NEventStore/5.2.0": {
@@ -5780,6 +5824,28 @@
           "lib/dnx451/Microsoft.VisualStudio.Web.BrowserLink.Loader.dll": {}
         }
       },
+      "NanoMessageBus/2.0.50": {
+        "type": "package",
+        "compile": {
+          "lib/net40/NanoMessageBus.dll": {}
+        },
+        "runtime": {
+          "lib/net40/NanoMessageBus.dll": {}
+        }
+      },
+      "NanoMessageBus.Autofac/2.0.50": {
+        "type": "package",
+        "dependencies": {
+          "Autofac": "[3.1.5]",
+          "NanoMessageBus": "2.0.50"
+        },
+        "compile": {
+          "lib/net40/NanoMessageBus.Autofac.dll": {}
+        },
+        "runtime": {
+          "lib/net40/NanoMessageBus.Autofac.dll": {}
+        }
+      },
       "NEventStore/5.2.0": {
         "type": "package",
         "compile": {
@@ -7486,6 +7552,27 @@
         "Microsoft.VisualStudio.Web.BrowserLink.Loader.nuspec"
       ]
     },
+    "NanoMessageBus/2.0.50": {
+      "type": "package",
+      "sha512": "r9MRjMxxmN8oGZozTHV1wea57z34Eo4BsTp5NW81jdgzp3mqHmDsajpGs+7scTkbMays3PDxdt7t3eaM3Nu0ug==",
+      "files": [
+        "lib/net40/NanoMessageBus.dll",
+        "lib/net40/NanoMessageBus.xml",
+        "NanoMessageBus.2.0.50.nupkg",
+        "NanoMessageBus.2.0.50.nupkg.sha512",
+        "NanoMessageBus.nuspec"
+      ]
+    },
+    "NanoMessageBus.Autofac/2.0.50": {
+      "type": "package",
+      "sha512": "7eS2M/4jQg3xWghR+h6N4P3uiovwL7dPrGfjEvw4qOM4Pt2OrNXMX8CSTGYBIfsr+Leh0dnAQ1yeebWqr6N2DQ==",
+      "files": [
+        "lib/net40/NanoMessageBus.Autofac.dll",
+        "NanoMessageBus.Autofac.2.0.50.nupkg",
+        "NanoMessageBus.Autofac.2.0.50.nupkg.sha512",
+        "NanoMessageBus.Autofac.nuspec"
+      ]
+    },
     "NEventStore/5.2.0": {
       "type": "package",
       "sha512": "3ev22hhinX0lKkn5OQI+q61bLVWUv9mjUgjpMKFlwasmpwuKT2yU3jtQJK1uSTh0zoAoShjGRLrvAUduJwXxlA==",
@@ -8346,7 +8433,9 @@
       "Microsoft.Extensions.Logging >= 1.0.0-rc1-final",
       "Microsoft.Extensions.Logging.Console >= 1.0.0-rc1-final",
       "Microsoft.Extensions.Logging.Debug >= 1.0.0-rc1-final",
-      "Microsoft.VisualStudio.Web.BrowserLink.Loader >= 14.0.0-rc1-final"
+      "Microsoft.VisualStudio.Web.BrowserLink.Loader >= 14.0.0-rc1-final",
+      "NanoMessageBus >= 2.0.50",
+      "NanoMessageBus.Autofac >= 2.0.50"
     ],
     "DNX,Version=v4.5.1": [
       "Zen.Infrastructure.ReadRepository >= 1.0.0",
