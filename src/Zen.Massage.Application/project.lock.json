@@ -2,13 +2,149 @@
   "locked": false,
   "version": 2,
   "targets": {
-    "DNX,Version=v4.5.1": {},
-    "DNX,Version=v4.5.1/win7-x86": {},
-    "DNX,Version=v4.5.1/win7-x64": {}
+    "DNX,Version=v4.5.1": {
+      "AggregateSource/0.0.300": {
+        "type": "package",
+        "compile": {
+          "lib/net45/AggregateSource.dll": {}
+        },
+        "runtime": {
+          "lib/net45/AggregateSource.dll": {}
+        }
+      },
+      "NanoMessageBus/2.0.50": {
+        "type": "package",
+        "compile": {
+          "lib/net40/NanoMessageBus.dll": {}
+        },
+        "runtime": {
+          "lib/net40/NanoMessageBus.dll": {}
+        }
+      },
+      "Zen.Massage.Domain.Events/1.0.0": {
+        "type": "project",
+        "framework": "DNX,Version=v4.5.1",
+        "dependencies": {
+          "Zen.Massage.Domain.Interfaces": "1.0.0"
+        }
+      },
+      "Zen.Massage.Domain.Interfaces/1.0.0": {
+        "type": "project",
+        "framework": "DNX,Version=v4.5.1",
+        "dependencies": {
+          "AggregateSource": "0.0.300"
+        }
+      }
+    },
+    "DNX,Version=v4.5.1/win7-x86": {
+      "AggregateSource/0.0.300": {
+        "type": "package",
+        "compile": {
+          "lib/net45/AggregateSource.dll": {}
+        },
+        "runtime": {
+          "lib/net45/AggregateSource.dll": {}
+        }
+      },
+      "NanoMessageBus/2.0.50": {
+        "type": "package",
+        "compile": {
+          "lib/net40/NanoMessageBus.dll": {}
+        },
+        "runtime": {
+          "lib/net40/NanoMessageBus.dll": {}
+        }
+      },
+      "Zen.Massage.Domain.Events/1.0.0": {
+        "type": "project",
+        "framework": "DNX,Version=v4.5.1",
+        "dependencies": {
+          "Zen.Massage.Domain.Interfaces": "1.0.0"
+        }
+      },
+      "Zen.Massage.Domain.Interfaces/1.0.0": {
+        "type": "project",
+        "framework": "DNX,Version=v4.5.1",
+        "dependencies": {
+          "AggregateSource": "0.0.300"
+        }
+      }
+    },
+    "DNX,Version=v4.5.1/win7-x64": {
+      "AggregateSource/0.0.300": {
+        "type": "package",
+        "compile": {
+          "lib/net45/AggregateSource.dll": {}
+        },
+        "runtime": {
+          "lib/net45/AggregateSource.dll": {}
+        }
+      },
+      "NanoMessageBus/2.0.50": {
+        "type": "package",
+        "compile": {
+          "lib/net40/NanoMessageBus.dll": {}
+        },
+        "runtime": {
+          "lib/net40/NanoMessageBus.dll": {}
+        }
+      },
+      "Zen.Massage.Domain.Events/1.0.0": {
+        "type": "project",
+        "framework": "DNX,Version=v4.5.1",
+        "dependencies": {
+          "Zen.Massage.Domain.Interfaces": "1.0.0"
+        }
+      },
+      "Zen.Massage.Domain.Interfaces/1.0.0": {
+        "type": "project",
+        "framework": "DNX,Version=v4.5.1",
+        "dependencies": {
+          "AggregateSource": "0.0.300"
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Zen.Massage.Domain.Events/1.0.0": {
+      "type": "project",
+      "path": "../Zen.Massage.Domain.Events/project.json"
+    },
+    "Zen.Massage.Domain.Interfaces/1.0.0": {
+      "type": "project",
+      "path": "../Zen.Massage.Domain.Interfaces/project.json"
+    },
+    "AggregateSource/0.0.300": {
+      "type": "package",
+      "sha512": "OQrm2U5F5gvaMSSekOKhACWub/KTmrA1NR81fOd9I7rKNEnJDg7WWa6A3D8nNWlyy2HXSN2MlqXvUraN9/Xveg==",
+      "files": [
+        "AggregateSource.0.0.300.nupkg",
+        "AggregateSource.0.0.300.nupkg.sha512",
+        "AggregateSource.nuspec",
+        "lib/net40/AggregateSource.dll",
+        "lib/net40/AggregateSource.xml",
+        "lib/net45/AggregateSource.dll",
+        "lib/net45/AggregateSource.xml"
+      ]
+    },
+    "NanoMessageBus/2.0.50": {
+      "type": "package",
+      "sha512": "r9MRjMxxmN8oGZozTHV1wea57z34Eo4BsTp5NW81jdgzp3mqHmDsajpGs+7scTkbMays3PDxdt7t3eaM3Nu0ug==",
+      "files": [
+        "lib/net40/NanoMessageBus.dll",
+        "lib/net40/NanoMessageBus.xml",
+        "NanoMessageBus.2.0.50.nupkg",
+        "NanoMessageBus.2.0.50.nupkg.sha512",
+        "NanoMessageBus.nuspec"
+      ]
+    }
+  },
   "projectFileDependencyGroups": {
-    "": [],
+    "": [
+      "NanoMessageBus >= 2.0.50",
+      "Zen.Massage.Domain.Interfaces >= 1.0.0",
+      "Zen.Massage.Domain.Events >= 1.0.0"
+    ],
     "DNX,Version=v4.5.1": []
   }
 }
