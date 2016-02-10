@@ -4,7 +4,7 @@ namespace Zen.Massage.Domain.BookingContext
 {
     public class BookingBidEvent : BookingEvent
     {
-        public BookingBidEvent(Guid bookingId, Guid therapistId, DateTime? proposedTime)
+        public BookingBidEvent(Guid bookingId, Guid therapistId, DateTime proposedTime)
             : base(bookingId)
         {
             TherapistId = therapistId;
@@ -13,6 +13,6 @@ namespace Zen.Massage.Domain.BookingContext
 
         public Guid TherapistId { get; private set; }
 
-        public DateTime? ProposedTime { get; private set; }
+        public DateTime ProposedTime { get; private set; }
     }
 }

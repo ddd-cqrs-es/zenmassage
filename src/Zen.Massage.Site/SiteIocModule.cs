@@ -5,8 +5,10 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Autofac;
 using NanoMessageBus;
+using NanoMessageBus.Channels;
 using NEventStore;
 using Zen.Infrastructure.ReadRepository;
+using Zen.Massage.Application;
 using Zen.Massage.Domain.BookingContext;
 using Module = Autofac.Module;
 
@@ -20,20 +22,19 @@ namespace Zen.Massage.Site
         protected override void Load(ContainerBuilder builder)
         {
             // Setup messagebus (we're using lightweight message bus rather than Azure ServiceBus)
+            var routingTable =
+                new AutofacRoutingTable(
+                    builder,
+                    Assembly.GetExecutingAssembly(),
+                    typeof(BookingUpdater).Assembly);
             var messagingHost = new MessagingWireup()
-                .WithAuditing()
-                .StartWithReceive(new AutofacRoutingTable(builder, Assembly.GetExecutingAssembly()));
-
+                //.WithAuditing()   TODO: Hookup auditor that is capable of writing aggregate information to AppInsights
+                .StartWithReceive(routingTable);
+            
             // Setup event store
-            var store = Wireup.Init()
-                .UsingInMemoryPersistence()     // TODO: Switch to SQL connection for persistence
-                .UsingJsonSerialization()
-                .Compress()
-                //.EncryptWith()                // TODO: Enable encryption (on a per-tenant basis eventually)
-                .HookIntoPipelineUsing()        // TODO: Hook into processing pipeline so we can route events
-                                                //  through the application message bus queue
-                .Build();
-            builder.RegisterInstance(store);
+            builder.Register(c => BuildEventStore(c.Resolve<ILifetimeScope>()))
+                .As<IStoreEvents>()
+                .SingleInstance();
 
             // Register core domain types
             builder.RegisterType<BookingFactory>()
@@ -48,6 +49,63 @@ namespace Zen.Massage.Site
             // Register application types
 
             // Register site types
+        }
+
+        private IStoreEvents BuildEventStore(ILifetimeScope container)
+        {
+            return Wireup.Init()
+                .UsingSqlPersistence("EventStore")
+                    .InitializeStorageEngine()
+                .UsingJsonSerialization()
+                .Compress()
+                .HookIntoPipelineUsing(new PipelineDispatcherHook(container))
+                .Build();
+        }
+
+        public class PipelineDispatcherHook : IPipelineHook
+        {
+            private readonly ILifetimeScope _container;
+
+            public PipelineDispatcherHook(ILifetimeScope container)
+            {
+                _container = container;
+            }
+
+            public void Dispose()
+            {
+            }
+
+            public ICommit Select(ICommit committed)
+            {
+                return committed;
+            }
+
+            public bool PreCommit(CommitAttempt attempt)
+            {
+                return true;
+            }
+
+            public void PostCommit(ICommit committed)
+            {
+                using (var scope = _container.BeginLifetimeScope())
+                {
+                    // Get dispatch context
+                    var publisher = scope.Resolve<IDispatchContext>();
+
+                    // Publish events and commit
+                    publisher
+                        .Publish(committed.Events.Select(e => e.Body).ToArray())
+                        .Commit();
+                }
+            }
+
+            public void OnPurge(string bucketId)
+            {
+            }
+
+            public void OnDeleteStream(string bucketId, string streamId)
+            {
+            }
         }
     }
 }

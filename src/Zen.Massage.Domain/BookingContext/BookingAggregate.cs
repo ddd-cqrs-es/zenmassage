@@ -35,7 +35,7 @@ namespace Zen.Massage.Domain.BookingContext
         {
             // TODO: Sanity checks
 
-            ApplyChange(new BookingBidEvent(BookingId, therapistId, proposedTime));
+            ApplyChange(new BookingBidEvent(BookingId, therapistId, proposedTime ?? ProposedTime));
         }
 
         public void Cancel(string reason)

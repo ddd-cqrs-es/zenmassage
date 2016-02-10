@@ -23,12 +23,12 @@ namespace Zen.Massage.Domain.BookingContext
             Guid bookingId, Guid clientId, DateTime proposedTime, TimeSpan duration, CancellationToken cancellationToken);
 
         Task UpdateBooking(
-            Guid bookingId, BookingStatus status, DateTime proposedTime, TimeSpan duration, CancellationToken cancellationToken);
+            Guid bookingId, BookingStatus? status, DateTime? proposedTime, TimeSpan? duration, CancellationToken cancellationToken);
 
         Task AddTherapistBooking(
-            Guid bookingId, Guid therapistId, DateTime proposedTime, CancellationToken cancellationToken);
+            Guid bookingId, Guid therapistId, BookingStatus status, DateTime proposedTime, CancellationToken cancellationToken);
 
         Task UpdateTherapistBooking(
-            Guid bookingId, Guid therapistId, DateTime proposedTime, BookingStatus status, CancellationToken cancellationToken);
+            Guid bookingId, Guid therapistId, BookingStatus? status, DateTime? proposedTime, CancellationToken cancellationToken);
     }
 }

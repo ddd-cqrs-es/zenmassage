@@ -111,21 +111,30 @@ namespace Zen.Infrastructure.ReadRepository
             }
         }
 
-        public async Task UpdateBooking(Guid bookingId, BookingStatus status, DateTime proposedTime, TimeSpan duration, CancellationToken cancellationToken)
+        public async Task UpdateBooking(Guid bookingId, BookingStatus? status, DateTime? proposedTime, TimeSpan? duration, CancellationToken cancellationToken)
         {
             using (var context = new BookingEntityContext())
             {
                 var booking = await context.Bookings
                     .FindAsync(cancellationToken, bookingId)
                     .ConfigureAwait(false);
-                booking.Status = status;
-                booking.ProposedTime = proposedTime;
-                booking.Duration = duration;
+                if (status.HasValue)
+                {
+                    booking.Status = status.Value;
+                }
+                if (proposedTime.HasValue)
+                {
+                    booking.ProposedTime = proposedTime.Value;
+                }
+                if (duration.HasValue)
+                {
+                    booking.Duration = duration.Value;
+                }
             }
         }
 
         public async Task AddTherapistBooking(
-            Guid bookingId, Guid therapistId, DateTime proposedTime,
+            Guid bookingId, Guid therapistId, BookingStatus status, DateTime proposedTime,
             CancellationToken cancellationToken)
         {
             using (var context = new BookingEntityContext())
@@ -140,7 +149,7 @@ namespace Zen.Infrastructure.ReadRepository
                         BookingId = bookingId,
                         TherapistId = therapistId,
                         ProposedTime = proposedTime,
-                        Status = BookingStatus.BidByTherapist,
+                        Status = status,
                         Booking = booking
                     };
                 context.TherapistBookings.Add(therapist);
@@ -151,7 +160,7 @@ namespace Zen.Infrastructure.ReadRepository
         }
 
         public async Task UpdateTherapistBooking(
-            Guid bookingId, Guid therapistId, DateTime proposedTime, BookingStatus status,
+            Guid bookingId, Guid therapistId, BookingStatus? status, DateTime? proposedTime,
             CancellationToken cancellationToken)
         {
             using (var context = new BookingEntityContext())
@@ -164,8 +173,14 @@ namespace Zen.Infrastructure.ReadRepository
                     .ConfigureAwait(false);
                 if (therapist != null)
                 {
-                    therapist.ProposedTime = proposedTime;
-                    therapist.Status = status;
+                    if (status.HasValue)
+                    {
+                        therapist.Status = status.Value;
+                    }
+                    if (proposedTime.HasValue)
+                    {
+                        therapist.ProposedTime = proposedTime.Value;
+                    }
 
                     await context
                         .SaveChangesAsync(cancellationToken)

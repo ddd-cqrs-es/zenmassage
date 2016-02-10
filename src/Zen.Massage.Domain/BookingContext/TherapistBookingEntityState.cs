@@ -24,13 +24,13 @@ namespace Zen.Massage.Domain.BookingContext
         private void OnBookingBid(BookingBidEvent eventObject)
         {
             TherapistId = eventObject.TherapistId;
-            ProposedTime = eventObject.ProposedTime ?? Booking.ProposedTime;
+            ProposedTime = eventObject.ProposedTime;
             Status = BookingStatus.BidByTherapist;
         }
 
         private void OnBookingAccepted(TherapistBookingAcceptedEvent eventObject)
         {
-            
+            Status = BookingStatus.AcceptByClient;
         }
 
         private void OnBookingConfirmed(TherapistBookingConfirmedEvent eventObject)
