@@ -2018,9 +2018,13 @@
         "framework": "DNX,Version=v4.5.1",
         "dependencies": {
           "AggregateSource.NEventStore": "0.0.300",
+          "Autofac": "4.0.0-rc1-177",
           "NEventStore": "5.2.0",
           "Zen.Massage.Domain": "1.0.0"
-        }
+        },
+        "frameworkAssemblies": [
+          "System.Transactions"
+        ]
       },
       "Zen.Massage.Application/1.0.0": {
         "type": "project",
@@ -4077,9 +4081,13 @@
         "framework": "DNX,Version=v4.5.1",
         "dependencies": {
           "AggregateSource.NEventStore": "0.0.300",
+          "Autofac": "4.0.0-rc1-177",
           "NEventStore": "5.2.0",
           "Zen.Massage.Domain": "1.0.0"
-        }
+        },
+        "frameworkAssemblies": [
+          "System.Transactions"
+        ]
       },
       "Zen.Massage.Application/1.0.0": {
         "type": "project",
@@ -6136,9 +6144,13 @@
         "framework": "DNX,Version=v4.5.1",
         "dependencies": {
           "AggregateSource.NEventStore": "0.0.300",
+          "Autofac": "4.0.0-rc1-177",
           "NEventStore": "5.2.0",
           "Zen.Massage.Domain": "1.0.0"
-        }
+        },
+        "frameworkAssemblies": [
+          "System.Transactions"
+        ]
       },
       "Zen.Massage.Application/1.0.0": {
         "type": "project",

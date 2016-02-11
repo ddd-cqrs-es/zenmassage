@@ -25,6 +25,21 @@
           "lib/net45/AggregateSource.NEventStore.dll": {}
         }
       },
+      "Autofac/4.0.0-rc1-177": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net45/Autofac.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Autofac.dll": {}
+        }
+      },
       "NEventStore/5.2.0": {
         "type": "package",
         "compile": {
@@ -80,6 +95,21 @@
           "lib/net45/AggregateSource.NEventStore.dll": {}
         }
       },
+      "Autofac/4.0.0-rc1-177": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net45/Autofac.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Autofac.dll": {}
+        }
+      },
       "NEventStore/5.2.0": {
         "type": "package",
         "compile": {
@@ -133,6 +163,21 @@
         },
         "runtime": {
           "lib/net45/AggregateSource.NEventStore.dll": {}
+        }
+      },
+      "Autofac/4.0.0-rc1-177": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net45/Autofac.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Autofac.dll": {}
         }
       },
       "NEventStore/5.2.0": {
@@ -207,6 +252,23 @@
         "lib/net45/AggregateSource.NEventStore.xml"
       ]
     },
+    "Autofac/4.0.0-rc1-177": {
+      "type": "package",
+      "sha512": "cTSfTca0qWl3Zd68iMl2bH8e4RyGL/Q7EUT0PmAzCSoitSlrHu4zmByhP/f+KGGSuRqWHFYoMEEOanvTviEr4g==",
+      "files": [
+        "Autofac.4.0.0-rc1-177.nupkg",
+        "Autofac.4.0.0-rc1-177.nupkg.sha512",
+        "Autofac.nuspec",
+        "lib/dnxcore50/Autofac.dll",
+        "lib/dnxcore50/Autofac.xml",
+        "lib/dotnet5.2/Autofac.dll",
+        "lib/dotnet5.2/Autofac.xml",
+        "lib/net45/Autofac.dll",
+        "lib/net45/Autofac.xml",
+        "lib/win/Autofac.dll",
+        "lib/win/Autofac.xml"
+      ]
+    },
     "NEventStore/5.2.0": {
       "type": "package",
       "sha512": "3ev22hhinX0lKkn5OQI+q61bLVWUv9mjUgjpMKFlwasmpwuKT2yU3jtQJK1uSTh0zoAoShjGRLrvAUduJwXxlA==",
@@ -223,9 +285,12 @@
   "projectFileDependencyGroups": {
     "": [
       "AggregateSource.NEventStore >= 0.0.300",
+      "Autofac >= 4.0.0-rc1-177",
       "NEventStore >= 5.2.0",
       "Zen.Massage.Domain >= 1.0.0"
     ],
-    "DNX,Version=v4.5.1": []
+    "DNX,Version=v4.5.1": [
+      "fx/System.Transactions >= 4.0.0"
+    ]
   }
 }

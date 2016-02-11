@@ -8,7 +8,9 @@ using NanoMessageBus;
 using NanoMessageBus.Channels;
 using NEventStore;
 using Zen.Infrastructure.ReadRepository;
+using Zen.Infrastructure.WriteRepository;
 using Zen.Massage.Application;
+using Zen.Massage.Domain;
 using Zen.Massage.Domain.BookingContext;
 using Module = Autofac.Module;
 
@@ -16,6 +18,13 @@ namespace Zen.Massage.Site
 {
     public class SiteIocModule : Module
     {
+        private readonly bool _useInMemoryPersistence;
+
+        public SiteIocModule()
+        {
+            _useInMemoryPersistence = true;
+        }
+
         // TODO: Pass ASP.NET configuration object into module
         //  so setup parameters can be setup via IoC
 
@@ -37,6 +46,9 @@ namespace Zen.Massage.Site
                 .SingleInstance();
 
             // Register core domain types
+            builder.RegisterType<UnitOfWorkFactory>()
+                .As<IUnitOfWorkFactory>();
+            builder.RegisterType<UnitOfWorkSession>();
             builder.RegisterType<BookingFactory>()
                 .As<IBookingFactory>();
 
@@ -53,9 +65,22 @@ namespace Zen.Massage.Site
 
         private IStoreEvents BuildEventStore(ILifetimeScope container)
         {
-            return Wireup.Init()
-                .UsingSqlPersistence("EventStore")
-                    .InitializeStorageEngine()
+            // Setup the appropriate persistence layer
+            PersistenceWireup wireup;
+            if (_useInMemoryPersistence)
+            {
+                wireup = Wireup.Init()
+                    .UsingInMemoryPersistence();
+            }
+            else
+            {
+                wireup = Wireup.Init()
+                    .UsingSqlPersistence("EventStore")
+                    .InitializeStorageEngine();
+            }
+
+            // Setup remainder of neventstore and build
+            return wireup
                 .UsingJsonSerialization()
                 .Compress()
                 .HookIntoPipelineUsing(new PipelineDispatcherHook(container))
