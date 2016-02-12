@@ -2031,6 +2031,7 @@
         "framework": "DNX,Version=v4.5.1",
         "dependencies": {
           "NanoMessageBus": "2.0.50",
+          "Zen.Massage.Application.Interfaces": "1.0.0",
           "Zen.Massage.Domain.Events": "1.0.0",
           "Zen.Massage.Domain.Interfaces": "1.0.0"
         }
@@ -4094,6 +4095,7 @@
         "framework": "DNX,Version=v4.5.1",
         "dependencies": {
           "NanoMessageBus": "2.0.50",
+          "Zen.Massage.Application.Interfaces": "1.0.0",
           "Zen.Massage.Domain.Events": "1.0.0",
           "Zen.Massage.Domain.Interfaces": "1.0.0"
         }
@@ -6157,6 +6159,7 @@
         "framework": "DNX,Version=v4.5.1",
         "dependencies": {
           "NanoMessageBus": "2.0.50",
+          "Zen.Massage.Application.Interfaces": "1.0.0",
           "Zen.Massage.Domain.Events": "1.0.0",
           "Zen.Massage.Domain.Interfaces": "1.0.0"
         }

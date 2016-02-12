@@ -21,6 +21,10 @@
           "lib/net40/NanoMessageBus.dll": {}
         }
       },
+      "Zen.Massage.Application.Interfaces/1.0.0": {
+        "type": "project",
+        "framework": "DNX,Version=v4.5.1"
+      },
       "Zen.Massage.Domain.Events/1.0.0": {
         "type": "project",
         "framework": "DNX,Version=v4.5.1",
@@ -54,6 +58,10 @@
         "runtime": {
           "lib/net40/NanoMessageBus.dll": {}
         }
+      },
+      "Zen.Massage.Application.Interfaces/1.0.0": {
+        "type": "project",
+        "framework": "DNX,Version=v4.5.1"
       },
       "Zen.Massage.Domain.Events/1.0.0": {
         "type": "project",
@@ -89,6 +97,10 @@
           "lib/net40/NanoMessageBus.dll": {}
         }
       },
+      "Zen.Massage.Application.Interfaces/1.0.0": {
+        "type": "project",
+        "framework": "DNX,Version=v4.5.1"
+      },
       "Zen.Massage.Domain.Events/1.0.0": {
         "type": "project",
         "framework": "DNX,Version=v4.5.1",
@@ -106,6 +118,10 @@
     }
   },
   "libraries": {
+    "Zen.Massage.Application.Interfaces/1.0.0": {
+      "type": "project",
+      "path": "../Zen.Massage.Application.Interfaces/project.json"
+    },
     "Zen.Massage.Domain.Events/1.0.0": {
       "type": "project",
       "path": "../Zen.Massage.Domain.Events/project.json"
@@ -143,7 +159,8 @@
     "": [
       "NanoMessageBus >= 2.0.50",
       "Zen.Massage.Domain.Interfaces >= 1.0.0",
-      "Zen.Massage.Domain.Events >= 1.0.0"
+      "Zen.Massage.Domain.Events >= 1.0.0",
+      "Zen.Massage.Application.Interfaces >= 1.0.0-*"
     ],
     "DNX,Version=v4.5.1": []
   }
