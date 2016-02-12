@@ -5,11 +5,17 @@ namespace NanoMessageBus.Channels
 {
     public class EventHubConnectionFactory
     {
-        private EventHubClient _client;
+        private string _hubConnectionString;
+        private string _storeConnectionString;
 
-        public void SetConnectionString(string connectionString)
+        public void SetHubConnectionString(string hubConnectionString)
         {
-            _client = EventHubClient.CreateFromConnectionString(connectionString);
+            _hubConnectionString = hubConnectionString;
+        }
+
+        public void SetStoreConnectionString(string storeConnectionString)
+        {
+            _storeConnectionString = storeConnectionString;
         }
 
         public IMessagingChannel CreateConnection()
