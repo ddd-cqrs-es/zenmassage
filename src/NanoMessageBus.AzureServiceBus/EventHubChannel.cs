@@ -5,7 +5,8 @@ namespace NanoMessageBus.Channels
 {
     public class EventHubChannel : IMessagingChannel
     {
-        private EventHubChannelGroupConfiguration _configuration;
+        private readonly IChannelConnector _connector;
+        private readonly EventHubChannelGroupConfiguration _configuration;
         private EventHubClient _eventHubClient;
         private EventProcessorHost _eventProcessorHost;
 
@@ -15,6 +16,7 @@ namespace NanoMessageBus.Channels
             EventHubClient eventHubClient,
             EventProcessorHost eventProcessorHost)
         {
+            _connector = connector;
             _configuration = configuration;
             _eventHubClient = eventHubClient;
             _eventProcessorHost = eventProcessorHost;
@@ -25,13 +27,13 @@ namespace NanoMessageBus.Channels
 
         public bool Active { get; private set; }
 
+        public IChannelGroupConfiguration CurrentConfiguration => _configuration;
+
         public ChannelMessage CurrentMessage { get; private set; }
 
         public IDependencyResolver CurrentResolver { get; private set; }
 
         public IChannelTransaction CurrentTransaction { get; private set; }
-
-        public IChannelGroupConfiguration CurrentConfiguration => _configuration;
 
         public void Dispose()
         {
@@ -40,15 +42,8 @@ namespace NanoMessageBus.Channels
 
         public void Send(ChannelEnvelope envelope)
         {
-            //if (_eventHubClient == null)
-            //{
-            //    _eventHubClient = EventHubClient.Create(eventHubPath);
-            //}
-
-            //var eventData = new EventData();
-            //eventData.
-            //envelope.Message.ActiveMessage
-            //_eventHubClient.
+            var message = _configuration.MessageAdapter.Build(envelope.Message);
+            _eventHubClient.Send(message);
         }
 
         public async void Receive(Action<IDeliveryContext> callback)
@@ -93,12 +88,13 @@ namespace NanoMessageBus.Channels
 
         public IDispatchContext PrepareDispatch(object message = null, IMessagingChannel channel = null)
         {
-            throw new NotImplementedException();
+            EnsureTransaction();
+            var context = new DefaultDispatchContext(channel ?? this);
+            return message == null ? context : context.WithMessage(message);
         }
 
         public void BeginShutdown()
         {
-            throw new NotImplementedException();
         }
 
         protected virtual void Dispose(bool disposing)
