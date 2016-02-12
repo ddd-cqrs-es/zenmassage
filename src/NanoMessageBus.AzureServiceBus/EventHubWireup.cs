@@ -5,9 +5,9 @@ namespace NanoMessageBus.Channels
 {
     public class EventHubWireup
     {
-        private EventHubConnectionFactory _channelFactory =
+        private readonly EventHubConnectionFactory _channelFactory =
             new EventHubConnectionFactory();
-        private List<EventHubChannelGroupConfiguration> _channelGroupConfigurations =
+        private readonly List<EventHubChannelGroupConfiguration> _configurations =
             new List<EventHubChannelGroupConfiguration>(); 
 
         public EventHubWireup WithHubConnectionString(string hubConnectionString)
@@ -31,8 +31,13 @@ namespace NanoMessageBus.Channels
 
             var config = new EventHubChannelGroupConfiguration();
             callback(config);
-            _channelGroupConfigurations.Add(config);
+            _configurations.Add(config);
             return this;
+        }
+
+        public EventHubConnector Build()
+        {
+            return new EventHubConnector(_channelFactory, _configurations);
         }
     }
 }

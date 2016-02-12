@@ -18,9 +18,22 @@ namespace NanoMessageBus.Channels
             _storeConnectionString = storeConnectionString;
         }
 
-        public IMessagingChannel CreateConnection()
+        public IMessagingChannel CreateConnection(
+            IChannelConnector connector,
+            EventHubChannelGroupConfiguration config)
         {
-            throw new NotImplementedException();
+            var eventHubClient = EventHubClient.CreateFromConnectionString(_hubConnectionString);
+            EventProcessorHost host = null;
+            if (!config.DispatchOnly)
+            {
+                host = new EventProcessorHost(
+                    config.InputHubPath,
+                    config.GroupName,
+                    _hubConnectionString,
+                    _storeConnectionString);
+            }
+
+            return new EventHubChannel(connector, config, eventHubClient, host);
         }
     }
 }
