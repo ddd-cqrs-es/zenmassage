@@ -1,0 +1,7 @@
+﻿# Cordova git ignore definitions
+
+wwwroot/schemas/
+wwwroot/css/
+wwwroot/js/
+wwwroot/fonts/
+node_modules/

@@ -27,7 +27,7 @@ var GulpConfig = (function () {
         this.paths.fontsOutputPath = this.paths.webroot + 'fonts/';
 
         this.paths.swaggerSourcePath = this.paths.root + '../../artifacts/bin/Zen.Massage.Site/Debug/dnx451/Zen.Massage.Site.xml';
-        this.paths.swaggerDestinationPath = this.paths.webroot + 'schemas/api/Zen.Massage.Site.xml';
+        this.paths.swaggerDestinationPath = this.paths.webroot + 'schemas/api';
     }
     return gulpConfig;
 })();
