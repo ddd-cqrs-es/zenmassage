@@ -21,7 +21,7 @@ namespace Zen.Massage.Application
             _unitOfWorkFactory = unitOfWorkFactory;
         }
 
-        public void Create(Guid clientId, DateTime proposedTime, TimeSpan duration)
+        public Guid Create(Guid clientId, DateTime proposedTime, TimeSpan duration)
         {
             using (var uow = _unitOfWorkFactory.CreateSession())
             {
@@ -29,6 +29,7 @@ namespace Zen.Massage.Application
                 var booking = _bookingFactory.Create(clientId, proposedTime, duration);
                 uow.GetRepository<IBookingWriteRepository>().Add(booking);
                 uow.Commit();
+                return booking.BookingId;
             }
         }
 

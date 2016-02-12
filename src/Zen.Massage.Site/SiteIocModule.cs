@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using Autofac;
+using Microsoft.ApplicationInsights;
 using NanoMessageBus;
 using NanoMessageBus.Channels;
 using NEventStore;
@@ -37,9 +36,10 @@ namespace Zen.Massage.Site
                     Assembly.GetExecutingAssembly(),
                     typeof(BookingUpdater).Assembly);
             var messagingHost = new MessagingWireup()
-                //.WithAuditing()   TODO: Hookup auditor that is capable of writing aggregate information to AppInsights
+                .WithAuditing(GetAuditorsForChannel)
                 .StartWithReceive(routingTable);
-            
+            builder.RegisterInstance(messagingHost);
+
             // Setup event store
             builder.Register(c => BuildEventStore(c.Resolve<ILifetimeScope>()))
                 .As<IStoreEvents>()
@@ -65,6 +65,14 @@ namespace Zen.Massage.Site
             // Register site types
         }
 
+        private IEnumerable<IMessageAuditor> GetAuditorsForChannel(IMessagingChannel channel)
+        {
+            return new[]
+            {
+                new ApplicationInsightsMessageAuditor(channel)
+            };
+        }
+
         private IStoreEvents BuildEventStore(ILifetimeScope container)
         {
             // Setup the appropriate persistence layer
@@ -87,6 +95,42 @@ namespace Zen.Massage.Site
                 .Compress()
                 .HookIntoPipelineUsing(new PipelineDispatcherHook(container))
                 .Build();
+        }
+
+        public class ApplicationInsightsMessageAuditor : IMessageAuditor
+        {
+            private readonly IMessagingChannel _channel;
+            private readonly TelemetryClient _telemetryClient;
+
+            public ApplicationInsightsMessageAuditor(IMessagingChannel channel)
+            {
+                _channel = channel;
+                _telemetryClient = new TelemetryClient();
+            }
+
+            public void Dispose()
+            {
+            }
+
+            public void AuditReceive(IDeliveryContext delivery)
+            {
+                _telemetryClient.TrackEvent("ReceiveMessage",
+                    new Dictionary<string, string>
+                    {
+                        { "ChannelGroup", _channel.CurrentConfiguration.GroupName },
+                        { "MessageType", delivery.CurrentMessage.ActiveMessage.GetType().Name }
+                    });
+            }
+
+            public void AuditSend(ChannelEnvelope envelope, IDeliveryContext delivery)
+            {
+                _telemetryClient.TrackEvent("SendMessage",
+                    new Dictionary<string, string>
+                    {
+                        { "ChannelGroup", _channel.CurrentConfiguration.GroupName },
+                        { "MessageType", envelope.Message.ActiveMessage.GetType().Name }
+                    });
+            }
         }
 
         public class PipelineDispatcherHook : IPipelineHook

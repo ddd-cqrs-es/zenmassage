@@ -369,6 +369,24 @@
           "lib/net451/Microsoft.AspNet.FileProviders.Abstractions.dll": {}
         }
       },
+      "Microsoft.AspNet.FileProviders.Embedded/1.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.FileProviders.Abstractions": "1.0.0-rc1-final"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.AspNet.FileProviders.Embedded.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNet.FileProviders.Embedded.dll": {}
+        }
+      },
       "Microsoft.AspNet.FileProviders.Physical/1.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -1756,6 +1774,51 @@
           "lib/net45/Newtonsoft.Json.dll": {}
         }
       },
+      "Swashbuckle/6.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Swashbuckle.SwaggerGen": "6.0.0-rc1-final",
+          "Swashbuckle.SwaggerUi": "6.0.0-rc1-final"
+        }
+      },
+      "Swashbuckle.SwaggerGen/6.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Mvc": "6.0.0-rc1-final"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/dnx451/Swashbuckle.SwaggerGen.dll": {}
+        },
+        "runtime": {
+          "lib/dnx451/Swashbuckle.SwaggerGen.dll": {}
+        }
+      },
+      "Swashbuckle.SwaggerUi/6.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.FileProviders.Embedded": "1.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
+          "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/dnx451/Swashbuckle.SwaggerUi.dll": {}
+        },
+        "runtime": {
+          "lib/dnx451/Swashbuckle.SwaggerUi.dll": {}
+        }
+      },
       "System.Collections/4.0.0": {
         "type": "package",
         "compile": {
@@ -2428,6 +2491,24 @@
         },
         "runtime": {
           "lib/net451/Microsoft.AspNet.FileProviders.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.AspNet.FileProviders.Embedded/1.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.FileProviders.Abstractions": "1.0.0-rc1-final"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.AspNet.FileProviders.Embedded.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNet.FileProviders.Embedded.dll": {}
         }
       },
       "Microsoft.AspNet.FileProviders.Physical/1.0.0-rc1-final": {
@@ -3820,6 +3901,51 @@
           "lib/net45/Newtonsoft.Json.dll": {}
         }
       },
+      "Swashbuckle/6.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Swashbuckle.SwaggerGen": "6.0.0-rc1-final",
+          "Swashbuckle.SwaggerUi": "6.0.0-rc1-final"
+        }
+      },
+      "Swashbuckle.SwaggerGen/6.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Mvc": "6.0.0-rc1-final"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/dnx451/Swashbuckle.SwaggerGen.dll": {}
+        },
+        "runtime": {
+          "lib/dnx451/Swashbuckle.SwaggerGen.dll": {}
+        }
+      },
+      "Swashbuckle.SwaggerUi/6.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.FileProviders.Embedded": "1.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
+          "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/dnx451/Swashbuckle.SwaggerUi.dll": {}
+        },
+        "runtime": {
+          "lib/dnx451/Swashbuckle.SwaggerUi.dll": {}
+        }
+      },
       "System.Collections/4.0.0": {
         "type": "package",
         "compile": {
@@ -4492,6 +4618,24 @@
         },
         "runtime": {
           "lib/net451/Microsoft.AspNet.FileProviders.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.AspNet.FileProviders.Embedded/1.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.FileProviders.Abstractions": "1.0.0-rc1-final"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.AspNet.FileProviders.Embedded.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNet.FileProviders.Embedded.dll": {}
         }
       },
       "Microsoft.AspNet.FileProviders.Physical/1.0.0-rc1-final": {
@@ -5884,6 +6028,51 @@
           "lib/net45/Newtonsoft.Json.dll": {}
         }
       },
+      "Swashbuckle/6.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Swashbuckle.SwaggerGen": "6.0.0-rc1-final",
+          "Swashbuckle.SwaggerUi": "6.0.0-rc1-final"
+        }
+      },
+      "Swashbuckle.SwaggerGen/6.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Mvc": "6.0.0-rc1-final"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/dnx451/Swashbuckle.SwaggerGen.dll": {}
+        },
+        "runtime": {
+          "lib/dnx451/Swashbuckle.SwaggerGen.dll": {}
+        }
+      },
+      "Swashbuckle.SwaggerUi/6.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.FileProviders.Embedded": "1.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
+          "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/dnx451/Swashbuckle.SwaggerUi.dll": {}
+        },
+        "runtime": {
+          "lib/dnx451/Swashbuckle.SwaggerUi.dll": {}
+        }
+      },
       "System.Collections/4.0.0": {
         "type": "package",
         "compile": {
@@ -6520,6 +6709,20 @@
         "Microsoft.AspNet.FileProviders.Abstractions.1.0.0-rc1-final.nupkg",
         "Microsoft.AspNet.FileProviders.Abstractions.1.0.0-rc1-final.nupkg.sha512",
         "Microsoft.AspNet.FileProviders.Abstractions.nuspec"
+      ]
+    },
+    "Microsoft.AspNet.FileProviders.Embedded/1.0.0-rc1-final": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "MWMhV2n9CHQHIJpgGVCguXyeh+6c0GpABHH+Z12HY9nyNU56slop1KLa7eSN4Z6oojKm/eMoP79EIihj5GokDQ==",
+      "files": [
+        "lib/dotnet5.4/Microsoft.AspNet.FileProviders.Embedded.dll",
+        "lib/dotnet5.4/Microsoft.AspNet.FileProviders.Embedded.xml",
+        "lib/net451/Microsoft.AspNet.FileProviders.Embedded.dll",
+        "lib/net451/Microsoft.AspNet.FileProviders.Embedded.xml",
+        "Microsoft.AspNet.FileProviders.Embedded.1.0.0-rc1-final.nupkg",
+        "Microsoft.AspNet.FileProviders.Embedded.1.0.0-rc1-final.nupkg.sha512",
+        "Microsoft.AspNet.FileProviders.Embedded.nuspec"
       ]
     },
     "Microsoft.AspNet.FileProviders.Physical/1.0.0-rc1-final": {
@@ -7639,6 +7842,41 @@
         "tools/install.ps1"
       ]
     },
+    "Swashbuckle/6.0.0-rc1-final": {
+      "type": "package",
+      "sha512": "m8xTit1yy8eFavvrVPBaNWvWKMTnKnjHcULVku5DwiUFuqg6iVJ6DUuw2zId2UjljVlZlMQpuIde9DprvcFcXg==",
+      "files": [
+        "Swashbuckle.6.0.0-rc1-final.nupkg",
+        "Swashbuckle.6.0.0-rc1-final.nupkg.sha512",
+        "Swashbuckle.nuspec"
+      ]
+    },
+    "Swashbuckle.SwaggerGen/6.0.0-rc1-final": {
+      "type": "package",
+      "sha512": "YfkBm+xYruoKJzVpaDFZQzwPF59CyrYe0d4bb3kKGeJ+vi20xYfzzk9j2PXZ/BiP8xJ59pkVrRUZOyeceP3eNQ==",
+      "files": [
+        "lib/dnx451/Swashbuckle.SwaggerGen.dll",
+        "lib/dnx451/Swashbuckle.SwaggerGen.xml",
+        "lib/dnxcore50/Swashbuckle.SwaggerGen.dll",
+        "lib/dnxcore50/Swashbuckle.SwaggerGen.xml",
+        "Swashbuckle.SwaggerGen.6.0.0-rc1-final.nupkg",
+        "Swashbuckle.SwaggerGen.6.0.0-rc1-final.nupkg.sha512",
+        "Swashbuckle.SwaggerGen.nuspec"
+      ]
+    },
+    "Swashbuckle.SwaggerUi/6.0.0-rc1-final": {
+      "type": "package",
+      "sha512": "h/yK4Pq2SJNPwrWEVvP6UHnZBfi0MnesCa1ZgV5HKI/PRp1dq/BXPrAZi2VB1oz1PU+F0zsaVfZf31BTxg6NzA==",
+      "files": [
+        "lib/dnx451/Swashbuckle.SwaggerUi.dll",
+        "lib/dnx451/Swashbuckle.SwaggerUi.xml",
+        "lib/dnxcore50/Swashbuckle.SwaggerUi.dll",
+        "lib/dnxcore50/Swashbuckle.SwaggerUi.xml",
+        "Swashbuckle.SwaggerUi.6.0.0-rc1-final.nupkg",
+        "Swashbuckle.SwaggerUi.6.0.0-rc1-final.nupkg.sha512",
+        "Swashbuckle.SwaggerUi.nuspec"
+      ]
+    },
     "System.Collections/4.0.0": {
       "type": "package",
       "sha512": "i2vsGDIEbWdHcUSNDPKZP/ZWod6o740el7mGTCy0dqbCxQh74W4QoC+klUwPEtGEFuvzJ7bJgvwJqscosVNyZQ==",
@@ -8465,7 +8703,10 @@
       "Microsoft.Extensions.Logging.Debug >= 1.0.0-rc1-final",
       "Microsoft.VisualStudio.Web.BrowserLink.Loader >= 14.0.0-rc1-final",
       "NanoMessageBus >= 2.0.50",
-      "NanoMessageBus.Autofac >= 2.0.50"
+      "NanoMessageBus.Autofac >= 2.0.50",
+      "Swashbuckle >= 6.0.0-rc1-final",
+      "Swashbuckle.SwaggerGen >= 6.0.0-rc1-final",
+      "Swashbuckle.SwaggerUi >= 6.0.0-rc1-final"
     ],
     "DNX,Version=v4.5.1": [
       "Zen.Infrastructure.ReadRepository >= 1.0.0",

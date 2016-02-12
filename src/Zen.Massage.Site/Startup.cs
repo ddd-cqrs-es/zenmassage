@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNet.Authentication.Cookies;
-using Microsoft.AspNet.Authentication.OpenIdConnect;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Autofac;
-using Autofac.Extensions.DependencyInjection;
+using Swashbuckle.SwaggerGen;
 
 namespace Zen.Massage.Site
 {
@@ -42,6 +39,28 @@ namespace Zen.Massage.Site
             // Add framework services
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddMvc();
+
+            // Setup swagger integration
+            services.AddSwaggerGen();
+            services.ConfigureSwaggerDocument(
+                options =>
+                {
+                    options.SingleApiVersion(
+                        new Info
+                        {
+                            Version = "v1",
+                            Title = "Zen Massage Booking API",
+                            Description = "An API for searching and interacting with massage bookings.",
+                            TermsOfService = "None"
+                        });
+                });
+            services.ConfigureSwaggerSchema(
+                options =>
+                {
+                    options.DescribeAllEnumsAsStrings = true;
+                    options.ModelFilter(new Swashbuckle.SwaggerGen.XmlComments.ApplyXmlTypeComments(
+                        "~/wwwroot/schema/api.xml"));
+                });
 
             // Setup autofac dependency injection
             var builder = new ContainerBuilder();
@@ -95,6 +114,9 @@ namespace Zen.Massage.Site
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            app.UseSwaggerGen();
+            app.UseSwaggerUi();
         }
 
         // Entry point for the application.
