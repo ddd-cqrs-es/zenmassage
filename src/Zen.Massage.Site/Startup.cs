@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.SwaggerGen;
+using Swashbuckle.SwaggerGen.XmlComments;
 
 namespace Zen.Massage.Site
 {
@@ -41,6 +42,9 @@ namespace Zen.Massage.Site
             services.AddMvc();
 
             // Setup swagger integration
+            // NOTE: To avoid disclosure of directory structure and ease deployment
+            //  fetch doc path from user-secret config (dev env only)
+            var documentationPath = Configuration.Get<string>("swagger:xmlpath");
             services.AddSwaggerGen();
             services.ConfigureSwaggerDocument(
                 options =>
@@ -58,8 +62,8 @@ namespace Zen.Massage.Site
                 options =>
                 {
                     options.DescribeAllEnumsAsStrings = true;
-                    options.ModelFilter(new Swashbuckle.SwaggerGen.XmlComments.ApplyXmlTypeComments(
-                        "~/wwwroot/schema/api.xml"));
+                    options.ModelFilter(
+                        new ApplyXmlTypeComments(documentationPath));
                 });
 
             // Setup autofac dependency injection

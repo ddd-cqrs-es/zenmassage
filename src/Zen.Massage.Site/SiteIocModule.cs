@@ -36,6 +36,7 @@ namespace Zen.Massage.Site
                     Assembly.GetExecutingAssembly(),
                     typeof(BookingUpdater).Assembly);
             var messagingHost = new MessagingWireup()
+                .AddConnector(null)
                 .WithAuditing(GetAuditorsForChannel)
                 .StartWithReceive(routingTable);
             builder.RegisterInstance(messagingHost);
