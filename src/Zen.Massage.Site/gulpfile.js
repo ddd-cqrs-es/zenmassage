@@ -1,4 +1,4 @@
-﻿/// <binding Clean='clean' />
+﻿/// <binding AfterBuild='postbuild:swagger' Clean='clean' />
 'use strict';
 
 var del = require('del'),
@@ -164,3 +164,11 @@ gulp.task('watch', function () {
 });
 
 gulp.task('default', ['compile:sitecore', 'compile:ts', 'compile:sass']);
+
+gulp.task('postbuild:swagger', function() {
+    return gulp
+        .src(config.paths.swaggerSourcePath)
+        .pipe(gulp.dest(config.paths.swaggerDestinationPath));
+});
+
+gulp.task('clean', ['clean:ts', 'clean:sass']);
