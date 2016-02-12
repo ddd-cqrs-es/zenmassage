@@ -1909,9 +1909,9 @@
           "lib/net40/NanoMessageBus.Autofac.dll": {}
         }
       },
-      "NanoMessageBus.AzureEventHub/1.0.0": {
+      "NanoMessageBus.AzureServiceBus/1.0.0": {
         "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
+        "framework": "DNX,Version=v4.5.1",
         "dependencies": {
           "Microsoft.Azure.KeyVault.Core": "1.0.0",
           "Microsoft.Azure.ServiceBus.EventProcessorHost": "2.1.2",
@@ -4281,9 +4281,9 @@
           "lib/net40/NanoMessageBus.Autofac.dll": {}
         }
       },
-      "NanoMessageBus.AzureEventHub/1.0.0": {
+      "NanoMessageBus.AzureServiceBus/1.0.0": {
         "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
+        "framework": "DNX,Version=v4.5.1",
         "dependencies": {
           "Microsoft.Azure.KeyVault.Core": "1.0.0",
           "Microsoft.Azure.ServiceBus.EventProcessorHost": "2.1.2",
@@ -6653,9 +6653,9 @@
           "lib/net40/NanoMessageBus.Autofac.dll": {}
         }
       },
-      "NanoMessageBus.AzureEventHub/1.0.0": {
+      "NanoMessageBus.AzureServiceBus/1.0.0": {
         "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
+        "framework": "DNX,Version=v4.5.1",
         "dependencies": {
           "Microsoft.Azure.KeyVault.Core": "1.0.0",
           "Microsoft.Azure.ServiceBus.EventProcessorHost": "2.1.2",
@@ -7117,9 +7117,9 @@
     }
   },
   "libraries": {
-    "NanoMessageBus.AzureEventHub/1.0.0": {
+    "NanoMessageBus.AzureServiceBus/1.0.0": {
       "type": "project",
-      "path": "../../wrap/NanoMessageBus.AzureEventHub/project.json"
+      "path": "../NanoMessageBus.AzureServiceBus/project.json"
     },
     "Zen.Infrastructure.ReadRepository/1.0.0": {
       "type": "project",
@@ -9655,7 +9655,7 @@
     },
     "WindowsAzure.ServiceBus/3.1.3": {
       "type": "package",
-      "sha512": "jCUIVxTxLeJ0jHWqAcxrPSCS72NyCb4FWK2Jq/SVNSF+nKOcsxaYPxT+8ZS2Qx6j4O2Xw4rT9RgSiPp6x2fmQw==",
+      "sha512": "3o3dLgQSxk5z154fBrnb+7AXFZ9BNY8AxIwmzwvuT5oP4JVru5uYFdwVjH8J3rWljhcdkvqBQNDgNpwNPFf1Hw==",
       "files": [
         "content/app.config.install.xdt",
         "content/web.config.install.xdt",
@@ -9714,7 +9714,7 @@
       "Swashbuckle.SwaggerUi >= 6.0.0-rc1-final"
     ],
     "DNX,Version=v4.5.1": [
-      "NanoMessageBus.AzureEventHub >= 1.0.0-*",
+      "NanoMessageBus.AzureServiceBus >= 1.0.0-*",
       "Zen.Infrastructure.ReadRepository >= 1.0.0",
       "Zen.Infrastructure.WriteRepository >= 1.0.0",
       "Zen.Massage.Application >= 1.0.0-*",

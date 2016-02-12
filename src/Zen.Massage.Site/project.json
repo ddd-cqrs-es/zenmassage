@@ -40,7 +40,7 @@
   "frameworks": {
     "dnx451": {
       "dependencies": {
-        "NanoMessageBus.AzureEventHub": "1.0.0-*",
+        "NanoMessageBus.AzureServiceBus": "1.0.0-*",
         "Zen.Infrastructure.ReadRepository": "1.0.0",
         "Zen.Infrastructure.WriteRepository": "1.0.0",
         "Zen.Massage.Application": "1.0.0-*",

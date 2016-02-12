@@ -58,25 +58,25 @@ namespace NanoMessageBus.Channels
                 }
                 catch (ChannelConnectionException)
                 {
-                    Log.Warn("Channel {0} has become unavailable, aborting current transaction.", this.identifier);
-                    _owner.CurrentTransaction.TryDispose();
-                    throw;
+                    //Log.Warn("Channel {0} has become unavailable, aborting current transaction.", this.identifier);
+                    //_owner.CurrentTransaction.TryDispose();
+                    //throw;
                 }
                 catch (PoisonMessageException e)
                 {
-                    Log.Warn("Wire message {0} on channel {1} could not be deserialized; forwarding to poison message exchange.", messageId, this.identifier);
-                    this.ForwardToPoisonMessageExchange(message, e);
+                    //Log.Warn("Wire message {0} on channel {1} could not be deserialized; forwarding to poison message exchange.", messageId, this.identifier);
+                    //this.ForwardToPoisonMessageExchange(message, e);
                 }
                 catch (DeadLetterException e)
                 {
-                    var seconds = (SystemTime.UtcNow - e.Expiration).TotalSeconds;
-                    Log.Info("Wire message {0} on channel {1} expired on the wire {2:n3} seconds ago; forwarding to dead letter exchange.", messageId, this.identifier, seconds);
-                    this.ForwardTo(message, this.configuration.DeadLetterExchange);
+                    //var seconds = (SystemTime.UtcNow - e.Expiration).TotalSeconds;
+                    //Log.Info("Wire message {0} on channel {1} expired on the wire {2:n3} seconds ago; forwarding to dead letter exchange.", messageId, this.identifier, seconds);
+                    //this.ForwardTo(message, this.configuration.DeadLetterExchange);
                 }
                 catch (Exception e)
                 {
-                    _owner.CurrentTransaction.TryDispose();
-                    this.RetryMessage(message, e);
+                    //_owner.CurrentTransaction.TryDispose();
+                    //this.RetryMessage(message, e);
                 }
             }
         }
@@ -101,22 +101,22 @@ namespace NanoMessageBus.Channels
 
         public void Send(ChannelEnvelope envelope)
         {
-            if (_eventHubClient == null)
-            {
-                _eventHubClient = EventHubClient.Create(eventHubPath);
-            }
+            //if (_eventHubClient == null)
+            //{
+            //    _eventHubClient = EventHubClient.Create(eventHubPath);
+            //}
 
-            var eventData = new EventData();
-            eventData.
-            envelope.Message.ActiveMessage
-            _eventHubClient.
+            //var eventData = new EventData();
+            //eventData.
+            //envelope.Message.ActiveMessage
+            //_eventHubClient.
         }
 
         public async void Receive(Action<IDeliveryContext> callback)
         {
-            _eventProcessorHost = new EventProcessorHost(
-                eventHubPath, consumerGroupName, hubConnectionString, storageConnectionString);
-            await _eventProcessorHost.RegisterEventProcessorFactoryAsync(new ChannelEventProcessorFactory(this, callback)).ConfigureAwait(false);
+            //_eventProcessorHost = new EventProcessorHost(
+            //    eventHubPath, consumerGroupName, hubConnectionString, storageConnectionString);
+            //await _eventProcessorHost.RegisterEventProcessorFactoryAsync(new ChannelEventProcessorFactory(this, callback)).ConfigureAwait(false);
         }
 
         public IDispatchContext PrepareDispatch(object message = null, IMessagingChannel channel = null)
