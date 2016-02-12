@@ -35,8 +35,16 @@ namespace Zen.Massage.Site
                     builder,
                     Assembly.GetExecutingAssembly(),
                     typeof(BookingUpdater).Assembly);
+            var eventHubConnector = new EventHubWireup()
+                .WithHubConnectionString("")    // TODO: Get from configuration
+                .WithStoreConnectionString("")  // TODO: Get from configuration
+                .AddChannelGroup(
+                    config => config
+                        .WithGroupName("default")
+                    )
+                .Build();
             var messagingHost = new MessagingWireup()
-                .AddConnector(null)
+                .AddConnector(eventHubConnector)
                 .WithAuditing(GetAuditorsForChannel)
                 .StartWithReceive(routingTable);
             builder.RegisterInstance(messagingHost);
