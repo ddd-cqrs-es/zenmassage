@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using Autofac;
 using Microsoft.ApplicationInsights;
+using Microsoft.Extensions.Configuration;
 using NanoMessageBus;
 using NanoMessageBus.Channels;
 using NEventStore;
@@ -17,15 +18,14 @@ namespace Zen.Massage.Site
 {
     public class SiteIocModule : Module
     {
+        private readonly IConfigurationRoot _configuration;
         private readonly bool _useInMemoryPersistence;
 
-        public SiteIocModule()
+        public SiteIocModule(IConfigurationRoot configuration)
         {
+            _configuration = configuration;
             _useInMemoryPersistence = true;
         }
-
-        // TODO: Pass ASP.NET configuration object into module
-        //  so setup parameters can be setup via IoC
 
         protected override void Load(ContainerBuilder builder)
         {
@@ -36,10 +36,11 @@ namespace Zen.Massage.Site
                     Assembly.GetExecutingAssembly(),
                     typeof(BookingUpdater).Assembly);
             var eventHubConnector = new EventHubWireup()
-                .WithHubConnectionString("")    // TODO: Get from configuration
-                .WithStoreConnectionString("")  // TODO: Get from configuration
+                .WithHubConnectionString(_configuration["MessageBus:EventHubConnectionString"])
+                .WithStoreConnectionString(_configuration["MessageBus:StorageConnectionString"])
                 .AddChannelGroup(
                     config => config
+                        .WithInputHubPath("domainevents")
                         .WithGroupName("default")
                     )
                 .Build();

@@ -22,7 +22,7 @@ namespace NanoMessageBus.Channels
             IChannelConnector connector,
             EventHubChannelGroupConfiguration config)
         {
-            var eventHubClient = EventHubClient.CreateFromConnectionString(_hubConnectionString);
+            var eventHubClient = EventHubClient.CreateFromConnectionString(_hubConnectionString, config.InputHubPath);
             EventProcessorHost host = null;
             if (!config.DispatchOnly)
             {

@@ -66,9 +66,10 @@ namespace Zen.Massage.Site
                         new ApplyXmlTypeComments(documentationPath));
                 });
 
+            var module = new SiteIocModule(Configuration);
             // Setup autofac dependency injection
             var builder = new ContainerBuilder();
-            builder.RegisterModule<SiteIocModule>();
+            builder.RegisterModule(module);
             builder.Populate(services);
             var container = builder.Build();
             return container.Resolve<IServiceProvider>();
