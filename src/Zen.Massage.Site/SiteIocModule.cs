@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using Autofac;
+using AutoMapper;
 using Microsoft.ApplicationInsights;
 using Microsoft.Extensions.Configuration;
 using NanoMessageBus;
@@ -29,6 +30,14 @@ namespace Zen.Massage.Site
 
         protected override void Load(ContainerBuilder builder)
         {
+            // Setup automapper configuration
+            var mapperConfig = new MapperConfiguration(
+                configure =>
+                {
+                    configure.AddProfile<AutomapperConfigProfile>();
+                });
+            builder.RegisterInstance(mapperConfig);
+
             // Setup messagebus (we're using lightweight message bus rather than Azure ServiceBus)
             var routingTable =
                 new AutofacRoutingTable(

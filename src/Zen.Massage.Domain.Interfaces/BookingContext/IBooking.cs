@@ -9,7 +9,7 @@ namespace Zen.Massage.Domain.BookingContext
 
         Guid ClientId { get; }
 
-        ICollection<ITherapistBooking> AssociatedTherapists { get; }
+        ICollection<ITherapistBooking> TherapistBookings { get; }
 
         BookingStatus Status { get; }
 

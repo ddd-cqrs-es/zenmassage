@@ -61,7 +61,7 @@ namespace Zen.Massage.Application
             {
                 // Get booking, open for tender and commit
                 var booking = uow.GetRepository<IBookingWriteRepository>().Get(bookingId);
-                var therapist = booking.AssociatedTherapists.First(t => t.TherapistId == therapistId);
+                var therapist = booking.TherapistBookings.First(t => t.TherapistId == therapistId);
                 therapist.Accept();
                 uow.Commit();
             }
@@ -73,7 +73,7 @@ namespace Zen.Massage.Application
             {
                 // Get booking, open for tender and commit
                 var booking = uow.GetRepository<IBookingWriteRepository>().Get(bookingId);
-                var therapist = booking.AssociatedTherapists.First(t => t.TherapistId == therapistId);
+                var therapist = booking.TherapistBookings.First(t => t.TherapistId == therapistId);
                 therapist.Confirm();
                 uow.Commit();
             }
@@ -96,7 +96,7 @@ namespace Zen.Massage.Application
             {
                 // Get booking, open for tender and commit
                 var booking = uow.GetRepository<IBookingWriteRepository>().Get(bookingId);
-                var therapist = booking.AssociatedTherapists.First(t => t.TherapistId == therapistId);
+                var therapist = booking.TherapistBookings.First(t => t.TherapistId == therapistId);
                 therapist.Cancel(reason);
                 uow.Commit();
             }

@@ -16,7 +16,7 @@ namespace Zen.Massage.Domain.BookingContext
 
         public Guid ClientId => State.ClientId;
 
-        public ICollection<ITherapistBooking> AssociatedTherapists => State.AssociatedTherapists;
+        public ICollection<ITherapistBooking> TherapistBookings => State.AssociatedTherapists;
 
         public BookingStatus Status => State.Status;
 

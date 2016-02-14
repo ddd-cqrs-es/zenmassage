@@ -1,22 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNet.Mvc;
+using Swashbuckle.SwaggerGen.Annotations;
 using Zen.Massage.Application;
 using Zen.Massage.Domain.BookingContext;
 
 namespace Zen.Massage.Site.Controllers.V1
 {
-    [Route("api/bookings")]
-    public class BookingApiController : Controller
+    /// <summary>
+    /// Booking endpoint
+    /// </summary>
+    /// <remarks>
+    /// This endpoint exposes information regarding bookings.
+    /// Ultimately access to the information here will be limited by user id
+    /// as supplied by an OAuth2 claim from our identity server but for now
+    /// it is wide open!
+    /// </remarks>
+    [Route("api/v1/bookings")]
+    public class BookingApiControllerV1 : Controller
     {
         private readonly IMapper _mapper;
         private readonly IBookingReadRepository _bookingReadRepository;
         private readonly IBookingCommandService _bookingCommandService;
 
-        public BookingApiController(
+        public BookingApiControllerV1(
             MapperConfiguration mapperConfiguration,
             IBookingReadRepository bookingReadRepository,
             IBookingCommandService bookingCommandService)
@@ -26,13 +38,62 @@ namespace Zen.Massage.Site.Controllers.V1
             _bookingCommandService = bookingCommandService;
         }
 
-        [HttpGet("user/{userId}")]
-        public Task<IActionResult> GetUserBookings(Guid userId)
+        /// <summary>
+        /// Gets bookings associated with a user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("user/{userId}")]
+        [SwaggerOperation("GetBookingsByUser")]
+        [SwaggerResponse(HttpStatusCode.OK, "Booking retrieved")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to retrieve booking")]
+        public async Task<IActionResult> GetUserBookings(Guid userId, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var cutoffDate = DateTime.UtcNow;
+                var clientBookings = await _bookingReadRepository
+                    .GetFutureBookingsForClient(userId, cutoffDate, cancellationToken)
+                    .ConfigureAwait(true);
+                var therapistBookings = await _bookingReadRepository
+                    .GetFutureBookingsForTherapist(userId, cutoffDate, cancellationToken)
+                    .ConfigureAwait(true);
+
+                var allBookings = clientBookings.Concat(therapistBookings);
+                var mappedBookings = allBookings
+                    .Select(b => _mapper.Map<BookingItemDto>(b));
+                return Ok(
+                    new ResultDto<IEnumerable<BookingItemDto>>
+                    {
+                        StatusCode = 200,
+                        StatusDescription = "Bookings for user: " + userId,
+                        Result = mappedBookings
+                    });
+            }
+            catch (Exception exception)
+            {
+                return HttpBadRequest(
+                    new ResultDto
+                    {
+                        StatusCode = 400,
+                        StatusDescription = $"Failed to get bookings for user: {exception.Message}"
+                    });
+            }
         }
 
-        [HttpGet("{bookingId}")]
+        /// <summary>
+        /// Gets a single booking using the booking id.
+        /// </summary>
+        /// <param name="bookingId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("{bookingId}")]
+        [SwaggerOperation("GetAllBookings")]
+        [SwaggerResponse(HttpStatusCode.OK, "Booking retrieved")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to retrieve booking")]
         public async Task<IActionResult> GetBooking(Guid bookingId, CancellationToken cancellationToken)
         {
             try
@@ -60,7 +121,18 @@ namespace Zen.Massage.Site.Controllers.V1
             }
         }
 
-        [HttpPost("user/{clientId}")]
+        /// <summary>
+        /// Creates a new booking in the future associated with a given client
+        /// </summary>
+        /// <param name="clientId">The client identifier (guid)</param>
+        /// <param name="proposedTime">The proposed treatment date and time</param>
+        /// <param name="duration">Desired treatment duration</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("user/{clientId:guid}")]
+        [SwaggerOperation("CreateBooking")]
+        [SwaggerResponse(HttpStatusCode.OK, "Booking created")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to create booking")]
         public IActionResult CreateBooking(
             Guid clientId, 
             [FromBody]DateTime proposedTime,
@@ -92,7 +164,16 @@ namespace Zen.Massage.Site.Controllers.V1
             }
         }
 
-        [HttpPatch("{bookingId}/tender")]
+        /// <summary>
+        /// Opens a provisional booking for tender by therapists
+        /// </summary>
+        /// <param name="bookingId"></param>
+        /// <returns></returns>
+        [HttpPatch]
+        [Route("{bookingId}/tender")]
+        [SwaggerOperation("TenderBooking")]
+        [SwaggerResponse(HttpStatusCode.OK, "Booking tendered")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to tender booking")]
         public IActionResult TenderBooking(Guid bookingId)
         {
             try
