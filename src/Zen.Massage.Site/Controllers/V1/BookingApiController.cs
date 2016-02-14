@@ -45,7 +45,7 @@ namespace Zen.Massage.Site.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("user/{userId}")]
+        [Route("user/{userId:guid}")]
         [SwaggerOperation("GetBookingsByUser")]
         [SwaggerResponse(HttpStatusCode.OK, "Booking retrieved")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to retrieve booking")]
@@ -90,7 +90,7 @@ namespace Zen.Massage.Site.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("{bookingId}")]
+        [Route("{bookingId:guid}")]
         [SwaggerOperation("GetAllBookings")]
         [SwaggerResponse(HttpStatusCode.OK, "Booking retrieved")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to retrieve booking")]
@@ -170,7 +170,7 @@ namespace Zen.Massage.Site.Controllers.V1
         /// <param name="bookingId"></param>
         /// <returns></returns>
         [HttpPatch]
-        [Route("{bookingId}/tender")]
+        [Route("{bookingId:guid}/tender")]
         [SwaggerOperation("TenderBooking")]
         [SwaggerResponse(HttpStatusCode.OK, "Booking tendered")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to tender booking")]
