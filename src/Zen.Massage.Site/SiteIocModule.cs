@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Autofac;
@@ -74,7 +75,7 @@ namespace Zen.Massage.Site
             // Register infrastructure types
             builder.RegisterType<BookingReadRepository>()
                 .As<IBookingReadRepository>();
-            builder.RegisterType<IBookingWriteRepository>()
+            builder.RegisterType<BookingWriteRepository>()
                 .As<IBookingWriteRepository>();
 
             // Register application types
@@ -82,6 +83,7 @@ namespace Zen.Massage.Site
                 .As<IBookingCommandService>();
 
             // Register site types
+            builder.RegisterType<PipelineDispatcherHook>();
         }
 
         private IEnumerable<IMessageAuditor> GetAuditorsForChannel(IMessagingChannel channel)
@@ -112,7 +114,7 @@ namespace Zen.Massage.Site
             return wireup
                 .UsingJsonSerialization()
                 .Compress()
-                .HookIntoPipelineUsing(new PipelineDispatcherHook(container))
+                .HookIntoPipelineUsing(container.Resolve<PipelineDispatcherHook>())
                 .Build();
         }
 
@@ -154,15 +156,21 @@ namespace Zen.Massage.Site
 
         public class PipelineDispatcherHook : IPipelineHook
         {
-            private readonly ILifetimeScope _container;
+            private readonly IMessagingHost _messagingHost;
+            private IChannelGroup _channelGroup;
+            private IMessagingChannel _messageChannel;
 
-            public PipelineDispatcherHook(ILifetimeScope container)
+            public PipelineDispatcherHook(
+                IMessagingHost messagingHost)
             {
-                _container = container;
+                _messagingHost = messagingHost;
+                _channelGroup = _messagingHost.Initialize();
+                _messageChannel = _channelGroup.OpenChannel();
             }
 
             public void Dispose()
             {
+                Dispose(true);
             }
 
             public ICommit Select(ICommit committed)
@@ -177,16 +185,16 @@ namespace Zen.Massage.Site
 
             public void PostCommit(ICommit committed)
             {
-                using (var scope = _container.BeginLifetimeScope())
-                {
-                    // Get dispatch context
-                    var publisher = scope.Resolve<IDispatchContext>();
-
-                    // Publish events and commit
-                    publisher
-                        .Publish(committed.Events.Select(e => e.Body).ToArray())
-                        .Commit();
-                }
+                var messageId = Guid.NewGuid();
+                var correlationId = Guid.NewGuid();
+                var message = new ChannelMessage(
+                    messageId,
+                    correlationId,
+                    new Uri("uri://noreturnaddress"),
+                    new Dictionary<string, string>(),
+                    committed.Events.Select(e => e.Body));
+                var envelope = new ChannelEnvelope(message, new Uri[0]);
+                _messageChannel.Send(envelope);
             }
 
             public void OnPurge(string bucketId)
@@ -195,6 +203,23 @@ namespace Zen.Massage.Site
 
             public void OnDeleteStream(string bucketId, string streamId)
             {
+            }
+
+            protected virtual void Dispose(bool disposing)
+            {
+                if (disposing)
+                {
+                    if (_messageChannel != null)
+                    {
+                        _messageChannel.Dispose();
+                        _messageChannel = null;
+                    }
+                    if (_channelGroup != null)
+                    {
+                        _channelGroup.Dispose();
+                        _channelGroup = null;
+                    }
+                }
             }
         }
     }
