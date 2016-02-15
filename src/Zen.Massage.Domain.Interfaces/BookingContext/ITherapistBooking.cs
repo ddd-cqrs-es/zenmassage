@@ -6,7 +6,7 @@ namespace Zen.Massage.Domain.BookingContext
     {
         IBooking Booking { get; }
 
-        Guid TherapistId { get; }
+        TherapistId TherapistId { get; }
 
         DateTime ProposedTime { get; }
 

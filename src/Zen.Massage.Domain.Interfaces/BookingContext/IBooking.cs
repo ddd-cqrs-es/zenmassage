@@ -5,9 +5,9 @@ namespace Zen.Massage.Domain.BookingContext
 {
     public interface IBooking
     {
-        Guid BookingId { get; }
+        BookingId BookingId { get; }
 
-        Guid ClientId { get; }
+        ClientId ClientId { get; }
 
         ICollection<ITherapistBooking> TherapistBookings { get; }
 
@@ -19,7 +19,7 @@ namespace Zen.Massage.Domain.BookingContext
 
         void Tender();
 
-        void Bid(Guid therapistId, DateTime? proposedTime);
+        void Bid(TherapistId therapistId, DateTime? proposedTime);
 
         void Cancel(string reason);
     }

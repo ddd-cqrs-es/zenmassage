@@ -13,7 +13,7 @@ namespace Zen.Massage.Domain.BookingContext
 
         public IBooking Booking => State.Booking;
 
-        public Guid TherapistId => State.TherapistId;
+        public TherapistId TherapistId => State.TherapistId;
 
         public DateTime ProposedTime => State.ProposedTime;
 

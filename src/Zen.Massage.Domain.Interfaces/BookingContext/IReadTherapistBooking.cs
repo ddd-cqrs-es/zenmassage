@@ -4,7 +4,7 @@ namespace Zen.Massage.Domain.BookingContext
 {
     public interface IReadTherapistBooking
     {
-        Guid TherapistId { get; }
+        TherapistId TherapistId { get; }
 
         BookingStatus Status { get; }
 

@@ -11,9 +11,10 @@ namespace Zen.Infrastructure.ReadRepository
         public ReadTherapistBooking(DbTherapistBooking booking)
         {
             _innerBooking = booking;
+            TherapistId = new TherapistId(_innerBooking.TherapistId);
         }
 
-        public Guid TherapistId => _innerBooking.TherapistId;
+        public TherapistId TherapistId { get; private set; }
 
         public BookingStatus Status => _innerBooking.Status;
 

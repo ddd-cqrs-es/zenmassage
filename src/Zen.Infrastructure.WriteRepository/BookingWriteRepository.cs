@@ -5,19 +5,19 @@ using Zen.Massage.Domain.BookingContext;
 
 namespace Zen.Infrastructure.WriteRepository
 {
-    public class BookingWriteRepository : BaseRepository<BookingAggregate, Guid>, IBookingWriteRepository
+    public class BookingWriteRepository : BaseRepository<BookingAggregate, BookingId>, IBookingWriteRepository
     {
         public BookingWriteRepository(UnitOfWork unitOfWork, IStoreEvents eventStore)
             : base(unitOfWork, eventStore)
         {
         }
 
-        public IBooking Get(Guid bookingId)
+        public IBooking Get(BookingId bookingId)
         {
             return GetAggregate(bookingId);
         }
 
-        public IBooking GetOptional(Guid bookingId)
+        public IBooking GetOptional(BookingId bookingId)
         {
             return GetAggregateOptional(bookingId);
         }
@@ -27,14 +27,14 @@ namespace Zen.Infrastructure.WriteRepository
             AddAggregate((BookingAggregate)booking);
         }
 
-        protected override Guid GetKeyFromAggregate(BookingAggregate aggregate)
+        protected override BookingId GetKeyFromAggregate(BookingAggregate aggregate)
         {
             return aggregate.BookingId;
         }
 
-        protected override string GetStringKeyFromBlob(Guid key)
+        protected override string GetStringKeyRaw(BookingId key)
         {
-            return $"Booking:{key:N}";
+            return $"{key.Id:N}";
         }
     }
 }

@@ -23,9 +23,9 @@ namespace Zen.Massage.Domain.BookingContext
 
         public Action<object> Applier { get; set; }
 
-        public Guid BookingId { get; private set; }
+        public BookingId BookingId { get; private set; }
 
-        public Guid ClientId { get; private set; }
+        public ClientId ClientId { get; private set; }
 
         public ICollection<ITherapistBooking> AssociatedTherapists =>
             new ReadOnlyCollection<ITherapistBooking>(
@@ -56,7 +56,7 @@ namespace Zen.Massage.Domain.BookingContext
 
         private void OnBookingCancelled(BookingCancelledEvent eventObject)
         {
-            if (eventObject.TherapistId != Guid.Empty)
+            if (eventObject.TherapistId != TherapistId.Empty)
             {
                 // Booking cancelled by therapist
                 // Route event through to the associated therapist booking

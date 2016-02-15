@@ -55,31 +55,20 @@ namespace Zen.Massage.Site.Controllers.V1
             {
                 var cutoffDate = DateTime.UtcNow;
                 var clientBookings = await _bookingReadRepository
-                    .GetFutureBookingsForClient(userId, cutoffDate, cancellationToken)
+                    .GetFutureBookingsForClient(new ClientId(userId), cutoffDate, cancellationToken)
                     .ConfigureAwait(true);
                 var therapistBookings = await _bookingReadRepository
-                    .GetFutureBookingsForTherapist(userId, cutoffDate, cancellationToken)
+                    .GetFutureBookingsForTherapist(new TherapistId(userId), cutoffDate, cancellationToken)
                     .ConfigureAwait(true);
 
                 var allBookings = clientBookings.Concat(therapistBookings);
                 var mappedBookings = allBookings
                     .Select(b => _mapper.Map<BookingItemDto>(b));
-                return Ok(
-                    new ResultDto<IEnumerable<BookingItemDto>>
-                    {
-                        StatusCode = 200,
-                        StatusDescription = "Bookings for user: " + userId,
-                        Result = mappedBookings
-                    });
+                return Ok(mappedBookings);
             }
             catch (Exception exception)
             {
-                return HttpBadRequest(
-                    new ResultDto
-                    {
-                        StatusCode = 400,
-                        StatusDescription = $"Failed to get bookings for user: {exception.Message}"
-                    });
+                return HttpBadRequest($"Failed to get bookings for user: {exception.Message}");
             }
         }
 
@@ -99,25 +88,14 @@ namespace Zen.Massage.Site.Controllers.V1
             try
             {
                 var booking = await _bookingReadRepository
-                    .GetBooking(bookingId, true, cancellationToken)
+                    .GetBooking(new BookingId(bookingId), true, cancellationToken)
                     .ConfigureAwait(true);
                 var mappedBooking = _mapper.Map<BookingItemDto>(booking);
-                return Ok(
-                    new ResultDto<BookingItemDto>
-                    {
-                        StatusCode = 200,
-                        StatusDescription = "Success",
-                        Result = mappedBooking
-                    });
+                return Ok(mappedBooking);
             }
             catch (Exception exception)
             {
-                return HttpBadRequest(
-                    new ResultDto
-                    {
-                        StatusCode = 400,
-                        StatusDescription = "Failed to retrieve booking: " + exception.Message
-                    });
+                return HttpBadRequest($"Failed to retrieve booking: {exception.Message}");
             }
         }
 
@@ -140,27 +118,17 @@ namespace Zen.Massage.Site.Controllers.V1
         {
             try
             {
-                var bookingId = _bookingCommandService.Create(clientId, proposedTime, duration);
+                var bookingId = _bookingCommandService.Create(new ClientId(clientId), proposedTime, duration);
                 return CreatedAtAction(
                     "GetBooking",
                     new Dictionary<string, string>
                     {
-                        { "bookingId", bookingId.ToString("D") }
-                    },
-                    new ResultDto
-                    {
-                        StatusCode = 200,
-                        StatusDescription = "Booking created"
+                        { "bookingId", bookingId.Id.ToString("D") }
                     });
             }
             catch (Exception exception)
             {
-                return HttpBadRequest(
-                    new ResultDto
-                    {
-                        StatusCode = 400,
-                        StatusDescription = "Failed to create booking: " + exception.Message
-                    });
+                return HttpBadRequest($"Failed to create booking: {exception.Message}");
             }
         }
 
@@ -178,22 +146,12 @@ namespace Zen.Massage.Site.Controllers.V1
         {
             try
             {
-                _bookingCommandService.Tender(bookingId);
-                return Ok(
-                    new ResultDto
-                    {
-                        StatusCode = 200,
-                        StatusDescription = "Booking tendered"
-                    });
+                _bookingCommandService.Tender(new BookingId(bookingId));
+                return Ok();
             }
             catch (Exception exception)
             {
-                return HttpBadRequest(
-                    new ResultDto
-                    {
-                        StatusCode = 400,
-                        StatusDescription = "Failed to tender booking: " + exception.Message
-                    });
+                return HttpBadRequest($"Failed to tender booking: {exception.Message}");
             }
         }
     }

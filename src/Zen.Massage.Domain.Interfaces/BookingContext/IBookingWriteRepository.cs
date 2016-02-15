@@ -4,9 +4,9 @@ namespace Zen.Massage.Domain.BookingContext
 {
     public interface IBookingWriteRepository
     {
-        IBooking Get(Guid bookingId);
+        IBooking Get(BookingId bookingId);
 
-        IBooking GetOptional(Guid bookingId);
+        IBooking GetOptional(BookingId bookingId);
 
         void Add(IBooking booking);
     }

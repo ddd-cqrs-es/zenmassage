@@ -21,7 +21,7 @@ namespace Zen.Massage.Application
             _unitOfWorkFactory = unitOfWorkFactory;
         }
 
-        public Guid Create(Guid clientId, DateTime proposedTime, TimeSpan duration)
+        public BookingId Create(ClientId clientId, DateTime proposedTime, TimeSpan duration)
         {
             using (var uow = _unitOfWorkFactory.CreateSession())
             {
@@ -33,7 +33,7 @@ namespace Zen.Massage.Application
             }
         }
 
-        public void Tender(Guid bookingId)
+        public void Tender(BookingId bookingId)
         {
             using (var uow = _unitOfWorkFactory.CreateSession())
             {
@@ -44,7 +44,7 @@ namespace Zen.Massage.Application
             }
         }
 
-        public void PlaceBid(Guid bookingId, Guid therapistId, DateTime? proposedTime)
+        public void PlaceBid(BookingId bookingId, TherapistId therapistId, DateTime? proposedTime)
         {
             using (var uow = _unitOfWorkFactory.CreateSession())
             {
@@ -55,7 +55,7 @@ namespace Zen.Massage.Application
             }
         }
 
-        public void AcceptBid(Guid bookingId, Guid therapistId)
+        public void AcceptBid(BookingId bookingId, TherapistId therapistId)
         {
             using (var uow = _unitOfWorkFactory.CreateSession())
             {
@@ -67,7 +67,7 @@ namespace Zen.Massage.Application
             }
         }
 
-        public void ConfirmBid(Guid bookingId, Guid therapistId)
+        public void ConfirmBid(BookingId bookingId, TherapistId therapistId)
         {
             using (var uow = _unitOfWorkFactory.CreateSession())
             {
@@ -79,7 +79,7 @@ namespace Zen.Massage.Application
             }
         }
 
-        public void Cancel(Guid bookingId, string reason)
+        public void Cancel(BookingId bookingId, string reason)
         {
             using (var uow = _unitOfWorkFactory.CreateSession())
             {
@@ -90,7 +90,7 @@ namespace Zen.Massage.Application
             }
         }
 
-        public void Cancel(Guid bookingId, Guid therapistId, string reason)
+        public void Cancel(BookingId bookingId, TherapistId therapistId, string reason)
         {
             using (var uow = _unitOfWorkFactory.CreateSession())
             {

@@ -4,11 +4,11 @@ namespace Zen.Massage.Domain.BookingContext
 {
     public class BookingEvent
     {
-        public BookingEvent(Guid bookingId)
+        public BookingEvent(BookingId bookingId)
         {
             BookingId = bookingId;
         }
 
-        public Guid BookingId { get; private set; }
+        public BookingId BookingId { get; private set; }
     }
 }

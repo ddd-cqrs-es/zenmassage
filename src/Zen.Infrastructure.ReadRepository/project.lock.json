@@ -31,7 +31,10 @@
         "framework": "DNX,Version=v4.5.1",
         "dependencies": {
           "AggregateSource": "0.0.300"
-        }
+        },
+        "frameworkAssemblies": [
+          "System.Runtime.Serialization"
+        ]
       }
     },
     "DNX,Version=v4.5.1/win7-x86": {
@@ -63,7 +66,10 @@
         "framework": "DNX,Version=v4.5.1",
         "dependencies": {
           "AggregateSource": "0.0.300"
-        }
+        },
+        "frameworkAssemblies": [
+          "System.Runtime.Serialization"
+        ]
       }
     },
     "DNX,Version=v4.5.1/win7-x64": {
@@ -95,7 +101,10 @@
         "framework": "DNX,Version=v4.5.1",
         "dependencies": {
           "AggregateSource": "0.0.300"
-        }
+        },
+        "frameworkAssemblies": [
+          "System.Runtime.Serialization"
+        ]
       }
     }
   },

@@ -55,6 +55,8 @@
     "": [
       "AggregateSource >= 0.0.300"
     ],
-    "DNX,Version=v4.5.1": []
+    "DNX,Version=v4.5.1": [
+      "fx/System.Runtime.Serialization >= 4.0.0"
+    ]
   }
 }

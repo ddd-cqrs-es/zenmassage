@@ -29,6 +29,8 @@ namespace Zen.Massage.Site
             _useInMemoryPersistence = true;
         }
 
+        public IConfigurationRoot Configuration => _configuration;
+
         protected override void Load(ContainerBuilder builder)
         {
             // Setup automapper configuration
@@ -46,8 +48,8 @@ namespace Zen.Massage.Site
                     Assembly.GetExecutingAssembly(),
                     typeof(BookingUpdater).Assembly);
             var eventHubConnector = new EventHubWireup()
-                .WithHubConnectionString(_configuration["MessageBus:EventHubConnectionString"])
-                .WithStoreConnectionString(_configuration["MessageBus:StorageConnectionString"])
+                .WithHubConnectionString(Configuration["MessageBus:EventHubConnectionString"])
+                .WithStoreConnectionString(Configuration["MessageBus:StorageConnectionString"])
                 .AddChannelGroup(
                     config => config
                         .WithInputHubPath("domainevents")
@@ -106,7 +108,7 @@ namespace Zen.Massage.Site
             else
             {
                 wireup = Wireup.Init()
-                    .UsingSqlPersistence("EventStore")
+                    .UsingSqlPersistence("EventStore", "SqlClient", Configuration["EventStore:Database"])
                     .InitializeStorageEngine();
             }
 
@@ -190,10 +192,15 @@ namespace Zen.Massage.Site
                 var message = new ChannelMessage(
                     messageId,
                     correlationId,
-                    new Uri("uri://noreturnaddress"),
+                    new Uri("uri://noreply.zenmassage.com"),
                     new Dictionary<string, string>(),
                     committed.Events.Select(e => e.Body));
-                var envelope = new ChannelEnvelope(message, new Uri[0]);
+                var envelope = new ChannelEnvelope(
+                    message,
+                    new[]
+                    {
+                       new Uri("uri://domain.zenmassage.com"),  
+                    });
                 _messageChannel.Send(envelope);
             }
 

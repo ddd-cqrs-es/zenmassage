@@ -12,9 +12,9 @@ namespace Zen.Massage.Domain.BookingContext
             State.Applier = ApplyChange;
         }
 
-        public Guid BookingId => State.BookingId;
+        public BookingId BookingId => State.BookingId;
 
-        public Guid ClientId => State.ClientId;
+        public ClientId ClientId => State.ClientId;
 
         public ICollection<ITherapistBooking> TherapistBookings => State.AssociatedTherapists;
 
@@ -34,14 +34,15 @@ namespace Zen.Massage.Domain.BookingContext
         /// This method should never be exposed to the IBooking interface and
         /// is only called by the BookingFactory.
         /// </remarks>
-        public void Create(Guid clientId, DateTime proposedTime, TimeSpan duration)
+        public void Create(ClientId clientId, DateTime proposedTime, TimeSpan duration)
         {
-            if (BookingId != Guid.Empty)
+            if (BookingId != BookingId.Empty)
             {
                 throw new InvalidOperationException("Booking has already been created.");
             }
 
-            ApplyChange(new BookingCreatedEvent(Guid.NewGuid(), clientId, proposedTime, duration));
+            var bookingId = new BookingId(Guid.NewGuid());
+            ApplyChange(new BookingCreatedEvent(bookingId, clientId, proposedTime, duration));
         }
 
         public void Tender()
@@ -59,7 +60,7 @@ namespace Zen.Massage.Domain.BookingContext
             ApplyChange(new BookingTenderEvent(BookingId));
         }
 
-        public void Bid(Guid therapistId, DateTime? proposedTime)
+        public void Bid(TherapistId therapistId, DateTime? proposedTime)
         {
             // TODO: Sanity checks
 

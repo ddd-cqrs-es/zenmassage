@@ -38,9 +38,29 @@ namespace Zen.Infrastructure.WriteRepository
 
         protected abstract TKey GetKeyFromAggregate(TAggregate aggregate);
 
-        protected virtual string GetStringKeyFromBlob(TKey key)
+        protected virtual string GetStringKeyPartition(TKey key)
+        {
+            return key.GetType().Name.Replace("Aggregate", string.Empty);
+        }
+
+        protected virtual string GetStringKeyRaw(TKey key)
         {
             return key.ToString();
+        }
+
+        protected virtual string GetStringKeyFromBlob(TKey key)
+        {
+            var partition = GetStringKeyPartition(key);
+            var identifier = GetStringKeyRaw(key);
+
+            if (!string.IsNullOrEmpty(partition))
+            {
+                return $"{partition}#{identifier}";
+            }
+            else
+            {
+                return identifier;
+            }
         }
     }
 }

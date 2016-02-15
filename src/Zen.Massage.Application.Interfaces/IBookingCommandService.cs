@@ -1,21 +1,22 @@
 ﻿using System;
+using Zen.Massage.Domain.BookingContext;
 
 namespace Zen.Massage.Application
 {
     public interface IBookingCommandService
     {
-        Guid Create(Guid clientId, DateTime proposedTime, TimeSpan duration);
+        BookingId Create(ClientId clientId, DateTime proposedTime, TimeSpan duration);
 
-        void Tender(Guid bookingId);
+        void Tender(BookingId bookingId);
 
-        void PlaceBid(Guid bookingId, Guid therapistId, DateTime? proposedTime);
+        void PlaceBid(BookingId bookingId, TherapistId therapistId, DateTime? proposedTime);
 
-        void AcceptBid(Guid bookingId, Guid therapistId);
+        void AcceptBid(BookingId bookingId, TherapistId therapistId);
 
-        void ConfirmBid(Guid bookingId, Guid therapistId);
+        void ConfirmBid(BookingId bookingId, TherapistId therapistId);
 
-        void Cancel(Guid bookingId, string reason);
+        void Cancel(BookingId bookingId, string reason);
 
-        void Cancel(Guid bookingId, Guid therapistId, string reason);
+        void Cancel(BookingId bookingId, TherapistId therapistId, string reason);
     }
 }

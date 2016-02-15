@@ -74,7 +74,7 @@ namespace Zen.Massage.Application
         /// <param name="message">The message to be handled.</param>
         public async void Handle(BookingCancelledEvent message)
         {
-            if (message.TherapistId != Guid.Empty)
+            if (message.TherapistId != TherapistId.Empty)
             {
                 await _repository
                     .UpdateTherapistBooking(

@@ -5,8 +5,8 @@ namespace Zen.Massage.Domain.BookingContext
     public class BookingCreatedEvent : BookingEvent
     {
         public BookingCreatedEvent(
-            Guid bookingId,
-            Guid clientId,
+            BookingId bookingId,
+            ClientId clientId,
             DateTime proposedTime,
             TimeSpan duration)
             : base(bookingId)
@@ -16,7 +16,7 @@ namespace Zen.Massage.Domain.BookingContext
             Duration = duration;
         }
 
-        public Guid ClientId { get; private set; }
+        public ClientId ClientId { get; private set; }
 
         public DateTime ProposedTime { get; private set; }
 

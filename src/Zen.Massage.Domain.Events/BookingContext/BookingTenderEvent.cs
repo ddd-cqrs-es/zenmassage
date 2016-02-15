@@ -4,7 +4,7 @@ namespace Zen.Massage.Domain.BookingContext
 {
     public class BookingTenderEvent : BookingEvent
     {
-        public BookingTenderEvent(Guid bookingId)
+        public BookingTenderEvent(BookingId bookingId)
             : base(bookingId)
         {
         }

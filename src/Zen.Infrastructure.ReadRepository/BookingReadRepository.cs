@@ -12,7 +12,7 @@ namespace Zen.Infrastructure.ReadRepository
 {
     public class BookingReadRepository : IBookingReadRepository
     {
-        public async Task<IReadBooking> GetBooking(Guid bookingId, bool includeTherapists, CancellationToken cancellationToken)
+        public async Task<IReadBooking> GetBooking(BookingId bookingId, bool includeTherapists, CancellationToken cancellationToken)
         {
             using (var context = new BookingEntityContext())
             {
@@ -25,7 +25,7 @@ namespace Zen.Infrastructure.ReadRepository
 
                 // Issue async query
                 var result = await query
-                    .FirstOrDefaultAsync(b => b.BookingId == bookingId, cancellationToken)
+                    .FirstOrDefaultAsync(b => b.BookingId == bookingId.Id, cancellationToken)
                     .ConfigureAwait(false);
                 if (result == null)
                 {
@@ -54,7 +54,7 @@ namespace Zen.Infrastructure.ReadRepository
             }
         }
 
-        public async Task<IEnumerable<IReadBooking>> GetFutureBookingsForClient(Guid clientId, DateTime cutoffDate, CancellationToken cancellationToken)
+        public async Task<IEnumerable<IReadBooking>> GetFutureBookingsForClient(ClientId clientId, DateTime cutoffDate, CancellationToken cancellationToken)
         {
             using (var context = new BookingEntityContext())
             {
@@ -62,7 +62,7 @@ namespace Zen.Infrastructure.ReadRepository
                     .Include("TherapistBookings")
                     .Where(b =>
                         b.ProposedTime > cutoffDate &&
-                        b.ClientId == clientId &&
+                        b.ClientId == clientId.Id &&
                         b.Status != BookingStatus.Provisional &&
                         b.Status != BookingStatus.CancelledByClient)
                     .ToListAsync(cancellationToken)
@@ -72,7 +72,7 @@ namespace Zen.Infrastructure.ReadRepository
             }
         }
 
-        public async Task<IEnumerable<IReadBooking>> GetFutureBookingsForTherapist(Guid therapistId, DateTime cutoffDate, CancellationToken cancellationToken)
+        public async Task<IEnumerable<IReadBooking>> GetFutureBookingsForTherapist(TherapistId therapistId, DateTime cutoffDate, CancellationToken cancellationToken)
         {
             using (var context = new BookingEntityContext())
             {
@@ -80,7 +80,7 @@ namespace Zen.Infrastructure.ReadRepository
                     .Include("Booking")
                     .Where(tb =>
                         tb.Booking.ProposedTime > cutoffDate &&
-                        tb.TherapistId == therapistId &&
+                        tb.TherapistId == therapistId.Id &&
                         tb.Booking.Status != BookingStatus.Provisional &&
                         tb.Booking.Status != BookingStatus.CancelledByClient)
                     .Select(tb => tb.Booking)
@@ -91,16 +91,16 @@ namespace Zen.Infrastructure.ReadRepository
             }
         }
 
-        public async Task AddBooking(Guid bookingId, Guid clientId, DateTime proposedTime, TimeSpan duration, CancellationToken cancellationToken)
+        public async Task AddBooking(BookingId bookingId, ClientId clientId, DateTime proposedTime, TimeSpan duration, CancellationToken cancellationToken)
         {
             using (var context = new BookingEntityContext())
             {
                 var booking =
                     new DbBooking
                     {
-                        BookingId = (bookingId != Guid.Empty) ? bookingId : Guid.NewGuid(),
+                        BookingId = bookingId.Id,
                         Status = BookingStatus.Provisional,
-                        ClientId = clientId,
+                        ClientId = clientId.Id,
                         ProposedTime = proposedTime,
                         Duration = duration
                     };
@@ -111,12 +111,12 @@ namespace Zen.Infrastructure.ReadRepository
             }
         }
 
-        public async Task UpdateBooking(Guid bookingId, BookingStatus? status, DateTime? proposedTime, TimeSpan? duration, CancellationToken cancellationToken)
+        public async Task UpdateBooking(BookingId bookingId, BookingStatus? status, DateTime? proposedTime, TimeSpan? duration, CancellationToken cancellationToken)
         {
             using (var context = new BookingEntityContext())
             {
                 var booking = await context.Bookings
-                    .FindAsync(cancellationToken, bookingId)
+                    .FindAsync(cancellationToken, bookingId.Id)
                     .ConfigureAwait(false);
                 if (status.HasValue)
                 {
@@ -134,7 +134,7 @@ namespace Zen.Infrastructure.ReadRepository
         }
 
         public async Task AddTherapistBooking(
-            Guid bookingId, Guid therapistId, BookingStatus status, DateTime proposedTime,
+            BookingId bookingId, TherapistId therapistId, BookingStatus status, DateTime proposedTime,
             CancellationToken cancellationToken)
         {
             using (var context = new BookingEntityContext())
@@ -146,8 +146,8 @@ namespace Zen.Infrastructure.ReadRepository
                     new DbTherapistBooking
                     {
                         TherapistBookingId = Guid.NewGuid(),
-                        BookingId = bookingId,
-                        TherapistId = therapistId,
+                        BookingId = bookingId.Id,
+                        TherapistId = therapistId.Id,
                         ProposedTime = proposedTime,
                         Status = status,
                         Booking = booking
@@ -160,15 +160,15 @@ namespace Zen.Infrastructure.ReadRepository
         }
 
         public async Task UpdateTherapistBooking(
-            Guid bookingId, Guid therapistId, BookingStatus? status, DateTime? proposedTime,
+            BookingId bookingId, TherapistId therapistId, BookingStatus? status, DateTime? proposedTime,
             CancellationToken cancellationToken)
         {
             using (var context = new BookingEntityContext())
             {
                 var therapist = await context.TherapistBookings
                     .FirstOrDefaultAsync(tb =>
-                        tb.BookingId == bookingId &&
-                        tb.TherapistId == therapistId,
+                        tb.BookingId == bookingId.Id &&
+                        tb.TherapistId == therapistId.Id,
                         cancellationToken)
                     .ConfigureAwait(false);
                 if (therapist != null)
