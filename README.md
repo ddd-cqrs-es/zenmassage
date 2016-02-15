@@ -18,7 +18,7 @@ Seed web application project using;
 
 Companion Apache Cordova mobile project using;
 
- * Cordova 5.4.1
+ * Cordova 6.0.0
  * Onsen UI 2.0.0 beta
  * Angular 1
  * Typescript
@@ -38,8 +38,20 @@ Feel free to contribute, comment and reuse all that you see here.
 
 # Requirements
 1. An internet connection (so you can download node modules and such)
-2. Visual Studio 2015 (should also work with Visual Studio Code)
-3. NodeJS (currently using version 5.4.1)
+2. Visual Studio 2015
+   You will need the Azure SDK (v2.8.2 or higher) and Apache Cordova Tools for Visual Studio (Update 6 or higher)
+3. NodeJS (currently using version 5.5.0)
+
+# Application Structure
+
+The web-site is a multi-tier web application based on MVC6. It follows a CQRS (Command Query Response Seperation) pattern that keeps the read side (query) and write side (command) distinct.
+
+The write side is supported by a Domain-Driven-Design persistence model where changes are written to a transaction log and published to a message bus.
+The read side is supported by a typical code-first Entity Framework database.
+The read and write sides are kept in sync by an update handler that listens for events on the message bus and plays the corresponding actions into the read side database.
+This means that the system employs eventual consistency.
+
+The site also exposes a set of WEB APIs that allow access to underlying services. These services are documented by Swagger (/swagger/ui)
 
 # Next Steps
 1. Integration of unit testing of both server-side and client-side code (likely using xUnit and mocha)
