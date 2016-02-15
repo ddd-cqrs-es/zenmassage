@@ -2,6 +2,7 @@
 
 namespace Zen.Massage.Domain.BookingContext
 {
+    [Serializable]
     public class BookingCancelledEvent : BookingEvent
     {
         public BookingCancelledEvent(BookingId bookingId, string reason)

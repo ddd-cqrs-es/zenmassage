@@ -6,6 +6,7 @@ namespace Zen.Massage.Domain.BookingContext
     /// <summary>
     /// <c>TherapistBookingId</c> simple object to encapsulate a therapist booking id.
     /// </summary>
+    [Serializable]
     [DataContract]
     public struct TherapistBookingId
     {

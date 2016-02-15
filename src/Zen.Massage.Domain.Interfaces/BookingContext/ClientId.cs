@@ -6,6 +6,7 @@ namespace Zen.Massage.Domain.BookingContext
     /// <summary>
     /// <c>ClientId</c> simple object to encapsulate a client id.
     /// </summary>
+    [Serializable]
     [DataContract]
     public struct ClientId
     {

@@ -2,6 +2,7 @@
 
 namespace Zen.Massage.Domain.BookingContext
 {
+    [Serializable]
     public class TherapistBookingEvent : BookingEvent
     {
         public TherapistBookingEvent(BookingId bookingId, TherapistId therapistId)
