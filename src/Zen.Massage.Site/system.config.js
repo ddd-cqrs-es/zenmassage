@@ -6,6 +6,12 @@
         bootstrap: '/js/lib/bootstrap/bootstrap.js'
     },
     meta: {
+		'js/lib/bootstrap/bootstrap.js': {
+			deps: [
+				'jquery',
+				'tether'
+			]
+		},
         'js/lib/tether/tether.js': {
             format: 'global',
             exports: 'Tether'
