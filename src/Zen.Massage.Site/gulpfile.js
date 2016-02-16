@@ -1,4 +1,4 @@
-﻿/// <binding AfterBuild='postbuild:swagger' Clean='clean' />
+/// <binding AfterBuild='default, postbuild:swagger' Clean='clean' />
 'use strict';
 
 var del = require('del'),
