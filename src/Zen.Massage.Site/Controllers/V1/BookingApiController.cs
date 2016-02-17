@@ -119,12 +119,7 @@ namespace Zen.Massage.Site.Controllers.V1
             try
             {
                 var bookingId = _bookingCommandService.Create(new ClientId(clientId), proposedTime, duration);
-                return CreatedAtAction(
-                    "GetBooking",
-                    new Dictionary<string, string>
-                    {
-                        { "bookingId", bookingId.Id.ToString("D") }
-                    });
+                return Created(new Uri($"http://localhost:1282/api/v1/bookings/{bookingId.Id:D}/"), null);
             }
             catch (Exception exception)
             {
