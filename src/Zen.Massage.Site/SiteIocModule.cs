@@ -73,6 +73,7 @@ namespace Zen.Massage.Site
 
             // Register infrastructure types
             builder.RegisterType<BookingReadRepository>()
+                .WithParameter("connectionString", Configuration["ReadStore:DatabaseConnectionString"])
                 .As<IBookingReadRepository>();
             builder.RegisterType<BookingWriteRepository>()
                 .As<IBookingWriteRepository>();

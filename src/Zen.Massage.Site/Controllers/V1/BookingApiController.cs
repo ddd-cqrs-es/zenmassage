@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading;
@@ -103,9 +102,14 @@ namespace Zen.Massage.Site.Controllers.V1
         /// Creates a new booking in the future associated with a given client
         /// </summary>
         /// <param name="clientId">The client identifier (guid)</param>
-        /// <param name="proposedTime">The proposed treatment date and time</param>
-        /// <param name="duration">Desired treatment duration</param>
-        /// <returns></returns>
+        /// <param name="booking">The booking information</param>
+        /// <returns>
+        /// HTTP Created with the booking id.
+        /// </returns>
+        /// <remarks>
+        /// The url that represents the booking object via this API is returned
+        /// in the location header of the response.
+        /// </remarks>
         [HttpPost]
         [Route("user/{clientId:guid}")]
         [SwaggerOperation("CreateBooking")]
@@ -113,13 +117,12 @@ namespace Zen.Massage.Site.Controllers.V1
         [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to create booking")]
         public IActionResult CreateBooking(
             Guid clientId, 
-            [FromBody]DateTime proposedTime,
-            [FromBody]TimeSpan duration)
+            [FromBody]CreateBookingDto booking)
         {
             try
             {
-                var bookingId = _bookingCommandService.Create(new ClientId(clientId), proposedTime, duration);
-                return Created(new Uri($"http://localhost:1282/api/v1/bookings/{bookingId.Id:D}/"), null);
+                var bookingId = _bookingCommandService.Create(new ClientId(clientId), booking.ProposedTime, booking.Duration);
+                return Created(new Uri($"http://localhost:1282/api/v1/bookings/{bookingId.Id:D}/"), bookingId.Id);
             }
             catch (Exception exception)
             {

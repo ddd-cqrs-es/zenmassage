@@ -12,9 +12,16 @@ namespace Zen.Infrastructure.ReadRepository
 {
     public class BookingReadRepository : IBookingReadRepository
     {
+        private readonly string _connectionString;
+
+        public BookingReadRepository(string connectionString)
+        {
+            _connectionString = connectionString;
+        }
+
         public async Task<IReadBooking> GetBooking(BookingId bookingId, bool includeTherapists, CancellationToken cancellationToken)
         {
-            using (var context = new BookingEntityContext())
+            using (var context = CreateBookingEntityContext())
             {
                 // Determine depth of information we will be returning
                 DbQuery<DbBooking> query = context.Bookings;
@@ -39,7 +46,7 @@ namespace Zen.Infrastructure.ReadRepository
 
         public async Task<IEnumerable<IReadBooking>> GetFutureOpenBookings(DateTime cutoffDate, BookingStatus status, CancellationToken cancellationToken)
         {
-            using (var context = new BookingEntityContext())
+            using (var context = CreateBookingEntityContext())
             {
                 var query = await context.Bookings
                     .Include("TherapistBookings")
@@ -56,7 +63,7 @@ namespace Zen.Infrastructure.ReadRepository
 
         public async Task<IEnumerable<IReadBooking>> GetFutureBookingsForClient(ClientId clientId, DateTime cutoffDate, CancellationToken cancellationToken)
         {
-            using (var context = new BookingEntityContext())
+            using (var context = CreateBookingEntityContext())
             {
                 var query = await context.Bookings
                     .Include("TherapistBookings")
@@ -74,7 +81,7 @@ namespace Zen.Infrastructure.ReadRepository
 
         public async Task<IEnumerable<IReadBooking>> GetFutureBookingsForTherapist(TherapistId therapistId, DateTime cutoffDate, CancellationToken cancellationToken)
         {
-            using (var context = new BookingEntityContext())
+            using (var context = CreateBookingEntityContext())
             {
                 var query = await context.TherapistBookings
                     .Include("Booking")
@@ -93,7 +100,7 @@ namespace Zen.Infrastructure.ReadRepository
 
         public async Task AddBooking(BookingId bookingId, ClientId clientId, DateTime proposedTime, TimeSpan duration, CancellationToken cancellationToken)
         {
-            using (var context = new BookingEntityContext())
+            using (var context = CreateBookingEntityContext())
             {
                 var booking =
                     new DbBooking
@@ -113,7 +120,7 @@ namespace Zen.Infrastructure.ReadRepository
 
         public async Task UpdateBooking(BookingId bookingId, BookingStatus? status, DateTime? proposedTime, TimeSpan? duration, CancellationToken cancellationToken)
         {
-            using (var context = new BookingEntityContext())
+            using (var context = CreateBookingEntityContext())
             {
                 var booking = await context.Bookings
                     .FindAsync(cancellationToken, bookingId.Id)
@@ -137,7 +144,7 @@ namespace Zen.Infrastructure.ReadRepository
             BookingId bookingId, TherapistId therapistId, BookingStatus status, DateTime proposedTime,
             CancellationToken cancellationToken)
         {
-            using (var context = new BookingEntityContext())
+            using (var context = CreateBookingEntityContext())
             {
                 var booking = await context.Bookings
                     .FindAsync(cancellationToken, bookingId)
@@ -163,7 +170,7 @@ namespace Zen.Infrastructure.ReadRepository
             BookingId bookingId, TherapistId therapistId, BookingStatus? status, DateTime? proposedTime,
             CancellationToken cancellationToken)
         {
-            using (var context = new BookingEntityContext())
+            using (var context = CreateBookingEntityContext())
             {
                 var therapist = await context.TherapistBookings
                     .FirstOrDefaultAsync(tb =>
@@ -187,6 +194,11 @@ namespace Zen.Infrastructure.ReadRepository
                         .ConfigureAwait(false);
                 }
             }
+        }
+
+        private BookingEntityContext CreateBookingEntityContext()
+        {
+            return new BookingEntityContext(_connectionString);
         }
     }
 }

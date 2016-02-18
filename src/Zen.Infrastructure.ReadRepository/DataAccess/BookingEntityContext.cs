@@ -9,6 +9,11 @@ namespace Zen.Infrastructure.ReadRepository.DataAccess
         {
         }
 
+        public BookingEntityContext(string connectionString)
+            : base(connectionString)
+        {
+        }
+
         public virtual DbSet<DbBooking> Bookings { get; set; }
 
         public virtual DbSet<DbTherapistBooking> TherapistBookings { get; set; }
