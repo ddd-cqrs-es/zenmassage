@@ -46,8 +46,8 @@ namespace Zen.Massage.Site.Controllers.V1
         [HttpGet]
         [Route("user/{userId:guid}")]
         [SwaggerOperation("GetBookingsByUser")]
-        [SwaggerResponse(HttpStatusCode.OK, "Booking retrieved")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to retrieve booking")]
+        [SwaggerResponse(HttpStatusCode.OK, "Bookings retrieved")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to retrieve bookings")]
         public async Task<IActionResult> GetUserBookings(Guid userId, CancellationToken cancellationToken)
         {
             try
@@ -68,6 +68,66 @@ namespace Zen.Massage.Site.Controllers.V1
             catch (Exception exception)
             {
                 return HttpBadRequest($"Failed to get bookings for user: {exception.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Gets bookings associated with a client
+        /// </summary>
+        /// <param name="clientId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("client/{clientId:guid}")]
+        [SwaggerOperation("GetBookingsByClient")]
+        [SwaggerResponse(HttpStatusCode.OK, "Bookings retrieved")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to retrieve bookings")]
+        public async Task<IActionResult> GetClientBookings(Guid clientId, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var cutoffDate = DateTime.UtcNow;
+                var clientBookings = await _bookingReadRepository
+                    .GetFutureBookingsForClient(new ClientId(clientId), cutoffDate, cancellationToken)
+                    .ConfigureAwait(true);
+
+                var mappedBookings = clientBookings
+                    .Select(b => _mapper.Map<BookingItemDto>(b));
+                return Ok(mappedBookings);
+            }
+            catch (Exception exception)
+            {
+                return HttpBadRequest($"Failed to get bookings for client: {exception.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Gets bookings associated with a therapist
+        /// </summary>
+        /// <param name="therapistId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("therapist/{therapistId:guid}")]
+        [SwaggerOperation("GetBookingsByTherapist")]
+        [SwaggerResponse(HttpStatusCode.OK, "Bookings retrieved")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to retrieve bookings")]
+        public async Task<IActionResult> GetTherapistBookings(Guid therapistId, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var cutoffDate = DateTime.UtcNow;
+                var therapistBookings = await _bookingReadRepository
+                    .GetFutureBookingsForTherapist(new TherapistId(therapistId), cutoffDate, cancellationToken)
+                    .ConfigureAwait(true);
+
+                var mappedBookings = therapistBookings
+                    .Select(b => _mapper.Map<BookingItemDto>(b));
+                return Ok(mappedBookings);
+            }
+            catch (Exception exception)
+            {
+                return HttpBadRequest($"Failed to get bookings for therapist: {exception.Message}");
             }
         }
 
@@ -150,6 +210,142 @@ namespace Zen.Massage.Site.Controllers.V1
             catch (Exception exception)
             {
                 return HttpBadRequest($"Failed to tender booking: {exception.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Bids on a tendered booking
+        /// </summary>
+        /// <param name="bookingId">Booking identifier</param>
+        /// <param name="therapistId">Therapist identifier</param>
+        /// <param name="placeBid">Bid placement information</param>
+        /// <returns></returns>
+        [HttpPatch]
+        [Route("{bookingId:guid}/bid/{therapistId:guid}")]
+        [SwaggerOperation("PlaceBid")]
+        [SwaggerResponse(HttpStatusCode.OK, "Bid placed")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to place bid")]
+        public IActionResult PlaceBid(
+            Guid bookingId,
+            Guid therapistId,
+            [FromBody] PlaceBookingBidDto placeBid)
+        {
+            try
+            {
+                _bookingCommandService.PlaceBid(
+                    new BookingId(bookingId),
+                    new TherapistId(therapistId),
+                    placeBid.ProposedTime);
+                return Ok();
+            }
+            catch (Exception exception)
+            {
+                return HttpBadRequest($"Failed to place bid on booking: {exception.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Accepts a bid offered by a therapist
+        /// </summary>
+        /// <param name="bookingId">Booking identifier</param>
+        /// <param name="therapistId">Therapist identifier</param>
+        /// <param name="placeBid">Bid placement information</param>
+        /// <returns></returns>
+        [HttpPatch]
+        [Route("{bookingId:guid}/accept/{therapistId:guid}")]
+        [SwaggerOperation("AcceptBid")]
+        [SwaggerResponse(HttpStatusCode.OK, "Booking accepted")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to accept bid")]
+        public IActionResult AcceptBid(Guid bookingId, Guid therapistId)
+        {
+            try
+            {
+                _bookingCommandService.AcceptBid(
+                    new BookingId(bookingId),
+                    new TherapistId(therapistId));
+                return Ok();
+            }
+            catch (Exception exception)
+            {
+                return HttpBadRequest($"Failed to accept booking: {exception.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Confirm an accepted bid on a booking
+        /// </summary>
+        /// <param name="bookingId">Booking identifier</param>
+        /// <param name="therapistId">Therapist identifier</param>
+        /// <param name="placeBid">Bid placement information</param>
+        /// <returns></returns>
+        [HttpPatch]
+        [Route("{bookingId:guid}/confirm/{therapistId:guid}")]
+        [SwaggerOperation("ConfirmedBid")]
+        [SwaggerResponse(HttpStatusCode.OK, "Booking confirmed")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to confirm bid")]
+        public IActionResult ConfirmBid(Guid bookingId, Guid therapistId)
+        {
+            try
+            {
+                _bookingCommandService.ConfirmBid(
+                    new BookingId(bookingId),
+                    new TherapistId(therapistId));
+                return Ok();
+            }
+            catch (Exception exception)
+            {
+                return HttpBadRequest($"Failed to confirm booking: {exception.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Cancels a booking
+        /// </summary>
+        /// <param name="bookingId">Booking identifier</param>
+        /// <returns></returns>
+        [HttpPatch]
+        [Route("{bookingId:guid}/cancel")]
+        [SwaggerOperation("CancelBookingByClient")]
+        [SwaggerResponse(HttpStatusCode.OK, "Booking cancelled")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to cancel booking")]
+        public IActionResult CancelBooking(Guid bookingId)
+        {
+            try
+            {
+                _bookingCommandService.Cancel(new BookingId(bookingId), string.Empty);
+                return Ok();
+            }
+            catch (Exception exception)
+            {
+                return HttpBadRequest($"Failed to cancel booking: {exception.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Cancels a booking (by therapist)
+        /// </summary>
+        /// <param name="bookingId">Booking identifier</param>
+        /// <param name="therapistId">Therapist identifier</param>
+        /// <param name="placeBid">Bid placement information</param>
+        /// <returns></returns>
+        [HttpPatch]
+        [Route("{bookingId:guid}/cancel/{therapistId:guid}")]
+        [SwaggerOperation("CancelBookingByTherapist")]
+        [SwaggerResponse(HttpStatusCode.OK, "Booking cancelled")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to cancel booking")]
+        public IActionResult CancelBooking(Guid bookingId, Guid therapistId)
+        {
+            try
+            {
+                _bookingCommandService.Cancel(
+                    new BookingId(bookingId),
+                    new TherapistId(therapistId),
+                    string.Empty);
+                return Ok();
+            }
+            catch (Exception exception)
+            {
+                return HttpBadRequest($"Failed to cancel booking: {exception.Message}");
             }
         }
     }
