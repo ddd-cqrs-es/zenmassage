@@ -24,8 +24,5 @@
     <DnxInvisibleContent Include=".bowerrc" />
     <DnxInvisibleContent Include="package.json" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NanoMessageBus.AzureEventHub\NanoMessageBus.AzureEventHub.csproj" />
-  </ItemGroup>
   <Import Project="$(VSToolsPath)\DNX\Microsoft.DNX.targets" Condition="'$(VSToolsPath)' != ''" />
 </Project>
