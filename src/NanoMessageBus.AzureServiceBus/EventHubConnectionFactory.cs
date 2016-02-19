@@ -26,9 +26,15 @@ namespace NanoMessageBus.Channels
             EventProcessorHost host = null;
             if (!config.DispatchOnly)
             {
+                var consumerGroup = eventHubClient.GetDefaultConsumerGroup();
+                if (!string.IsNullOrWhiteSpace(config.GroupName) && config.GroupName != "default")
+                {
+                    consumerGroup = eventHubClient.GetConsumerGroup(config.GroupName);
+                }
+
                 host = new EventProcessorHost(
-                    config.InputHubPath,
-                    config.GroupName,
+                    consumerGroup.EventHubPath,
+                    consumerGroup.GroupName,
                     _hubConnectionString,
                     _storeConnectionString);
             }

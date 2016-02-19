@@ -28,12 +28,12 @@ namespace NanoMessageBus.Channels
 
         protected virtual ChannelMessage Translate(EventData message)
         {
-            var messageId = (Guid)message.SystemProperties["MessageId"];
-            var correlationId = (Guid)message.SystemProperties["CorrelationId"];
-            var returnAddress = (Uri)message.SystemProperties["ReturnUri"];
-            var type = (string)message.SystemProperties["Type"];
-            var contentType = (string)message.SystemProperties["ContentType"];
-            var contentEncoding = (string)message.SystemProperties["ContentEncoding"];
+            var messageId = (Guid)message.Properties["MessageId"];
+            var correlationId = (Guid)message.Properties["CorrelationId"];
+            var returnAddress = (Uri)message.Properties["ReturnUri"];
+            var type = (string)message.Properties["Type"];
+            var contentType = (string)message.Properties["ContentType"];
+            var contentEncoding = (string)message.Properties["ContentEncoding"];
 
             var headers = message.Properties
                 .ToDictionary(prop => prop.Key, prop => (string)prop.Value);
@@ -69,14 +69,14 @@ namespace NanoMessageBus.Channels
 
             var exactStreamBuffer = new ArraySegment<byte>(stream.GetBuffer(), 0, (int)stream.Length);
             var eventData = new EventData(exactStreamBuffer.ToArray());
-            eventData.SystemProperties["MessageId"] = message.MessageId;
-            eventData.SystemProperties["CorrelationId"] = message.CorrelationId;
-            eventData.SystemProperties["ReturnUri"] = message.ReturnAddress;
-            eventData.SystemProperties["Type"] = message.Messages[0].GetType().FullName;
-            eventData.SystemProperties["ContentType"] = !string.IsNullOrEmpty(serializer.ContentFormat)
+            eventData.Properties["MessageId"] = message.MessageId;
+            eventData.Properties["CorrelationId"] = message.CorrelationId;
+            eventData.Properties["ReturnUri"] = message.ReturnAddress;
+            eventData.Properties["Type"] = message.Messages[0].GetType().FullName;
+            eventData.Properties["ContentType"] = !string.IsNullOrEmpty(serializer.ContentFormat)
                 ? serializer.ContentFormat
                 : "application/nanomessagebus";
-            eventData.SystemProperties["ContentEncoding"] = serializer.ContentEncoding ?? string.Empty;
+            eventData.Properties["ContentEncoding"] = serializer.ContentEncoding ?? string.Empty;
 
             foreach (var header in message.Headers)
             {

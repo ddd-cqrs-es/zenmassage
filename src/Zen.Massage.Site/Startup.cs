@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Threading;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNet.Authentication.Cookies;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Win32.SafeHandles;
 using Swashbuckle.SwaggerGen;
 using Swashbuckle.SwaggerGen.XmlComments;
 
@@ -168,27 +162,5 @@ namespace Zen.Massage.Site
 
         // Entry point for the application.
         public static void Main(string[] args) => WebApplication.Run<Startup>(args);
-    }
-
-    public class SwaggerRemoveCancellationTokenParameterFilter : IOperationFilter
-    {
-        public void Apply(Operation operation, OperationFilterContext context)
-        {
-            context.ApiDescription.ParameterDescriptions
-                .Where(pd =>
-                    pd.ModelMetadata.ContainerType == typeof(CancellationToken) ||
-                    pd.ModelMetadata.ContainerType == typeof(WaitHandle) ||
-                    pd.ModelMetadata.ContainerType == typeof(SafeWaitHandle))
-                .ToList()
-                .ForEach(
-                    pd =>
-                    {
-                        if (operation.Parameters != null)
-                        {
-                            var cancellationTokenParameter = operation.Parameters.Single(p => p.Name == pd.Name);
-                            operation.Parameters.Remove(cancellationTokenParameter);
-                        }
-                    });
-        }
     }
 }
