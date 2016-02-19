@@ -9,6 +9,7 @@ namespace NanoMessageBus.Channels
         private readonly EventHubChannelGroupConfiguration _configuration;
         private EventHubClient _eventHubClient;
         private EventProcessorHost _eventProcessorHost;
+        private bool _isShutdown;
 
         public EventHubChannel(
             IChannelConnector connector,
@@ -23,6 +24,8 @@ namespace NanoMessageBus.Channels
 
             CurrentResolver = configuration.DependencyResolver;
             CurrentTransaction = new EventHubTransaction();
+
+            Active = true;
         }
 
         public bool Active { get; private set; }
@@ -42,6 +45,11 @@ namespace NanoMessageBus.Channels
 
         public void Send(ChannelEnvelope envelope)
         {
+            if (_isShutdown)
+            {
+                throw new InvalidOperationException("Channel has shutdown.");
+            }
+
             var message = _configuration.MessageAdapter.Build(envelope.Message);
             _eventHubClient.Send(message);
         }
@@ -58,6 +66,23 @@ namespace NanoMessageBus.Channels
                 .ConfigureAwait(false);
         }
 
+        public IDispatchContext PrepareDispatch(object message = null, IMessagingChannel channel = null)
+        {
+            EnsureTransaction();
+            var context = new DefaultDispatchContext(channel ?? this);
+            return message == null ? context : context.WithMessage(message);
+        }
+
+        public async void BeginShutdown()
+        {
+            _isShutdown = true;
+            Active = false;
+
+            await _eventProcessorHost
+                .UnregisterEventProcessorAsync()
+                .ConfigureAwait(false);
+        }
+
         public virtual void Receive(
             PartitionContext partitionContext,
             EventData message,
@@ -65,15 +90,6 @@ namespace NanoMessageBus.Channels
         {
             CurrentMessage = null;
             EnsureTransaction();
-            TryReceive(partitionContext, message, callback);
-        }
-
-        public virtual void TryReceive(
-            PartitionContext partitionContext,
-            EventData message,
-            Action<IDeliveryContext> callback)
-        {
-            var messageId = message.SequenceNumber;
             try
             {
                 CurrentMessage = _configuration.MessageAdapter.Build(message);
@@ -86,21 +102,21 @@ namespace NanoMessageBus.Channels
             }
         }
 
-        public IDispatchContext PrepareDispatch(object message = null, IMessagingChannel channel = null)
-        {
-            EnsureTransaction();
-            var context = new DefaultDispatchContext(channel ?? this);
-            return message == null ? context : context.WithMessage(message);
-        }
-
-        public void BeginShutdown()
-        {
-        }
-
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
             {
+                if (!_configuration.DispatchOnly && _eventProcessorHost != null)
+                {
+                    // It's okay to kill the event processor asynchronously
+                    _eventProcessorHost = null;
+                }
+
+                if (_eventHubClient != null)
+                {
+                    _eventHubClient.Close();
+                    _eventHubClient = null;
+                }
             }
         }
 
