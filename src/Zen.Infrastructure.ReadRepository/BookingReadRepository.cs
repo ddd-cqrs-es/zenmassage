@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Zen.Infrastructure.ReadRepository.DataAccess;
 using Zen.Massage.Domain.BookingContext;
+using Microsoft.Data.Entity;
 
 namespace Zen.Infrastructure.ReadRepository
 {
@@ -24,10 +23,14 @@ namespace Zen.Infrastructure.ReadRepository
             using (var context = CreateBookingEntityContext())
             {
                 // Determine depth of information we will be returning
-                DbQuery<DbBooking> query = context.Bookings;
+                IQueryable<DbBooking> query;
                 if (includeTherapists)
                 {
-                    query = query.Include("TherapistBookings");
+                    query = context.Bookings.Include(b => b.TherapistBookings);
+                }
+                else
+                {
+                    query = context.Bookings;
                 }
 
                 // Issue async query
@@ -49,7 +52,7 @@ namespace Zen.Infrastructure.ReadRepository
             using (var context = CreateBookingEntityContext())
             {
                 var query = await context.Bookings
-                    .Include("TherapistBookings")
+                    .Include(b => b.TherapistBookings)
                     .Where(b =>
                         b.ProposedTime > cutoffDate &&
                         b.Status != BookingStatus.Provisional &&
@@ -66,7 +69,7 @@ namespace Zen.Infrastructure.ReadRepository
             using (var context = CreateBookingEntityContext())
             {
                 var query = await context.Bookings
-                    .Include("TherapistBookings")
+                    .Include(b => b.TherapistBookings)
                     .Where(b =>
                         b.ProposedTime > cutoffDate &&
                         b.ClientId == clientId.Id &&
@@ -84,7 +87,7 @@ namespace Zen.Infrastructure.ReadRepository
             using (var context = CreateBookingEntityContext())
             {
                 var query = await context.TherapistBookings
-                    .Include("Booking")
+                    .Include(tb => tb.Booking)
                     .Where(tb =>
                         tb.Booking.ProposedTime > cutoffDate &&
                         tb.TherapistId == therapistId.Id &&
@@ -123,7 +126,7 @@ namespace Zen.Infrastructure.ReadRepository
             using (var context = CreateBookingEntityContext())
             {
                 var booking = await context.Bookings
-                    .FindAsync(cancellationToken, bookingId.Id)
+                    .FirstOrDefaultAsync(b => b.BookingId == bookingId.Id, cancellationToken)
                     .ConfigureAwait(false);
                 if (status.HasValue)
                 {
@@ -147,7 +150,7 @@ namespace Zen.Infrastructure.ReadRepository
             using (var context = CreateBookingEntityContext())
             {
                 var booking = await context.Bookings
-                    .FindAsync(cancellationToken, bookingId)
+                    .FirstOrDefaultAsync(b => b.BookingId == bookingId.Id, cancellationToken)
                     .ConfigureAwait(false);
                 var therapist =
                     new DbTherapistBooking
