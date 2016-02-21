@@ -5,8 +5,8 @@ namespace NanoMessageBus.Channels
 {
     public class EventHubWireup
     {
-        private readonly EventHubConnectionFactory _channelFactory =
-            new EventHubConnectionFactory();
+        private readonly AzureTopicConnectionFactory _channelFactory =
+            new AzureTopicConnectionFactory();
         private readonly List<EventHubChannelGroupConfiguration> _configurations =
             new List<EventHubChannelGroupConfiguration>(); 
 

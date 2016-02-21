@@ -9,13 +9,13 @@ namespace NanoMessageBus.Channels
 {
     public class ChannelEventProcessor : IEventProcessor
     {
-        private readonly EventHubChannel _owner;
+        private readonly AzureTopicChannel _owner;
         private readonly Action<IDeliveryContext> _deliveryCallback;
         private readonly ConcurrentDictionary<string, PartitionContext> _partitions =
             new ConcurrentDictionary<string, PartitionContext>();
         private long? _lastSequenceNumber = null;
 
-        public ChannelEventProcessor(EventHubChannel owner, Action<IDeliveryContext> deliveryCallback)
+        public ChannelEventProcessor(AzureTopicChannel owner, Action<IDeliveryContext> deliveryCallback)
         {
             _owner = owner;
             _deliveryCallback = deliveryCallback;

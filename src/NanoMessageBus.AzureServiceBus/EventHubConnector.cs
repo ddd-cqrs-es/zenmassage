@@ -7,10 +7,10 @@ namespace NanoMessageBus.Channels
     public class EventHubConnector : IChannelConnector
     {
         private readonly ICollection<EventHubChannelGroupConfiguration> _configurations;
-        private readonly EventHubConnectionFactory _connectionFactory;
+        private readonly AzureTopicConnectionFactory _connectionFactory;
 
         public EventHubConnector(
-            EventHubConnectionFactory connectionFactory,
+            AzureTopicConnectionFactory connectionFactory,
             ICollection<EventHubChannelGroupConfiguration> configurations)
         {
             _connectionFactory = connectionFactory;
