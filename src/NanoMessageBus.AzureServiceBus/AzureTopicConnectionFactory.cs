@@ -17,9 +17,11 @@ namespace NanoMessageBus.Channels
         }
 
         public IMessagingChannel CreateConnection(
-            IChannelConnector connector,
-            EventHubChannelGroupConfiguration config)
+            ServiceBusConnector connector,
+            ServiceBusChannelGroupConfiguration config)
         {
+            connector.CurrentState = ConnectionState.Opening;
+
             TopicDescription topicDescription;
             if (!_namespaceManager.TopicExists(config.InputHubPath))
             {

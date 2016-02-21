@@ -44,7 +44,7 @@ namespace Zen.Massage.Site
                     builder,
                     Assembly.GetExecutingAssembly(),
                     typeof(BookingUpdater).Assembly);
-            var eventHubConnector = new EventHubWireup()
+            var eventHubConnector = new ServiceBusWireup()
                 .WithHubConnectionString(Configuration["MessageBus:EventHubConnectionString"])
                 .WithStoreConnectionString(Configuration["MessageBus:StorageConnectionString"])
                 .AddChannelGroup(

@@ -7,8 +7,8 @@ namespace NanoMessageBus.Channels
 {
     public class AzureTopicChannel : IMessagingChannel
     {
-        private readonly IChannelConnector _connector;
-        private readonly EventHubChannelGroupConfiguration _configuration;
+        private readonly ServiceBusConnector _connector;
+        private readonly ServiceBusChannelGroupConfiguration _configuration;
         private readonly TopicDescription _topicDescription;
         private TopicClient _topicClient;
         private SubscriptionClient _subscriptionClient;
@@ -17,8 +17,8 @@ namespace NanoMessageBus.Channels
             new CancellationTokenSource();
 
         public AzureTopicChannel(
-            IChannelConnector connector,
-            EventHubChannelGroupConfiguration configuration,
+            ServiceBusConnector connector,
+            ServiceBusChannelGroupConfiguration configuration,
             TopicDescription topicDescription,
             TopicClient topicClient,
             SubscriptionClient subscriptionClient)
@@ -32,6 +32,7 @@ namespace NanoMessageBus.Channels
             CurrentResolver = configuration.DependencyResolver;
             CurrentTransaction = new EventHubTransaction();
 
+            _connector.CurrentState = ConnectionState.Open;
             Active = true;
         }
 
@@ -92,6 +93,8 @@ namespace NanoMessageBus.Channels
                     await _subscriptionClient.DeadLetterAsync(message.LockToken);
                 }
             }
+
+            _connector.CurrentState = ConnectionState.Closed;
         }
 
         public IDispatchContext PrepareDispatch(object message = null, IMessagingChannel channel = null)
@@ -105,6 +108,7 @@ namespace NanoMessageBus.Channels
         {
             _isShutdown = true;
             Active = false;
+            _connector.CurrentState = ConnectionState.Closing;
 
             if (!_configuration.DispatchOnly)
             {
