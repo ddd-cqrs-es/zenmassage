@@ -1,0 +1,21 @@
+{
+  "version": "1.0.0-*",
+  "description": "NEventStore.AzureStorage Class Library",
+  "authors": [ "LewisAW7" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "dependencies": {
+    "NEventStore": "5.2.0",
+    "WindowsAzure.Storage": "6.2.0"
+  },
+
+  "frameworks": {
+    "net451": {
+      "frameworkAssemblies": {
+        "System.Transactions": "4.0.0.0"
+      }
+    }
+  }
+}

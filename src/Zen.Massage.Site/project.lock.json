@@ -2063,6 +2063,17 @@
           "lib/net40/NEventStore.dll": {}
         }
       },
+      "NEventStore.AzureStorage/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "NEventStore": "5.2.0",
+          "WindowsAzure.Storage": "6.2.0"
+        },
+        "frameworkAssemblies": [
+          "System.Transactions"
+        ]
+      },
       "Newtonsoft.Json/8.0.2": {
         "type": "package",
         "compile": {
@@ -4579,6 +4590,17 @@
         "runtime": {
           "lib/net40/NEventStore.dll": {}
         }
+      },
+      "NEventStore.AzureStorage/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "NEventStore": "5.2.0",
+          "WindowsAzure.Storage": "6.2.0"
+        },
+        "frameworkAssemblies": [
+          "System.Transactions"
+        ]
       },
       "Newtonsoft.Json/8.0.2": {
         "type": "package",
@@ -7097,6 +7119,17 @@
           "lib/net40/NEventStore.dll": {}
         }
       },
+      "NEventStore.AzureStorage/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "NEventStore": "5.2.0",
+          "WindowsAzure.Storage": "6.2.0"
+        },
+        "frameworkAssemblies": [
+          "System.Transactions"
+        ]
+      },
       "Newtonsoft.Json/8.0.2": {
         "type": "package",
         "compile": {
@@ -7555,6 +7588,10 @@
     "NanoMessageBus.AzureServiceBus/1.0.0": {
       "type": "project",
       "path": "../NanoMessageBus.AzureServiceBus/project.json"
+    },
+    "NEventStore.AzureStorage/1.0.0": {
+      "type": "project",
+      "path": "../NEventStore.AzureStorage/project.json"
     },
     "Zen.Infrastructure.ReadRepository/1.0.0": {
       "type": "project",
@@ -10257,6 +10294,7 @@
       "Microsoft.VisualStudio.Web.BrowserLink.Loader >= 14.0.0-rc1-final",
       "NanoMessageBus >= 2.0.50",
       "NanoMessageBus.Autofac >= 2.0.50",
+      "NEventStore.AzureStorage >= 1.0.0-*",
       "Swashbuckle >= 6.0.0-rc1-final",
       "Swashbuckle.SwaggerGen >= 6.0.0-rc1-final",
       "Swashbuckle.SwaggerUi >= 6.0.0-rc1-final"
