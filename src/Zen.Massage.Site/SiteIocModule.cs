@@ -45,8 +45,7 @@ namespace Zen.Massage.Site
                     Assembly.GetExecutingAssembly(),
                     typeof(BookingUpdater).Assembly);
             var eventHubConnector = new ServiceBusWireup()
-                .WithHubConnectionString(Configuration["MessageBus:EventHubConnectionString"])
-                .WithStoreConnectionString(Configuration["MessageBus:StorageConnectionString"])
+                .WithConnectionString(Configuration["MessageBus:ServiceBusConnectionString"])
                 .AddChannelGroup(
                     config => config
                         .WithInputHubPath("domainevents")
@@ -97,6 +96,8 @@ namespace Zen.Massage.Site
         private IStoreEvents BuildEventStore(ILifetimeScope container)
         {
             // Setup the appropriate persistence layer
+            // TODO: Setup to use Azure Blob Storage for persistence
+            //  based on work by Chris Evans (already forked repo)
             PersistenceWireup wireup;
             if (_useInMemoryPersistence)
             {

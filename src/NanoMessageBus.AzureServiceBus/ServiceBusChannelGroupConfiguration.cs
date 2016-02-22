@@ -21,7 +21,7 @@ namespace NanoMessageBus.Channels
             MessageBuilder = new DefaultChannelMessageBuilder();
             ReceiveTimeout = TimeSpan.FromMilliseconds(1500);
             DependencyResolver = null;
-            DispatchTable = new EventHubDispatchTable();
+            DispatchTable = new ServiceBusDispatchTable();
             MessageAdapter = new ServiceBusMessageAdapter(this);
             Serializer = null;
         }

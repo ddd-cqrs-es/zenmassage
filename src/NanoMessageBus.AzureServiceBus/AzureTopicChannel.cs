@@ -9,28 +9,25 @@ namespace NanoMessageBus.Channels
     {
         private readonly ServiceBusConnector _connector;
         private readonly ServiceBusChannelGroupConfiguration _configuration;
-        private readonly TopicDescription _topicDescription;
+        private readonly CancellationTokenSource _shutdownReceiver =
+            new CancellationTokenSource();
         private TopicClient _topicClient;
         private SubscriptionClient _subscriptionClient;
         private bool _isShutdown;
-        private CancellationTokenSource _shutdownReceiver =
-            new CancellationTokenSource();
 
         public AzureTopicChannel(
             ServiceBusConnector connector,
             ServiceBusChannelGroupConfiguration configuration,
-            TopicDescription topicDescription,
             TopicClient topicClient,
             SubscriptionClient subscriptionClient)
         {
             _connector = connector;
             _configuration = configuration;
-            _topicDescription = topicDescription;
             _topicClient = topicClient;
             _subscriptionClient = subscriptionClient;
 
             CurrentResolver = configuration.DependencyResolver;
-            CurrentTransaction = new EventHubTransaction();
+            CurrentTransaction = null;
 
             _connector.CurrentState = ConnectionState.Open;
             Active = true;
@@ -44,6 +41,12 @@ namespace NanoMessageBus.Channels
 
         public IDependencyResolver CurrentResolver { get; private set; }
 
+        /// <summary>
+        /// Gets the current transaction.
+        /// </summary>
+        /// <remarks>
+        /// Transactions are not supported on Azure ServiceBus so this property always returns <c>null.</c>
+        /// </remarks>
         public IChannelTransaction CurrentTransaction { get; private set; }
 
         public void Dispose()
@@ -78,10 +81,12 @@ namespace NanoMessageBus.Channels
 
             while (!_shutdownReceiver.IsCancellationRequested)
             {
-                var message = await _subscriptionClient
-                    .PeekAsync().ConfigureAwait(false);
+                BrokeredMessage message = null;
                 try
                 {
+                    message = await _subscriptionClient
+                        .PeekAsync().ConfigureAwait(false);
+
                     Receive(message, callback);
 
                     await _subscriptionClient
@@ -90,7 +95,12 @@ namespace NanoMessageBus.Channels
                 }
                 catch
                 {
-                    await _subscriptionClient.DeadLetterAsync(message.LockToken);
+                    if (message != null)
+                    {
+                        await _subscriptionClient
+                            .DeadLetterAsync(message.LockToken)
+                            .ConfigureAwait(false);
+                    }
                 }
             }
 
@@ -99,7 +109,6 @@ namespace NanoMessageBus.Channels
 
         public IDispatchContext PrepareDispatch(object message = null, IMessagingChannel channel = null)
         {
-            EnsureTransaction();
             var context = new DefaultDispatchContext(channel ?? this);
             return message == null ? context : context.WithMessage(message);
         }
@@ -121,7 +130,6 @@ namespace NanoMessageBus.Channels
             Action<IDeliveryContext> callback)
         {
             CurrentMessage = null;
-            EnsureTransaction();
             try
             {
                 CurrentMessage = _configuration.MessageAdapter.Build(message);
@@ -129,7 +137,6 @@ namespace NanoMessageBus.Channels
             }
             catch (Exception)
             {
-                CurrentTransaction.TryDispose();
                 throw;
             }
         }
@@ -150,17 +157,6 @@ namespace NanoMessageBus.Channels
                     _topicClient = null;
                 }
             }
-        }
-
-        protected virtual IChannelTransaction EnsureTransaction()
-        {
-            if (!CurrentTransaction.Finished)
-            {
-                return CurrentTransaction;
-            }
-
-            CurrentTransaction.TryDispose();
-            return CurrentTransaction = new EventHubTransaction();
         }
     }
 }

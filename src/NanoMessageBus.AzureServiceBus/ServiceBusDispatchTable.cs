@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace NanoMessageBus.Channels
 {
-    public class EventHubDispatchTable : IDispatchTable
+    public class ServiceBusDispatchTable : IDispatchTable
     {
         public ICollection<Uri> this[Type messageType]
         {
