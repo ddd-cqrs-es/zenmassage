@@ -1,3 +1,4 @@
+using System.Threading;
 using Microsoft.ServiceBus.Messaging;
 
 namespace NanoMessageBus.Channels
@@ -15,8 +16,6 @@ namespace NanoMessageBus.Channels
             ServiceBusConnector connector,
             ServiceBusChannelGroupConfiguration config)
         {
-            connector.CurrentState = ConnectionState.Opening;
-
             SubscriptionClient subscriptionClient = null;
             if (!config.DispatchOnly)
             {
@@ -25,7 +24,7 @@ namespace NanoMessageBus.Channels
             }
 
             var topicClient = TopicClient.CreateFromConnectionString(_connectionString, config.InputHubPath);
-            return new AzureTopicChannel(connector, config, topicClient, subscriptionClient);
+            return new AzureTopicChannel(connector, config, topicClient, subscriptionClient, CancellationToken.None);
         }
     }
 }

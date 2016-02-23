@@ -1,39 +1,53 @@
 using System;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.ServiceBus.Messaging;
+using NanoMessageBus.Logging;
 
 namespace NanoMessageBus.Channels
 {
     public class AzureTopicChannel : IMessagingChannel
     {
+        private static readonly ILog Log = LogFactory.Build(typeof(AzureTopicChannel));
+        private static int _nextIdentifier = 1;
+
         private readonly ServiceBusConnector _connector;
         private readonly ServiceBusChannelGroupConfiguration _configuration;
-        private readonly CancellationTokenSource _shutdownReceiver =
+        private readonly CancellationTokenSource _shutdownToken =
             new CancellationTokenSource();
+        private CancellationTokenRegistration _masterShutdownTokenRegistration;
         private TopicClient _topicClient;
         private SubscriptionClient _subscriptionClient;
+        private int _identifier;
         private bool _isShutdown;
+        private bool _isDisposed;
 
         public AzureTopicChannel(
             ServiceBusConnector connector,
             ServiceBusChannelGroupConfiguration configuration,
             TopicClient topicClient,
-            SubscriptionClient subscriptionClient)
+            SubscriptionClient subscriptionClient,
+            CancellationToken shutdownToken)
         {
             _connector = connector;
             _configuration = configuration;
             _topicClient = topicClient;
             _subscriptionClient = subscriptionClient;
+            _masterShutdownTokenRegistration = shutdownToken
+                .Register(() => _shutdownToken.Cancel());
+            _identifier = Interlocked.Increment(ref _nextIdentifier);
 
             CurrentResolver = configuration.DependencyResolver;
             CurrentTransaction = null;
-
-            _connector.CurrentState = ConnectionState.Open;
-            Active = true;
         }
 
-        public bool Active { get; private set; }
+        ~AzureTopicChannel()
+        {
+            Dispose(false);
+        }
+
+        public bool Active => !_isDisposed && !_isShutdown && _connector.CurrentState == ConnectionState.Open;
 
         public IChannelGroupConfiguration CurrentConfiguration => _configuration;
 
@@ -52,6 +66,7 @@ namespace NanoMessageBus.Channels
         public void Dispose()
         {
             Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         public void Send(ChannelEnvelope envelope)
@@ -79,32 +94,13 @@ namespace NanoMessageBus.Channels
                 throw new InvalidOperationException("Receive is not valid on dispatch only channel.");
             }
 
-            while (!_shutdownReceiver.IsCancellationRequested)
+            while (!_shutdownToken.IsCancellationRequested)
             {
-                BrokeredMessage message = null;
-                try
-                {
-                    message = await _subscriptionClient
-                        .PeekAsync().ConfigureAwait(false);
+                BrokeredMessage message = await _subscriptionClient
+                    .PeekAsync().ConfigureAwait(false);
 
-                    Receive(message, callback);
-
-                    await _subscriptionClient
-                        .CompleteAsync(message.LockToken)
-                        .ConfigureAwait(false);
-                }
-                catch
-                {
-                    if (message != null)
-                    {
-                        await _subscriptionClient
-                            .DeadLetterAsync(message.LockToken)
-                            .ConfigureAwait(false);
-                    }
-                }
+                await ReceiveAsync(message, callback).ConfigureAwait(false);
             }
-
-            _connector.CurrentState = ConnectionState.Closed;
         }
 
         public IDispatchContext PrepareDispatch(object message = null, IMessagingChannel channel = null)
@@ -116,35 +112,89 @@ namespace NanoMessageBus.Channels
         public void BeginShutdown()
         {
             _isShutdown = true;
-            Active = false;
-            _connector.CurrentState = ConnectionState.Closing;
 
             if (!_configuration.DispatchOnly)
             {
-                _shutdownReceiver.Cancel();
+                _shutdownToken.Cancel();
             }
         }
 
-        public virtual void Receive(
+        protected virtual async Task<bool> ReceiveAsync(
             BrokeredMessage message,
             Action<IDeliveryContext> callback)
         {
             CurrentMessage = null;
+
+            if (_isShutdown)
+            {
+                Log.Debug($"Shutdown request has been made on channel {_identifier}.");
+                return false;
+            }
+
+            if (message == null)
+            {
+                return true;
+            }
+
+            await TryReceiveAsync(message, callback).ConfigureAwait(false);
+
+            return !_isShutdown;
+        }
+
+        protected virtual async Task TryReceiveAsync(
+            BrokeredMessage message,
+            Action<IDeliveryContext> callback)
+        {
             try
             {
+                Log.Verbose($"Translating wire-specific message into channel message for channel {_identifier}.");
                 CurrentMessage = _configuration.MessageAdapter.Build(message);
+
+                Log.Info($"Routing message '{message.MessageId}' received through group '{_configuration.GroupName}' to configured receiver callback on channel {_identifier}.");
                 callback(this);
+
+                // Signal message processing as having completed.
+                await _subscriptionClient
+                    .CompleteAsync(message.LockToken)
+                    .ConfigureAwait(false);
             }
-            catch (Exception)
+            catch (ChannelConnectionException)
             {
+                Log.Warn($"Channel {_identifier} has become unavailable, aborting.");
                 throw;
+            }
+            catch (PoisonMessageException e)
+            {
+                Log.Warn($"Wire message {message.MessageId} on channel {_identifier} could not be deserialized; forwarding to poison message exchange.");
+
+                await _subscriptionClient
+                    .DeadLetterAsync(message.LockToken)
+                    .ConfigureAwait(false);
+            }
+            catch (DeadLetterException e)
+            {
+                var seconds = (SystemTime.UtcNow - e.Expiration).TotalSeconds;
+                Log.Info($"Wire message {message.MessageId} on channel {_identifier} expired on the wire {seconds:n3} seconds ago; forwarding to dead letter exchange.");
+
+                await _subscriptionClient
+                    .DeadLetterAsync(message.LockToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                
             }
         }
 
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing)
+            if (disposing && !_isDisposed)
             {
+                Log.Debug($"Disposing channel {_identifier}.");
+
+                _isDisposed = true;
+                _masterShutdownTokenRegistration.Dispose();
+
                 if (_subscriptionClient != null)
                 {
                     _subscriptionClient.Close();
@@ -156,6 +206,8 @@ namespace NanoMessageBus.Channels
                     _topicClient.Close();
                     _topicClient = null;
                 }
+
+                Log.Debug($"Channel {_identifier} disposed.");
             }
         }
     }
