@@ -10416,7 +10416,7 @@
     },
     "WindowsAzure.ServiceBus/3.1.3": {
       "type": "package",
-      "sha512": "jCUIVxTxLeJ0jHWqAcxrPSCS72NyCb4FWK2Jq/SVNSF+nKOcsxaYPxT+8ZS2Qx6j4O2Xw4rT9RgSiPp6x2fmQw==",
+      "sha512": "3o3dLgQSxk5z154fBrnb+7AXFZ9BNY8AxIwmzwvuT5oP4JVru5uYFdwVjH8J3rWljhcdkvqBQNDgNpwNPFf1Hw==",
       "files": [
         "content/app.config.install.xdt",
         "content/web.config.install.xdt",

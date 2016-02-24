@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using NanoMessageBus;
 using NanoMessageBus.Channels;
 using NEventStore;
+using NEventStore.Persistence.AzureStorage;
 using Zen.Infrastructure.ReadRepository;
 using Zen.Infrastructure.WriteRepository;
 using Zen.Massage.Application;
@@ -95,24 +96,11 @@ namespace Zen.Massage.Site
 
         private IStoreEvents BuildEventStore(ILifetimeScope container)
         {
-            // Setup the appropriate persistence layer
-            // TODO: Setup to use Azure Blob Storage for persistence
-            //  based on work by Chris Evans (already forked repo)
-            PersistenceWireup wireup;
-            if (_useInMemoryPersistence)
-            {
-                wireup = Wireup.Init()
-                    .UsingInMemoryPersistence();
-            }
-            else
-            {
-                wireup = Wireup.Init()
-                    .UsingSqlPersistence("EventStore", "SqlClient", Configuration["EventStore:Database"])
-                    .InitializeStorageEngine();
-            }
-
-            // Setup remainder of neventstore and build
-            return wireup
+            // Setup to use Azure Blob Storage for persistence
+            return Wireup.Init()
+                .UsingAzureBlobPersistence(
+                    Configuration["MessageBus:StorageConnectionString"],
+                    new AzureBlobPersistenceOptions("eventStore"))
                 .UsingJsonSerialization()
                 .Compress()
                 .HookIntoPipelineUsing(container.Resolve<PipelineDispatcherHook>())
