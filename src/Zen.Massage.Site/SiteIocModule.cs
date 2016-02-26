@@ -12,7 +12,6 @@ using Zen.Infrastructure.WriteRepository;
 using Zen.Massage.Application;
 using Zen.Massage.Domain;
 using Zen.Massage.Domain.BookingBoundedContext;
-using Zen.Massage.Domain.BookingContext;
 using Module = Autofac.Module;
 
 namespace Zen.Massage.Site

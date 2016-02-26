@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using NanoMessageBus;
 using Zen.Massage.Domain.BookingBoundedContext;
-using Zen.Massage.Domain.BookingContext;
 using Zen.Massage.Domain.UserBoundedContext;
 
 namespace Zen.Massage.Application
@@ -50,7 +49,12 @@ namespace Zen.Massage.Application
         public async void Handle(BookingTenderEvent message)
         {
             await _repository
-                .UpdateBooking(message.BookingId, BookingStatus.Tender, null, null, CancellationToken.None)
+                .UpdateBooking(
+                    message.BookingId,
+                    BookingStatus.Tender,
+                    null,
+                    null,
+                    CancellationToken.None)
                 .ConfigureAwait(false);
         }
 

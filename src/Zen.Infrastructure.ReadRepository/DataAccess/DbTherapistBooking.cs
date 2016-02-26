@@ -1,7 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Zen.Massage.Domain.BookingContext;
+using Zen.Massage.Domain.BookingBoundedContext;
 
 namespace Zen.Infrastructure.ReadRepository.DataAccess
 {

@@ -1,6 +1,7 @@
 using System;
 using Zen.Infrastructure.ReadRepository.DataAccess;
-using Zen.Massage.Domain.BookingContext;
+using Zen.Massage.Domain.BookingBoundedContext;
+using Zen.Massage.Domain.UserBoundedContext;
 
 namespace Zen.Infrastructure.ReadRepository
 {

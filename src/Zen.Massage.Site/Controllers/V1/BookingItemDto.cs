@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Zen.Massage.Domain.BookingBoundedContext;
-using Zen.Massage.Domain.BookingContext;
 
 namespace Zen.Massage.Site.Controllers.V1
 {

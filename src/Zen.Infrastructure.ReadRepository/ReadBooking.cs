@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Zen.Infrastructure.ReadRepository.DataAccess;
-using Zen.Massage.Domain.BookingContext;
+using Zen.Massage.Domain.BookingBoundedContext;
+using Zen.Massage.Domain.UserBoundedContext;
 
 namespace Zen.Infrastructure.ReadRepository
 {
@@ -14,7 +15,7 @@ namespace Zen.Infrastructure.ReadRepository
         {
             _innerBooking = booking;
             BookingId = new BookingId(_innerBooking.BookingId);
-            ClientId = new ClientId(_innerBooking.ClientId);
+            CustomerId = new CustomerId(_innerBooking.ClientId);
 
             TherapistBookings = _innerBooking
                 .TherapistBookings
@@ -25,7 +26,7 @@ namespace Zen.Infrastructure.ReadRepository
 
         public BookingId BookingId { get; private set; }
 
-        public ClientId ClientId { get; private set; }
+        public CustomerId CustomerId { get; private set; }
 
         public BookingStatus Status => _innerBooking.Status;
 

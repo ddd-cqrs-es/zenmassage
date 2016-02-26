@@ -4,8 +4,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Zen.Infrastructure.ReadRepository.DataAccess;
-using Zen.Massage.Domain.BookingContext;
+using Zen.Massage.Domain.BookingBoundedContext;
 using Microsoft.Data.Entity;
+using Zen.Massage.Domain.UserBoundedContext;
 
 namespace Zen.Infrastructure.ReadRepository
 {
@@ -64,7 +65,7 @@ namespace Zen.Infrastructure.ReadRepository
             }
         }
 
-        public async Task<IEnumerable<IReadBooking>> GetFutureBookingsForClient(ClientId clientId, DateTime cutoffDate, CancellationToken cancellationToken)
+        public async Task<IEnumerable<IReadBooking>> GetFutureBookingsForCustomer(CustomerId clientId, DateTime cutoffDate, CancellationToken cancellationToken)
         {
             using (var context = CreateBookingEntityContext())
             {
@@ -101,7 +102,7 @@ namespace Zen.Infrastructure.ReadRepository
             }
         }
 
-        public async Task AddBooking(BookingId bookingId, ClientId clientId, DateTime proposedTime, TimeSpan duration, CancellationToken cancellationToken)
+        public async Task AddBooking(BookingId bookingId, CustomerId clientId, DateTime proposedTime, TimeSpan duration, CancellationToken cancellationToken)
         {
             using (var context = CreateBookingEntityContext())
             {

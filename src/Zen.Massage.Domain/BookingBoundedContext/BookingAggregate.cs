@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using AggregateSource;
-using Zen.Massage.Domain.BookingContext;
 using Zen.Massage.Domain.UserBoundedContext;
 
 namespace Zen.Massage.Domain.BookingBoundedContext

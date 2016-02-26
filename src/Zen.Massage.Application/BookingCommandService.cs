@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using AggregateSource;
 using Zen.Massage.Domain;
 using Zen.Massage.Domain.BookingBoundedContext;
-using Zen.Massage.Domain.BookingContext;
 using Zen.Massage.Domain.UserBoundedContext;
 
 namespace Zen.Massage.Application

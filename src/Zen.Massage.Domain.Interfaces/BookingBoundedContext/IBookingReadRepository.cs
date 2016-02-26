@@ -14,7 +14,7 @@ namespace Zen.Massage.Domain.BookingBoundedContext
         Task<IEnumerable<IReadBooking>> GetFutureOpenBookings(
             DateTime cutoffDate, BookingStatus status, CancellationToken cancellationToken);
 
-        Task<IEnumerable<IReadBooking>> GetFutureBookingsForClient(
+        Task<IEnumerable<IReadBooking>> GetFutureBookingsForCustomer(
             CustomerId customerId, DateTime cutoffDate, CancellationToken cancellationToken);
 
         Task<IEnumerable<IReadBooking>> GetFutureBookingsForTherapist(

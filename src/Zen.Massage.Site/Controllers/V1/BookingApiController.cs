@@ -8,7 +8,6 @@ using Microsoft.AspNet.Mvc;
 using Swashbuckle.SwaggerGen.Annotations;
 using Zen.Massage.Application;
 using Zen.Massage.Domain.BookingBoundedContext;
-using Zen.Massage.Domain.BookingContext;
 using Zen.Massage.Domain.UserBoundedContext;
 
 namespace Zen.Massage.Site.Controllers.V1
@@ -56,7 +55,7 @@ namespace Zen.Massage.Site.Controllers.V1
             {
                 var cutoffDate = DateTime.UtcNow;
                 var clientBookings = await _bookingReadRepository
-                    .GetFutureBookingsForClient(new CustomerId(userId), cutoffDate, cancellationToken)
+                    .GetFutureBookingsForCustomer(new CustomerId(userId), cutoffDate, cancellationToken)
                     .ConfigureAwait(true);
                 var therapistBookings = await _bookingReadRepository
                     .GetFutureBookingsForTherapist(new TherapistId(userId), cutoffDate, cancellationToken)
@@ -90,7 +89,7 @@ namespace Zen.Massage.Site.Controllers.V1
             {
                 var cutoffDate = DateTime.UtcNow;
                 var clientBookings = await _bookingReadRepository
-                    .GetFutureBookingsForClient(new CustomerId(clientId), cutoffDate, cancellationToken)
+                    .GetFutureBookingsForCustomer(new CustomerId(clientId), cutoffDate, cancellationToken)
                     .ConfigureAwait(true);
 
                 var mappedBookings = clientBookings
