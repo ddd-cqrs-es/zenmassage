@@ -1,4 +1,5 @@
 ﻿using System;
+using Zen.Massage.Domain.BookingBoundedContext;
 
 namespace Zen.Massage.Domain.BookingContext
 {

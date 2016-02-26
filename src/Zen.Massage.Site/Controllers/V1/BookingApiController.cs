@@ -7,7 +7,9 @@ using AutoMapper;
 using Microsoft.AspNet.Mvc;
 using Swashbuckle.SwaggerGen.Annotations;
 using Zen.Massage.Application;
+using Zen.Massage.Domain.BookingBoundedContext;
 using Zen.Massage.Domain.BookingContext;
+using Zen.Massage.Domain.UserBoundedContext;
 
 namespace Zen.Massage.Site.Controllers.V1
 {
@@ -54,7 +56,7 @@ namespace Zen.Massage.Site.Controllers.V1
             {
                 var cutoffDate = DateTime.UtcNow;
                 var clientBookings = await _bookingReadRepository
-                    .GetFutureBookingsForClient(new ClientId(userId), cutoffDate, cancellationToken)
+                    .GetFutureBookingsForClient(new CustomerId(userId), cutoffDate, cancellationToken)
                     .ConfigureAwait(true);
                 var therapistBookings = await _bookingReadRepository
                     .GetFutureBookingsForTherapist(new TherapistId(userId), cutoffDate, cancellationToken)
@@ -78,7 +80,7 @@ namespace Zen.Massage.Site.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("client/{clientId:guid}")]
+        [Route("client/{CustomerId:guid}")]
         [SwaggerOperation("GetBookingsByClient")]
         [SwaggerResponse(HttpStatusCode.OK, "Bookings retrieved")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to retrieve bookings")]
@@ -88,7 +90,7 @@ namespace Zen.Massage.Site.Controllers.V1
             {
                 var cutoffDate = DateTime.UtcNow;
                 var clientBookings = await _bookingReadRepository
-                    .GetFutureBookingsForClient(new ClientId(clientId), cutoffDate, cancellationToken)
+                    .GetFutureBookingsForClient(new CustomerId(clientId), cutoffDate, cancellationToken)
                     .ConfigureAwait(true);
 
                 var mappedBookings = clientBookings
@@ -171,7 +173,7 @@ namespace Zen.Massage.Site.Controllers.V1
         /// in the location header of the response.
         /// </remarks>
         [HttpPost]
-        [Route("user/{clientId:guid}")]
+        [Route("user/{CustomerId:guid}")]
         [SwaggerOperation("CreateBooking")]
         [SwaggerResponse(HttpStatusCode.OK, "Booking created")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to create booking")]
@@ -181,7 +183,7 @@ namespace Zen.Massage.Site.Controllers.V1
         {
             try
             {
-                var bookingId = _bookingCommandService.Create(new ClientId(clientId), booking.ProposedTime, booking.Duration);
+                var bookingId = _bookingCommandService.Create(new CustomerId(clientId), booking.ProposedTime, booking.Duration);
                 return Created(new Uri($"http://localhost:1282/api/v1/bookings/{bookingId.Id:D}/"), bookingId.Id);
             }
             catch (Exception exception)

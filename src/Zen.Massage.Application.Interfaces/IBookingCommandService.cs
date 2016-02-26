@@ -1,11 +1,12 @@
 ﻿using System;
-using Zen.Massage.Domain.BookingContext;
+using Zen.Massage.Domain.BookingBoundedContext;
+using Zen.Massage.Domain.UserBoundedContext;
 
 namespace Zen.Massage.Application
 {
     public interface IBookingCommandService
     {
-        BookingId Create(ClientId clientId, DateTime proposedTime, TimeSpan duration);
+        BookingId Create(CustomerId customerId, DateTime proposedTime, TimeSpan duration);
 
         void Tender(BookingId bookingId);
 

@@ -142,7 +142,7 @@ namespace Zen.Massage.Site
                 options =>
                 {
                     options.AutomaticChallenge = true;
-                    options.ClientId = Configuration["Authentication:AzureAd:ClientId"];
+                    options.ClientId = Configuration["Authentication:AzureAd:CustomerId"];
                     options.Authority = Configuration["Authentication:AzureAd:AADInstance"] + Configuration["Authentication:AzureAd:TenantId"];
                     options.PostLogoutRedirectUri = Configuration["Authentication:AzureAd:PostLogoutRedirectUri"];
                     options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Zen.Massage.Domain.BookingBoundedContext;
 using Zen.Massage.Domain.BookingContext;
 using Zen.Massage.Site.Controllers.V1;
 

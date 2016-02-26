@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using AggregateSource;
 using Zen.Massage.Domain;
+using Zen.Massage.Domain.BookingBoundedContext;
 using Zen.Massage.Domain.BookingContext;
+using Zen.Massage.Domain.UserBoundedContext;
 
 namespace Zen.Massage.Application
 {
@@ -21,12 +23,12 @@ namespace Zen.Massage.Application
             _unitOfWorkFactory = unitOfWorkFactory;
         }
 
-        public BookingId Create(ClientId clientId, DateTime proposedTime, TimeSpan duration)
+        public BookingId Create(CustomerId customerId, DateTime proposedTime, TimeSpan duration)
         {
             using (var uow = _unitOfWorkFactory.CreateSession())
             {
                 // Create booking, add to repo and commit
-                var booking = _bookingFactory.Create(clientId, proposedTime, duration);
+                var booking = _bookingFactory.Create(customerId, proposedTime, duration);
                 uow.GetRepository<IBookingWriteRepository>().Add(booking);
                 uow.Commit();
                 return booking.BookingId;

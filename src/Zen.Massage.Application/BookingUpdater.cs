@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using NanoMessageBus;
+using Zen.Massage.Domain.BookingBoundedContext;
 using Zen.Massage.Domain.BookingContext;
+using Zen.Massage.Domain.UserBoundedContext;
 
 namespace Zen.Massage.Application
 {
@@ -34,7 +36,7 @@ namespace Zen.Massage.Application
             await _repository
                 .AddBooking(
                     message.BookingId,
-                    message.ClientId,
+                    message.CustomerId,
                     message.ProposedTime,
                     message.Duration,
                     CancellationToken.None)

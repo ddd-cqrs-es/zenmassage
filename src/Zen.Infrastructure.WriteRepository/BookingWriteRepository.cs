@@ -1,6 +1,7 @@
 ﻿using System;
 using AggregateSource;
 using NEventStore;
+using Zen.Massage.Domain.BookingBoundedContext;
 using Zen.Massage.Domain.BookingContext;
 
 namespace Zen.Infrastructure.WriteRepository

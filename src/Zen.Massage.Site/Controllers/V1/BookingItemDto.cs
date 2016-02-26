@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Zen.Massage.Domain.BookingBoundedContext;
 using Zen.Massage.Domain.BookingContext;
 
 namespace Zen.Massage.Site.Controllers.V1
@@ -10,7 +11,7 @@ namespace Zen.Massage.Site.Controllers.V1
         [JsonProperty("bookingId")]
         public Guid BookingId { get; set; }
 
-        [JsonProperty("clientId")]
+        [JsonProperty("CustomerId")]
         public Guid ClientId { get; set; }
 
         [JsonProperty("statusId")]
