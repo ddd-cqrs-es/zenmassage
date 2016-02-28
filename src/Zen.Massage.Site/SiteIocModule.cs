@@ -38,23 +38,29 @@ namespace Zen.Massage.Site
                 });
             builder.RegisterInstance(mapperConfig);
 
+            // Setup dependency resolver
+            builder
+                .Register(c => new AutofacDependencyResolver(c.Resolve<ILifetimeScope>()))
+                .As<IDependencyResolver>();
+
             // Setup messagebus (we're using lightweight message bus rather than Azure ServiceBus)
             var routingTable =
                 new AutofacRoutingTable(
                     builder,
                     Assembly.GetExecutingAssembly(),
                     typeof(BookingUpdater).Assembly);
-            var eventHubConnector = new ServiceBusWireup()
+            var serviceBusConnector = new ServiceBusWireup()
                 .WithConnectionString(Configuration["MessageBus:ServiceBusConnectionString"])
                 .AddChannelGroup(
                     config => config
                         .WithInputHubPath("domainevents")
+                        //.WithDependencyResolver(new AutofacDependencyResolver())
                         .WithGroupName("default")
                     )
                 .Build();
             LogFactory.LogWith(new ApplicationInsightsMessagingLogger());
             var messagingHost = new MessagingWireup()
-                .AddConnector(eventHubConnector)
+                .AddConnector(serviceBusConnector)
                 //.WithAuditing(GetAuditorsForChannel)
                 .StartWithReceive(routingTable);
             builder.RegisterInstance(messagingHost);
