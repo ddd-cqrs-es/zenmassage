@@ -5,6 +5,7 @@ using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using NanoMessageBus;
 using NanoMessageBus.Channels;
+using NanoMessageBus.Logging;
 using NEventStore;
 using NEventStore.Persistence.AzureStorage;
 using Zen.Infrastructure.ReadRepository;
@@ -19,12 +20,10 @@ namespace Zen.Massage.Site
     public class SiteIocModule : Module
     {
         private readonly IConfigurationRoot _configuration;
-        private readonly bool _useInMemoryPersistence;
 
         public SiteIocModule(IConfigurationRoot configuration)
         {
             _configuration = configuration;
-            _useInMemoryPersistence = true;
         }
 
         public IConfigurationRoot Configuration => _configuration;
@@ -53,9 +52,10 @@ namespace Zen.Massage.Site
                         .WithGroupName("default")
                     )
                 .Build();
+            LogFactory.LogWith(new ApplicationInsightsMessagingLogger());
             var messagingHost = new MessagingWireup()
                 .AddConnector(eventHubConnector)
-                .WithAuditing(GetAuditorsForChannel)
+                //.WithAuditing(GetAuditorsForChannel)
                 .StartWithReceive(routingTable);
             builder.RegisterInstance(messagingHost);
 

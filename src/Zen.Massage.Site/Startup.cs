@@ -4,6 +4,8 @@ using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNet.Authentication.Cookies;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
+using Microsoft.AspNet.Hosting.Internal;
+using Microsoft.AspNet.Http.Features;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -44,7 +46,7 @@ namespace Zen.Massage.Site
             // Setup swagger integration
             // NOTE: To avoid disclosure of directory structure and ease deployment
             //  fetch doc path from user-secret config (dev env only)
-            var documentationPath = Configuration.Get<string>("swagger:xmlpath");
+            var documentationPath = Configuration["swagger:xmlpath"];
             services.AddSwaggerGen();
             services.ConfigureSwaggerDocument(
                 options =>
@@ -142,7 +144,7 @@ namespace Zen.Massage.Site
                 options =>
                 {
                     options.AutomaticChallenge = true;
-                    options.ClientId = Configuration["Authentication:AzureAd:CustomerId"];
+                    options.ClientId = Configuration["Authentication:AzureAd:ClientId"];
                     options.Authority = Configuration["Authentication:AzureAd:AADInstance"] + Configuration["Authentication:AzureAd:TenantId"];
                     options.PostLogoutRedirectUri = Configuration["Authentication:AzureAd:PostLogoutRedirectUri"];
                     options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;

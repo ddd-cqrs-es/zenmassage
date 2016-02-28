@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Zen.Infrastructure.ReadRepository.DataAccess;
 using Zen.Massage.Domain.BookingBoundedContext;
-using Microsoft.Data.Entity;
 using Zen.Massage.Domain.UserBoundedContext;
 
 namespace Zen.Infrastructure.ReadRepository
@@ -27,7 +27,7 @@ namespace Zen.Infrastructure.ReadRepository
                 IQueryable<DbBooking> query;
                 if (includeTherapists)
                 {
-                    query = context.Bookings.Include(b => b.TherapistBookings);
+                    query = context.Bookings.Include("TherapistBookings");
                 }
                 else
                 {
@@ -36,7 +36,8 @@ namespace Zen.Infrastructure.ReadRepository
 
                 // Issue async query
                 var result = await query
-                    .FirstOrDefaultAsync(b => b.BookingId == bookingId.Id, cancellationToken)
+                    .Where(b => b.BookingId == bookingId.Id)
+                    .FirstOrDefaultAsync(cancellationToken)
                     .ConfigureAwait(false);
                 if (result == null)
                 {
