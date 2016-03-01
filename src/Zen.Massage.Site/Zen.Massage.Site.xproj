@@ -15,6 +15,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <WebProject_DirectoryAccessLevelKey>1</WebProject_DirectoryAccessLevelKey>
     <TypeScriptCompileBlocked>True</TypeScriptCompileBlocked>
+    <ApplicationInsightsResourceId>/subscriptions/d69d6dbd-7838-4ec6-9f3f-c1f43a96590c/resourcegroups/Aero-Online-Production-Group/providers/microsoft.insights/components/aeroonlinemassage</ApplicationInsightsResourceId>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <ProduceOutputsOnBuild>True</ProduceOutputsOnBuild>

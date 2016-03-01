@@ -69,7 +69,7 @@ namespace NanoMessageBus.Channels
             GC.SuppressFinalize(this);
         }
 
-        public void Send(ChannelEnvelope envelope)
+        public async void Send(ChannelEnvelope envelope)
         {
             if (_isShutdown)
             {
@@ -77,14 +77,7 @@ namespace NanoMessageBus.Channels
             }
 
             var message = _configuration.MessageAdapter.Build(envelope.Message);
-            if (message.Length == 1)
-            {
-                _topicClient.SendAsync(message.First());
-            }
-            else
-            {
-                _topicClient.SendBatchAsync(message);
-            }
+            await _topicClient.SendAsync(message).ConfigureAwait(false);
         }
 
         public async void Receive(Action<IDeliveryContext> callback)
