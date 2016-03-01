@@ -80,7 +80,7 @@ namespace NanoMessageBus.Channels
             await _topicClient.SendAsync(message).ConfigureAwait(false);
         }
 
-        public async void Receive(Action<IDeliveryContext> callback)
+        public void Receive(Action<IDeliveryContext> callback)
         {
             if (_configuration.DispatchOnly)
             {
@@ -89,10 +89,8 @@ namespace NanoMessageBus.Channels
 
             while (!_shutdownToken.IsCancellationRequested)
             {
-                BrokeredMessage message = await _subscriptionClient
-                    .PeekAsync().ConfigureAwait(false);
-
-                await ReceiveAsync(message, callback).ConfigureAwait(false);
+                BrokeredMessage message = _subscriptionClient.PeekAsync().Result;
+                var result = ReceiveAsync(message, callback).Result;
             }
         }
 

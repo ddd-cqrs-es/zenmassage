@@ -1,6 +1,6 @@
 {
   "version": "1.0.0-*",
-  "description": "NEventStore.AzureStorage Class Library",
+  "description": "NEventStore.Persistence.AzureStorage Class Library",
   "authors": [ "LewisAW7" ],
   "tags": [ "" ],
   "projectUrl": "",

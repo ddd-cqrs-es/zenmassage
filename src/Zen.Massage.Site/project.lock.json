@@ -1935,7 +1935,7 @@
           "lib/net40/NEventStore.dll": {}
         }
       },
-      "NEventStore.AzureStorage/1.0.0": {
+      "NEventStore.Persistence.AzureStorage/1.0.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
@@ -4324,7 +4324,7 @@
           "lib/net40/NEventStore.dll": {}
         }
       },
-      "NEventStore.AzureStorage/1.0.0": {
+      "NEventStore.Persistence.AzureStorage/1.0.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
@@ -6713,7 +6713,7 @@
           "lib/net40/NEventStore.dll": {}
         }
       },
-      "NEventStore.AzureStorage/1.0.0": {
+      "NEventStore.Persistence.AzureStorage/1.0.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
@@ -7172,9 +7172,9 @@
       "type": "project",
       "path": "../NanoMessageBus.AzureServiceBus/project.json"
     },
-    "NEventStore.AzureStorage/1.0.0": {
+    "NEventStore.Persistence.AzureStorage/1.0.0": {
       "type": "project",
-      "path": "../NEventStore.AzureStorage/project.json"
+      "path": "../NEventStore.Persistence.AzureStorage/project.json"
     },
     "Zen.Infrastructure.ReadRepository/1.0.0": {
       "type": "project",
@@ -8038,7 +8038,7 @@
     },
     "Microsoft.CodeAnalysis.Common/1.1.0-rc1-20151109-01": {
       "type": "package",
-      "sha512": "gC9zpQARTjIOht1dZM5Bp0fbOKA40yh0wHBMG2psLGquche0URbfdB9i1pnCusLospEsRIrNvYl75647BcBVug==",
+      "sha512": "5eea4BzS8/ge6aVWbweZ3LxMZumN7lm1hPPjSn3iAS3yi1ozsg1aCZ+lHq2nbS/ZNT+Z3QmTcmKaQd3b4bTqeA==",
       "files": [
         "lib/net45/Microsoft.CodeAnalysis.dll",
         "lib/net45/Microsoft.CodeAnalysis.xml",
@@ -8052,7 +8052,7 @@
     },
     "Microsoft.CodeAnalysis.CSharp/1.1.0-rc1-20151109-01": {
       "type": "package",
-      "sha512": "BFhSWMMlp0xLN/ogn71ULN7N0yy/yqJf/wu63x3KjV497n+8OlyiX7ZnbaQiUeafjW5P2vLzvZH99+5s+dH3Dg==",
+      "sha512": "2u8FpEIzbjvW6kveLYDwVgrrw7rkqN123dQSMLL3aRBcNFpKL4+hJkrU5uutsVNmjrzxjQkrSKQjIw6L2yjU9w==",
       "files": [
         "lib/net45/Microsoft.CodeAnalysis.CSharp.dll",
         "lib/net45/Microsoft.CodeAnalysis.CSharp.xml",
@@ -8966,7 +8966,7 @@
     "System.Diagnostics.DiagnosticSource/4.0.0-beta-23516": {
       "type": "package",
       "serviceable": true,
-      "sha512": "0uDR/UOmFCNPDCyHEPHhCrk6c1iRnDp00YqwSZ8Qf5aaaJjm4WXnf4Q9xZw4OoApsSiODSypDMdpQU24IxR16A==",
+      "sha512": "WHVhr5/p8UDjqNV7l9PCxZgOufE2tO4XOWva9pau9c7PzJJTdB1By6scO5dgHLpmlB/u4y27Y9AzT8AqtG8sxw==",
       "files": [
         "lib/dotnet5.2/System.Diagnostics.DiagnosticSource.dll",
         "lib/dotnet5.2/System.Diagnostics.DiagnosticSource.xml",
@@ -9183,7 +9183,7 @@
     "System.Numerics.Vectors/4.1.1-beta-23516": {
       "type": "package",
       "serviceable": true,
-      "sha512": "FCYCEjc3BXBTpVZTxMqf2m/sGYyDzLwICy5lNKgZzT8WfshJhsTGjJuETwsh1Cwi6bksw9YiTB6yeeWBBJDnTA==",
+      "sha512": "jphbCfQB30LZBC/8kNQtAaaCcKzCFIFnRyUvYapNOozvleUvwI6sYG9d3/WamMcalnNcHDgIlQ713QOv9aweVA==",
       "files": [
         "lib/dotnet5.4/System.Numerics.Vectors.dll",
         "lib/MonoAndroid10/_._",
@@ -9290,7 +9290,7 @@
     "System.Reflection.Metadata/1.1.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "RLIE4sSt2zngMLuqM6YmxBH99mTumtT4DNZE4+msfEaInUP5iCLQT+BHPl+2cjSAP1pdALyAjLB8RtCB+WGGWQ==",
+      "sha512": "a8VsRm/B0Ik1o5FumSMWmpwbG7cvIIajAYhzTTy9VB9XItByJDQHGZkQTIAdsvVJ6MI5O3uH/lb0izgQDlDIWA==",
       "files": [
         "lib/dotnet5.2/System.Reflection.Metadata.dll",
         "lib/dotnet5.2/System.Reflection.Metadata.xml",
@@ -9710,7 +9710,7 @@
     },
     "WindowsAzure.ServiceBus/3.1.3": {
       "type": "package",
-      "sha512": "jCUIVxTxLeJ0jHWqAcxrPSCS72NyCb4FWK2Jq/SVNSF+nKOcsxaYPxT+8ZS2Qx6j4O2Xw4rT9RgSiPp6x2fmQw==",
+      "sha512": "3o3dLgQSxk5z154fBrnb+7AXFZ9BNY8AxIwmzwvuT5oP4JVru5uYFdwVjH8J3rWljhcdkvqBQNDgNpwNPFf1Hw==",
       "files": [
         "content/app.config.install.xdt",
         "content/web.config.install.xdt",
@@ -9764,7 +9764,7 @@
       "Microsoft.VisualStudio.Web.BrowserLink.Loader >= 14.0.0-rc1-final",
       "NanoMessageBus >= 2.0.50",
       "NanoMessageBus.Autofac >= 2.0.50",
-      "NEventStore.AzureStorage >= 1.0.0-*",
+      "NEventStore.Persistence.AzureStorage >= 1.0.0-*",
       "Swashbuckle >= 6.0.0-rc1-final",
       "Swashbuckle.SwaggerGen >= 6.0.0-rc1-final",
       "Swashbuckle.SwaggerUi >= 6.0.0-rc1-final"

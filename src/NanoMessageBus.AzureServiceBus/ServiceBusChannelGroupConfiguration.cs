@@ -17,7 +17,7 @@ namespace NanoMessageBus.Channels
             MaxDispatchBuffer = 1;
             MinWorkers = 1;
             MaxWorkers = 1;
-            ReturnAddress = null;
+            ReturnAddress = new Uri("uri://hostservices");
             MessageBuilder = new DefaultChannelMessageBuilder();
             ReceiveTimeout = TimeSpan.FromMilliseconds(1500);
             DependencyResolver = null;

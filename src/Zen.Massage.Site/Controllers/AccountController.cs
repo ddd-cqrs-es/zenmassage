@@ -14,8 +14,9 @@ namespace Zen.Massage.Site.Controllers
     {
         public IActionResult SignIn()
         {
-            return new ChallengeResult(
-                OpenIdConnectDefaults.AuthenticationScheme, new AuthenticationProperties { RedirectUri = "/" });
+            return Redirect("/.auth/login/aad");
+//            return new ChallengeResult(
+//                OpenIdConnectDefaults.AuthenticationScheme, new AuthenticationProperties { RedirectUri = "/" });
         }
 
         public async Task<IActionResult> SignOut()

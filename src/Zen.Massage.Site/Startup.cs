@@ -9,6 +9,7 @@ using Microsoft.AspNet.Http.Features;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NanoMessageBus.Logging;
 using Swashbuckle.SwaggerGen;
 using Swashbuckle.SwaggerGen.XmlComments;
 
@@ -115,6 +116,8 @@ namespace Zen.Massage.Site
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+            LogFactory.LogWith(new ApplicationInsightsMessagingLogger(
+                loggerFactory.CreateLogger("MessageBus")));
 
             app.UseApplicationInsightsRequestTelemetry();
 

@@ -42,7 +42,7 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Zen.Massage.Application.Int
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "NanoMessageBus.AzureServiceBus", "src\NanoMessageBus.AzureServiceBus\NanoMessageBus.AzureServiceBus.xproj", "{6CD3C8C3-4BDD-4CFA-B67A-8DD2285E939E}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "NEventStore.Persistence.AzureStorage", "src\NEventStore.AzureStorage\NEventStore.Persistence.AzureStorage.xproj", "{C9D2B87B-4664-4DAD-887B-96EF8501B8C1}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "NEventStore.Persistence.AzureStorage", "src\NEventStore.Persistence.AzureStorage\NEventStore.Persistence.AzureStorage.xproj", "{C9D2B87B-4664-4DAD-887B-96EF8501B8C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

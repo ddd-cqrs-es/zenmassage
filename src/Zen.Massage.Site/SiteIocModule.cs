@@ -54,6 +54,7 @@ namespace Zen.Massage.Site
                 .AddChannelGroup(
                     config => config
                         .WithInputHubPath("domainevents")
+                        .WithDispatchTable(new ServiceBusDispatchTable())
                         //.WithDependencyResolver(new AutofacDependencyResolver())
                         .WithGroupName("default")
                     )

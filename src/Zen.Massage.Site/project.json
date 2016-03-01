@@ -28,7 +28,7 @@
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-rc1-final",
     "NanoMessageBus": "2.0.50",
     "NanoMessageBus.Autofac": "2.0.50",
-    "NEventStore.AzureStorage": "1.0.0-*",
+    "NEventStore.Persistence.AzureStorage": "1.0.0-*",
     "Swashbuckle": "6.0.0-rc1-final",
     "Swashbuckle.SwaggerGen": "6.0.0-rc1-final",
     "Swashbuckle.SwaggerUi": "6.0.0-rc1-final"
