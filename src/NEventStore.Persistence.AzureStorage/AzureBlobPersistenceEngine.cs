@@ -96,7 +96,7 @@ namespace NEventStore.Persistence.AzureStorage
             // application developer.
             if (Interlocked.Increment(ref _connectionLimitSet) < 2)
             {
-                Uri uri = new Uri(_primaryContainer.Uri.AbsoluteUri);
+                var uri = new Uri(_primaryContainer.Uri.AbsoluteUri);
                 var sp = ServicePointManager.FindServicePoint(uri);
                 sp.ConnectionLimit = _options.ParallelConnectionLimit;
 
@@ -270,10 +270,10 @@ namespace NEventStore.Persistence.AzureStorage
             var header = GetHeaderWithRetry(pageBlob, out headerDefinitionMetadata);
 
             // find out how many pages we are reading
-            int startPage = 0;
-            int endPage = startPage + 1;
-            int startIndex = 0;
-            int numberOfCommits = 0;
+            var startPage = 0;
+            var endPage = startPage + 1;
+            var startIndex = 0;
+            var numberOfCommits = 0;
             foreach (var commitDefinition in header.PageBlobCommitDefinitions)
             {
                 if (minRevision > commitDefinition.Revision)
@@ -334,7 +334,7 @@ namespace NEventStore.Persistence.AzureStorage
                 if (temp.Metadata.ContainsKey(IsEventStreamAggregateKey))
                 {
                     // we only care about guys who may be dirty
-                    bool isDirty = false;
+                    var isDirty = false;
                     string isDirtyString;
                     if (temp.Metadata.TryGetValue(HasUndispatchedCommitsKey, out isDirtyString))
                     {
@@ -355,7 +355,7 @@ namespace NEventStore.Persistence.AzureStorage
                             {
                                 HeaderDefinitionMetadata headerDefinitionMetadata = null;
                                 var header = GetHeaderWithRetry(temp, out headerDefinitionMetadata);
-                                bool wasActuallyDirty = false;
+                                var wasActuallyDirty = false;
                                 if (header.UndispatchedCommitCount > 0)
                                 {
                                     foreach (var definition in header.PageBlobCommitDefinitions)
@@ -492,7 +492,7 @@ namespace NEventStore.Persistence.AzureStorage
         public void DeleteStream(string bucketId, string streamId)
         {
             var pageBlobReference = _primaryContainer.GetPageBlobReference(bucketId + "/" + streamId);
-            string leaseId = pageBlobReference.AcquireLease(new TimeSpan(0, 0, 60), null);
+            var leaseId = pageBlobReference.AcquireLease(new TimeSpan(0, 0, 60), null);
             pageBlobReference.Delete(accessCondition: AccessCondition.GenerateLeaseCondition(leaseId));
             pageBlobReference.ReleaseLease(AccessCondition.GenerateLeaseCondition(leaseId));
         }
@@ -739,7 +739,7 @@ namespace NEventStore.Persistence.AzureStorage
             // do the fallback logic to try and find a valid header
             if (header == null)
             {
-                for (int i = 0; i != 3; ++i)
+                for (var i = 0; i != 3; ++i)
                 {
                     assumedValidHeaderDefinition = GetHeaderDefinitionMetadata(blob, i);
                     header = SafeGetHeader(blob, assumedValidHeaderDefinition, out lastException);
@@ -852,7 +852,7 @@ namespace NEventStore.Persistence.AzureStorage
             }
 
             // set the header definition to make it all official
-            bool isFirstWrite = currentGoodHeaderDefinition.HeaderSizeInBytes == 0;
+            var isFirstWrite = currentGoodHeaderDefinition.HeaderSizeInBytes == 0;
             var headerDefinitionMetadata = new HeaderDefinitionMetadata();
             headerDefinitionMetadata.HeaderSizeInBytes = serializedHeader.Length;
             headerDefinitionMetadata.HeaderStartLocationOffsetBytes = writeStartLocationAligned + newCommit.Length;
@@ -906,7 +906,7 @@ namespace NEventStore.Persistence.AzureStorage
         {
             var totalFillDataLength = 0;
             var ms = new MemoryStream(alignedAmount);
-            for (int i = 0; i != orderedFillData.Length; ++i)
+            for (var i = 0; i != orderedFillData.Length; ++i)
             {
                 totalFillDataLength += orderedFillData[i].Length;
                 ms.Write(orderedFillData[i], 0, orderedFillData[i].Length);

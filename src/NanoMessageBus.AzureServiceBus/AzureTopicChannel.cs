@@ -89,8 +89,15 @@ namespace NanoMessageBus.Channels
 
             while (!_shutdownToken.IsCancellationRequested)
             {
-                BrokeredMessage message = _subscriptionClient.PeekAsync().Result;
-                var result = ReceiveAsync(message, callback).Result;
+                try
+                {
+                    BrokeredMessage message = _subscriptionClient.PeekAsync().Result;
+                    var result = ReceiveAsync(message, callback).Result;
+                }
+                catch(Exception e)
+                {
+                    Log.Warn($"Exception caught in Receive message loop - [{e.Message}]", e);
+                }
             }
         }
 
