@@ -34,12 +34,23 @@ namespace Zen.Massage.Application
             }
         }
 
-        public void Tender(BookingId bookingId)
+        public void Tender(BookingId bookingId, CustomerId customerId)
         {
             using (var uow = _unitOfWorkFactory.CreateSession())
             {
                 // Get booking, open for tender and commit
                 var booking = uow.GetRepository<IBookingWriteRepository>().Get(bookingId);
+
+                // Sanity check: Owner of booking must match specified customer
+                if (booking.CustomerId != customerId)
+                {
+                    throw new ArgumentException(
+                        "Booking is owned by different customer.",
+                        nameof(customerId));
+
+                }
+
+                // Place booking into tendered state and commit
                 booking.Tender();
                 uow.Commit();
             }
@@ -56,12 +67,23 @@ namespace Zen.Massage.Application
             }
         }
 
-        public void AcceptBid(BookingId bookingId, TherapistId therapistId)
+        public void AcceptBid(BookingId bookingId, CustomerId customerId, TherapistId therapistId)
         {
             using (var uow = _unitOfWorkFactory.CreateSession())
             {
                 // Get booking, open for tender and commit
                 var booking = uow.GetRepository<IBookingWriteRepository>().Get(bookingId);
+
+                // Sanity check: Owner of booking must match specified customer
+                if (booking.CustomerId != customerId)
+                {
+                    throw new ArgumentException(
+                        "Booking is owned by different customer.",
+                        nameof(customerId));
+
+                }
+
+                // Find the associated therapist for this booking, accept bid then commit
                 var therapist = booking.TherapistBookings.First(t => t.TherapistId == therapistId);
                 therapist.Accept();
                 uow.Commit();
@@ -80,12 +102,22 @@ namespace Zen.Massage.Application
             }
         }
 
-        public void Cancel(BookingId bookingId, string reason)
+        public void Cancel(BookingId bookingId, CustomerId customerId, string reason)
         {
             using (var uow = _unitOfWorkFactory.CreateSession())
             {
                 // Get booking, open for tender and commit
                 var booking = uow.GetRepository<IBookingWriteRepository>().Get(bookingId);
+
+                // Sanity check: Owner of booking must match specified customer
+                if (booking.CustomerId != customerId)
+                {
+                    throw new ArgumentException(
+                        "Booking is owned by different customer.",
+                        nameof(customerId));
+
+                }
+
                 booking.Cancel(reason);
                 uow.Commit();
             }

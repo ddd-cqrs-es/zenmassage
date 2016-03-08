@@ -161,7 +161,7 @@ namespace NanoMessageBus.Channels
                 Log.Warn($"Channel {_identifier} has become unavailable, aborting.");
                 throw;
             }
-            catch (PoisonMessageException e)
+            catch (PoisonMessageException)
             {
                 Log.Warn($"Wire message {message.MessageId} on channel {_identifier} could not be deserialized; forwarding to poison message exchange.");
 
@@ -178,7 +178,7 @@ namespace NanoMessageBus.Channels
                     .DeadLetterAsync(message.LockToken)
                     .ConfigureAwait(false);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 
             }

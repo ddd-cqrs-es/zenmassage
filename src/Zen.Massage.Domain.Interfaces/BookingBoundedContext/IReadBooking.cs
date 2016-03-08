@@ -17,5 +17,7 @@ namespace Zen.Massage.Domain.BookingBoundedContext
         TimeSpan Duration { get; }
 
         ICollection<IReadTherapistBooking> TherapistBookings { get; }
+
+        IReadBooking LimitToTherapist(TherapistId therapistId);
     }
 }

@@ -35,5 +35,10 @@ namespace Zen.Infrastructure.ReadRepository
         public TimeSpan Duration => _innerBooking.Duration;
 
         public ICollection<IReadTherapistBooking> TherapistBookings { get; private set; }
+
+        public IReadBooking LimitToTherapist(TherapistId therapistId)
+        {
+            return new LimitedReadBooking(this, therapistId);
+        }
     }
 }

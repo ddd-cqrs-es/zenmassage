@@ -39,96 +39,55 @@ namespace Zen.Massage.Site.Controllers.V1
         }
 
         /// <summary>
-        /// Gets bookings associated with a user
+        /// Gets bookings associated with current logged on user
         /// </summary>
-        /// <param name="userId">The user identifier (this can be either a customer id or therapist id)</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("user/{userId:guid}")]
-        [SwaggerOperation("GetBookingsByUser")]
+        [Route("/")]
+        [SwaggerOperation("GetBookings")]
         [SwaggerResponse(HttpStatusCode.OK, "Bookings retrieved")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to retrieve bookings")]
-        public async Task<IActionResult> GetUserBookings(Guid userId, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetBookings(CancellationToken cancellationToken)
         {
             try
             {
+                // Retrieve user id claim from current user
+                var userId = User.GetUserIdClaim();
+                if (userId == Guid.Empty)
+                {
+                    // User does not have necessary claim
+                    return HttpBadRequest();
+                }
+
+                // Consider an API that allows definition of cutoff
+                // Also move meat of this method into service
                 var cutoffDate = DateTime.UtcNow;
-                var clientBookings = await _bookingReadRepository
+
+                // Fetch bookings as a customer
+                var bookings = await _bookingReadRepository
                     .GetFutureBookingsForCustomer(new CustomerId(userId), cutoffDate, cancellationToken)
                     .ConfigureAwait(true);
-                var therapistBookings = await _bookingReadRepository
-                    .GetFutureBookingsForTherapist(new TherapistId(userId), cutoffDate, cancellationToken)
-                    .ConfigureAwait(true);
 
-                var allBookings = clientBookings.Concat(therapistBookings);
-                var mappedBookings = allBookings
+                // If user is therapist then fetch bookings as therapist too
+                if (User.HasTherapistClaim())
+                {
+                    var therapistBookings = await _bookingReadRepository
+                        .GetFutureBookingsForTherapist(new TherapistId(userId), cutoffDate, cancellationToken)
+                        .ConfigureAwait(true);
+
+                    // Amalgamate into single collection
+                    // TODO: Consider sort order...
+                    bookings = bookings.Concat(therapistBookings);
+                }
+
+                var mappedBookings = bookings
                     .Select(b => _mapper.Map<BookingItemDto>(b));
                 return Ok(mappedBookings);
             }
             catch (Exception exception)
             {
                 return HttpBadRequest($"Failed to get bookings for user: {exception.Message}");
-            }
-        }
-
-        /// <summary>
-        /// Gets bookings associated with a customer
-        /// </summary>
-        /// <param name="customerId">The customer identifier (guid)</param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("customer/{customerId:guid}")]
-        [SwaggerOperation("GetBookingsByCustomer")]
-        [SwaggerResponse(HttpStatusCode.OK, "Bookings retrieved")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to retrieve bookings")]
-        public async Task<IActionResult> GetCustomerBookings(Guid customerId, CancellationToken cancellationToken)
-        {
-            try
-            {
-                var cutoffDate = DateTime.UtcNow;
-                var clientBookings = await _bookingReadRepository
-                    .GetFutureBookingsForCustomer(new CustomerId(customerId), cutoffDate, cancellationToken)
-                    .ConfigureAwait(true);
-
-                var mappedBookings = clientBookings
-                    .Select(b => _mapper.Map<BookingItemDto>(b));
-                return Ok(mappedBookings);
-            }
-            catch (Exception exception)
-            {
-                return HttpBadRequest($"Failed to get bookings for customer: {exception.Message}");
-            }
-        }
-
-        /// <summary>
-        /// Gets bookings associated with a therapist
-        /// </summary>
-        /// <param name="therapistId">The therapist identifier (guid)</param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("therapist/{therapistId:guid}")]
-        [SwaggerOperation("GetBookingsByTherapist")]
-        [SwaggerResponse(HttpStatusCode.OK, "Bookings retrieved")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to retrieve bookings")]
-        public async Task<IActionResult> GetTherapistBookings(Guid therapistId, CancellationToken cancellationToken)
-        {
-            try
-            {
-                var cutoffDate = DateTime.UtcNow;
-                var therapistBookings = await _bookingReadRepository
-                    .GetFutureBookingsForTherapist(new TherapistId(therapistId), cutoffDate, cancellationToken)
-                    .ConfigureAwait(true);
-
-                var mappedBookings = therapistBookings
-                    .Select(b => _mapper.Map<BookingItemDto>(b));
-                return Ok(mappedBookings);
-            }
-            catch (Exception exception)
-            {
-                return HttpBadRequest($"Failed to get bookings for therapist: {exception.Message}");
             }
         }
 
@@ -140,16 +99,44 @@ namespace Zen.Massage.Site.Controllers.V1
         /// <returns></returns>
         [HttpGet]
         [Route("{bookingId:guid}")]
-        [SwaggerOperation("GetAllBookings")]
+        [SwaggerOperation("GetBooking")]
         [SwaggerResponse(HttpStatusCode.OK, "Booking retrieved")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to retrieve booking")]
         public async Task<IActionResult> GetBooking(Guid bookingId, CancellationToken cancellationToken)
         {
             try
             {
+                // Retrieve user id claim from current user
+                var userId = User.GetUserIdClaim();
+                if (userId == Guid.Empty)
+                {
+                    // User does not have necessary claim
+                    return HttpBadRequest();
+                }
+
+                // Get the associated booking
                 var booking = await _bookingReadRepository
                     .GetBooking(new BookingId(bookingId), true, cancellationToken)
                     .ConfigureAwait(true);
+                if (booking == null)
+                {
+                    // Booking not found
+                    return HttpNotFound();
+                }
+
+                // Associated user must be customer or therapist
+                if (booking.CustomerId.Id != userId)
+                {
+                    // Limit information returned to only therapist data
+                    booking = booking.LimitToTherapist(new TherapistId(userId));
+                    if (!booking.TherapistBookings.Any())
+                    {
+                        // Booking is not known to the current caller as customer or therapist
+                        return HttpNotFound();
+                    }
+                }
+
+                // Map whatever we have
                 var mappedBooking = _mapper.Map<BookingItemDto>(booking);
                 return Ok(mappedBooking);
             }
@@ -160,9 +147,8 @@ namespace Zen.Massage.Site.Controllers.V1
         }
 
         /// <summary>
-        /// Creates a new booking in the future associated with a given client
+        /// Creates a new booking
         /// </summary>
-        /// <param name="customerId">The customer identifier (guid)</param>
         /// <param name="booking">The booking information</param>
         /// <returns>
         /// HTTP Created with the booking id.
@@ -172,17 +158,26 @@ namespace Zen.Massage.Site.Controllers.V1
         /// in the location header of the response.
         /// </remarks>
         [HttpPost]
-        [Route("user/{CustomerId:guid}")]
+        [Route("/")]
         [SwaggerOperation("CreateBooking")]
         [SwaggerResponse(HttpStatusCode.OK, "Booking created")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to create booking")]
         public IActionResult CreateBooking(
-            Guid customerId, 
             [FromBody]CreateBookingDto booking)
         {
             try
             {
-                var bookingId = _bookingCommandService.Create(new CustomerId(customerId), booking.ProposedTime, booking.Duration);
+                // Retrieve user id claim from current user
+                var userId = User.GetUserIdClaim();
+                if (userId == Guid.Empty)
+                {
+                    // User does not have necessary claim
+                    return HttpBadRequest();
+                }
+
+                var bookingId = _bookingCommandService.Create(new CustomerId(userId), booking.ProposedTime, booking.Duration);
+
+                // TODO: Fabricate URL with correct domain
                 return Created(new Uri($"http://localhost:1282/api/v1/bookings/{bookingId.Id:D}/"), bookingId.Id);
             }
             catch (Exception exception)
@@ -205,7 +200,15 @@ namespace Zen.Massage.Site.Controllers.V1
         {
             try
             {
-                _bookingCommandService.Tender(new BookingId(bookingId));
+                // Retrieve user id claim from current user
+                var userId = User.GetUserIdClaim();
+                if (userId == Guid.Empty)
+                {
+                    // User does not have necessary claim
+                    return HttpBadRequest();
+                }
+
+                _bookingCommandService.Tender(new BookingId(bookingId), new CustomerId(userId));
                 return Ok();
             }
             catch (Exception exception)
@@ -218,24 +221,30 @@ namespace Zen.Massage.Site.Controllers.V1
         /// Bids on a tendered booking
         /// </summary>
         /// <param name="bookingId">Booking identifier</param>
-        /// <param name="therapistId">Therapist identifier</param>
         /// <param name="placeBid">Bid placement information</param>
         /// <returns></returns>
         [HttpPatch]
-        [Route("{bookingId:guid}/bid/{therapistId:guid}")]
+        [Route("{bookingId:guid}/bid")]
         [SwaggerOperation("PlaceBid")]
         [SwaggerResponse(HttpStatusCode.OK, "Bid placed")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to place bid")]
         public IActionResult PlaceBid(
             Guid bookingId,
-            Guid therapistId,
             [FromBody] PlaceBookingBidDto placeBid)
         {
             try
             {
+                // Retrieve user id claim from current user
+                var userId = User.GetUserIdClaim();
+                if (userId == Guid.Empty || !User.HasTherapistClaim())
+                {
+                    // User does not have necessary claims
+                    return HttpBadRequest();
+                }
+
                 _bookingCommandService.PlaceBid(
                     new BookingId(bookingId),
-                    new TherapistId(therapistId),
+                    new TherapistId(userId),
                     placeBid.ProposedTime);
                 return Ok();
             }
@@ -250,7 +259,6 @@ namespace Zen.Massage.Site.Controllers.V1
         /// </summary>
         /// <param name="bookingId">Booking identifier</param>
         /// <param name="therapistId">Therapist identifier</param>
-        /// <param name="placeBid">Bid placement information</param>
         /// <returns></returns>
         [HttpPatch]
         [Route("{bookingId:guid}/accept/{therapistId:guid}")]
@@ -261,8 +269,17 @@ namespace Zen.Massage.Site.Controllers.V1
         {
             try
             {
+                // Retrieve user id claim from current user
+                var userId = User.GetUserIdClaim();
+                if (userId == Guid.Empty)
+                {
+                    // User does not have necessary claim
+                    return HttpBadRequest();
+                }
+
                 _bookingCommandService.AcceptBid(
                     new BookingId(bookingId),
+                    new CustomerId(userId), 
                     new TherapistId(therapistId));
                 return Ok();
             }
@@ -276,20 +293,27 @@ namespace Zen.Massage.Site.Controllers.V1
         /// Confirm an accepted bid on a booking
         /// </summary>
         /// <param name="bookingId">Booking identifier</param>
-        /// <param name="therapistId">Therapist identifier</param>
         /// <returns></returns>
         [HttpPatch]
-        [Route("{bookingId:guid}/confirm/{therapistId:guid}")]
+        [Route("{bookingId:guid}/confirm")]
         [SwaggerOperation("ConfirmedBid")]
         [SwaggerResponse(HttpStatusCode.OK, "Booking confirmed")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to confirm bid")]
-        public IActionResult ConfirmBid(Guid bookingId, Guid therapistId)
+        public IActionResult ConfirmBid(Guid bookingId)
         {
             try
             {
+                // Retrieve user id claim from current user
+                var userId = User.GetUserIdClaim();
+                if (userId == Guid.Empty || !User.HasTherapistClaim())
+                {
+                    // User does not have necessary claims
+                    return HttpBadRequest();
+                }
+
                 _bookingCommandService.ConfirmBid(
                     new BookingId(bookingId),
-                    new TherapistId(therapistId));
+                    new TherapistId(userId));
                 return Ok();
             }
             catch (Exception exception)
@@ -299,20 +323,31 @@ namespace Zen.Massage.Site.Controllers.V1
         }
 
         /// <summary>
-        /// Cancels a booking
+        /// Cancels a booking (if actioned by customer)
         /// </summary>
         /// <param name="bookingId">Booking identifier</param>
         /// <returns></returns>
         [HttpPatch]
-        [Route("{bookingId:guid}/cancel")]
+        [Route("{bookingId:guid}/cancel/customer")]
         [SwaggerOperation("CancelBookingByCustomer")]
         [SwaggerResponse(HttpStatusCode.OK, "Booking cancelled")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to cancel booking")]
-        public IActionResult CancelBooking(Guid bookingId)
+        public IActionResult CancelBookingByCustomer(Guid bookingId)
         {
             try
             {
-                _bookingCommandService.Cancel(new BookingId(bookingId), string.Empty);
+                // Retrieve user id claim from current user
+                var userId = User.GetUserIdClaim();
+                if (userId == Guid.Empty)
+                {
+                    // User does not have necessary claim
+                    return HttpBadRequest();
+                }
+
+                _bookingCommandService.Cancel(
+                    new BookingId(bookingId),
+                    new CustomerId(userId),
+                    string.Empty);
                 return Ok();
             }
             catch (Exception exception)
@@ -322,23 +357,30 @@ namespace Zen.Massage.Site.Controllers.V1
         }
 
         /// <summary>
-        /// Cancels a booking (by therapist)
+        /// Cancels a booking (if actioned by therapist)
         /// </summary>
         /// <param name="bookingId">Booking identifier</param>
-        /// <param name="therapistId">Therapist identifier</param>
         /// <returns></returns>
         [HttpPatch]
-        [Route("{bookingId:guid}/cancel/{therapistId:guid}")]
+        [Route("{bookingId:guid}/cancel/therapist")]
         [SwaggerOperation("CancelBookingByTherapist")]
         [SwaggerResponse(HttpStatusCode.OK, "Booking cancelled")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to cancel booking")]
-        public IActionResult CancelBooking(Guid bookingId, Guid therapistId)
+        public IActionResult CancelBookingByTherapist(Guid bookingId)
         {
             try
             {
+                // Retrieve user id claim from current user
+                var userId = User.GetUserIdClaim();
+                if (userId == Guid.Empty || !User.HasTherapistClaim())
+                {
+                    // User does not have necessary claims
+                    return HttpBadRequest();
+                }
+
                 _bookingCommandService.Cancel(
                     new BookingId(bookingId),
-                    new TherapistId(therapistId),
+                    new TherapistId(userId),
                     string.Empty);
                 return Ok();
             }
