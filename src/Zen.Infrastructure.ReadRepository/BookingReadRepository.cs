@@ -62,13 +62,15 @@ namespace Zen.Infrastructure.ReadRepository
         {
             using (var context = CreateBookingEntityContext())
             {
+                var now = DateTime.UtcNow;
                 var query = await context.Bookings
                     .Include(b => b.TherapistBookings)
                     .Where(b =>
                         b.TenantId == tenantId.Id &&
-                        b.ProposedTime > cutoffDate &&
+                        b.ProposedTime > now && b.ProposedTime < cutoffDate &&
                         b.Status != BookingStatus.Provisional &&
                         b.Status != BookingStatus.CancelledByClient)
+                    .OrderBy(b => b.ProposedTime)
                     .ToListAsync(cancellationToken)
                     .ConfigureAwait(false);
                 return query
@@ -84,14 +86,16 @@ namespace Zen.Infrastructure.ReadRepository
         {
             using (var context = CreateBookingEntityContext())
             {
+                var now = DateTime.UtcNow;
                 var query = await context.Bookings
                     .Include(b => b.TherapistBookings)
                     .Where(b =>
                         b.TenantId == tenantId.Id &&
-                        b.ProposedTime > cutoffDate &&
+                        b.ProposedTime > now && b.ProposedTime < cutoffDate &&
                         b.CustomerId == customerId.Id &&
                         b.Status != BookingStatus.Provisional &&
                         b.Status != BookingStatus.CancelledByClient)
+                    .OrderBy(b => b.ProposedTime)
                     .ToListAsync(cancellationToken)
                     .ConfigureAwait(false);
                 return query
@@ -107,15 +111,17 @@ namespace Zen.Infrastructure.ReadRepository
         {
             using (var context = CreateBookingEntityContext())
             {
+                var now = DateTime.UtcNow;
                 var query = await context.TherapistBookings
                     .Include(tb => tb.Booking)
                     .Where(tb =>
-                        tb.Booking.ProposedTime > cutoffDate &&
+                        tb.Booking.ProposedTime > now && tb.Booking.ProposedTime < cutoffDate &&
                         tb.TherapistId == therapistId.Id &&
                         tb.Booking.TenantId == tenantId.Id &&
                         tb.Booking.Status != BookingStatus.Provisional &&
                         tb.Booking.Status != BookingStatus.CancelledByClient)
                     .Select(tb => tb.Booking)
+                    .OrderBy(b => b.ProposedTime)
                     .ToListAsync(cancellationToken)
                     .ConfigureAwait(false);
                 return query

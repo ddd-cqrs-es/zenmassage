@@ -62,7 +62,7 @@ namespace Zen.Massage.Site.Controllers.V1
 
                 // Consider an API that allows definition of cutoff
                 // Also move meat of this method into service
-                var cutoffDate = DateTime.UtcNow;
+                var cutoffDate = DateTime.UtcNow.AddMonths(3);
 
                 // Fetch bookings as a customer
                 var bookings = await _bookingQueryService
@@ -77,8 +77,9 @@ namespace Zen.Massage.Site.Controllers.V1
                         .ConfigureAwait(true);
 
                     // Amalgamate into single collection
-                    // TODO: Consider sort order...
-                    bookings = bookings.Concat(therapistBookings);
+                    bookings = bookings
+                        .Concat(therapistBookings)
+                        .OrderBy(b => b.ProposedTime);
                 }
 
                 var mappedBookings = bookings
