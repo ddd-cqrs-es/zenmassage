@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Zen.Massage.Domain.BookingBoundedContext;
 using Zen.Massage.Domain.GeneralBoundedContext;
 using Zen.Massage.Domain.UserBoundedContext;
 
-namespace Zen.Massage.Domain.BookingBoundedContext
+namespace Zen.Massage.Application
 {
-    public interface IBookingReadRepository
+    public interface IBookingQueryService
     {
         Task<IReadBooking> GetBookingAsync(
             TenantId tenantId, BookingId bookingId, bool includeTherapists, CancellationToken cancellationToken);
@@ -20,17 +22,5 @@ namespace Zen.Massage.Domain.BookingBoundedContext
 
         Task<IEnumerable<IReadBooking>> GetFutureBookingsForTherapistAsync(
             TenantId tenantId, TherapistId therapistId, DateTime cutoffDate, CancellationToken cancellationToken);
-
-        Task AddBookingAsync(
-            TenantId tenantId, BookingId bookingId, CustomerId customerId, DateTime proposedTime, TimeSpan duration, CancellationToken cancellationToken);
-
-        Task UpdateBookingAsync(
-            TenantId tenantId, BookingId bookingId, BookingStatus? status, DateTime? proposedTime, TimeSpan? duration, CancellationToken cancellationToken);
-
-        Task AddTherapistBookingAsync(
-            TenantId tenantId, BookingId bookingId, TherapistId therapistId, BookingStatus status, DateTime proposedTime, CancellationToken cancellationToken);
-
-        Task UpdateTherapistBookingAsync(
-            TenantId tenantId, BookingId bookingId, TherapistId therapistId, BookingStatus? status, DateTime? proposedTime, CancellationToken cancellationToken);
     }
 }

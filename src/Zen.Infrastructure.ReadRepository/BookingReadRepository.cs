@@ -20,7 +20,7 @@ namespace Zen.Infrastructure.ReadRepository
             _connectionString = connectionString;
         }
 
-        public async Task<IReadBooking> GetBooking(
+        public async Task<IReadBooking> GetBookingAsync(
             TenantId tenantId,
             BookingId bookingId,
             bool includeTherapists,
@@ -54,7 +54,7 @@ namespace Zen.Infrastructure.ReadRepository
             }
         }
 
-        public async Task<IEnumerable<IReadBooking>> GetFutureOpenBookings(
+        public async Task<IEnumerable<IReadBooking>> GetFutureOpenBookingsAsync(
             TenantId tenantId,
             DateTime cutoffDate,
             BookingStatus status,
@@ -76,7 +76,7 @@ namespace Zen.Infrastructure.ReadRepository
             }
         }
 
-        public async Task<IEnumerable<IReadBooking>> GetFutureBookingsForCustomer(
+        public async Task<IEnumerable<IReadBooking>> GetFutureBookingsForCustomerAsync(
             TenantId tenantId,
             CustomerId customerId,
             DateTime cutoffDate,
@@ -99,7 +99,7 @@ namespace Zen.Infrastructure.ReadRepository
             }
         }
 
-        public async Task<IEnumerable<IReadBooking>> GetFutureBookingsForTherapist(
+        public async Task<IEnumerable<IReadBooking>> GetFutureBookingsForTherapistAsync(
             TenantId tenantId,
             TherapistId therapistId,
             DateTime cutoffDate,
@@ -123,7 +123,7 @@ namespace Zen.Infrastructure.ReadRepository
             }
         }
 
-        public async Task AddBooking(
+        public async Task AddBookingAsync(
             TenantId tenantId,
             BookingId bookingId,
             CustomerId clientId,
@@ -150,7 +150,7 @@ namespace Zen.Infrastructure.ReadRepository
             }
         }
 
-        public async Task UpdateBooking(
+        public async Task UpdateBookingAsync(
             TenantId tenantId,
             BookingId bookingId,
             BookingStatus? status,
@@ -178,7 +178,7 @@ namespace Zen.Infrastructure.ReadRepository
             }
         }
 
-        public async Task AddTherapistBooking(
+        public async Task AddTherapistBookingAsync(
             TenantId tenantId,
             BookingId bookingId,
             TherapistId therapistId,
@@ -208,7 +208,7 @@ namespace Zen.Infrastructure.ReadRepository
             }
         }
 
-        public async Task UpdateTherapistBooking(
+        public async Task UpdateTherapistBookingAsync(
             TenantId tenantId,
             BookingId bookingId,
             TherapistId therapistId,

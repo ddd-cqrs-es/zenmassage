@@ -86,6 +86,8 @@ namespace Zen.Massage.Site
                 .As<IBookingWriteRepository>();
 
             // Register application types
+            builder.RegisterType<BookingQueryService>()
+                .As<IBookingQueryService>();
             builder.RegisterType<BookingCommandService>()
                 .As<IBookingCommandService>();
 

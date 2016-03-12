@@ -18,24 +18,22 @@ namespace Zen.Massage.Site.Controllers.V1
     /// </summary>
     /// <remarks>
     /// This endpoint exposes information regarding bookings.
-    /// Ultimately access to the information here will be limited by user id
-    /// as supplied by an OAuth2 claim from our identity server but for now
-    /// it is wide open!
+    /// All calls to this endpoint require an authenticated user
     /// </remarks>
     [Route("api/v1")]
     public class BookingApiControllerV1 : Controller
     {
         private readonly IMapper _mapper;
-        private readonly IBookingReadRepository _bookingReadRepository;
+        private readonly IBookingQueryService _bookingQueryService;
         private readonly IBookingCommandService _bookingCommandService;
 
         public BookingApiControllerV1(
             MapperConfiguration mapperConfiguration,
-            IBookingReadRepository bookingReadRepository,
+            IBookingQueryService bookingQueryService,
             IBookingCommandService bookingCommandService)
         {
             _mapper = mapperConfiguration.CreateMapper();
-            _bookingReadRepository = bookingReadRepository;
+            _bookingQueryService = bookingQueryService;
             _bookingCommandService = bookingCommandService;
         }
 
@@ -67,15 +65,15 @@ namespace Zen.Massage.Site.Controllers.V1
                 var cutoffDate = DateTime.UtcNow;
 
                 // Fetch bookings as a customer
-                var bookings = await _bookingReadRepository
-                    .GetFutureBookingsForCustomer(new TenantId(tenantId), new CustomerId(userId), cutoffDate, cancellationToken)
+                var bookings = await _bookingQueryService
+                    .GetFutureBookingsForCustomerAsync(new TenantId(tenantId), new CustomerId(userId), cutoffDate, cancellationToken)
                     .ConfigureAwait(true);
 
                 // If user is therapist then fetch bookings as therapist too
                 if (User.HasTherapistClaim())
                 {
-                    var therapistBookings = await _bookingReadRepository
-                        .GetFutureBookingsForTherapist(new TenantId(tenantId), new TherapistId(userId), cutoffDate, cancellationToken)
+                    var therapistBookings = await _bookingQueryService
+                        .GetFutureBookingsForTherapistAsync(new TenantId(tenantId), new TherapistId(userId), cutoffDate, cancellationToken)
                         .ConfigureAwait(true);
 
                     // Amalgamate into single collection
@@ -102,7 +100,7 @@ namespace Zen.Massage.Site.Controllers.V1
         /// <returns></returns>
         [HttpGet]
         [Route("{tenantId:guid}/bookings/{bookingId:guid}")]
-        [SwaggerOperation("GetBooking")]
+        [SwaggerOperation("GetBookingAsync")]
         [SwaggerResponse(HttpStatusCode.OK, "Booking retrieved")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to retrieve booking")]
         public async Task<IActionResult> GetBooking(Guid tenantId, Guid bookingId, CancellationToken cancellationToken)
@@ -118,8 +116,8 @@ namespace Zen.Massage.Site.Controllers.V1
                 }
 
                 // Get the associated booking
-                var booking = await _bookingReadRepository
-                    .GetBooking(new TenantId(tenantId), new BookingId(bookingId), true, cancellationToken)
+                var booking = await _bookingQueryService
+                    .GetBookingAsync(new TenantId(tenantId), new BookingId(bookingId), true, cancellationToken)
                     .ConfigureAwait(true);
                 if (booking == null)
                 {

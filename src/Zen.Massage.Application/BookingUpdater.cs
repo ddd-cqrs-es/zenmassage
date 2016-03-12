@@ -33,7 +33,7 @@ namespace Zen.Massage.Application
         public async void Handle(BookingCreatedEvent message)
         {
             await _repository
-                .AddBooking(
+                .AddBookingAsync(
                     message.TenantId,
                     message.BookingId,
                     message.CustomerId,
@@ -50,7 +50,7 @@ namespace Zen.Massage.Application
         public async void Handle(BookingTenderEvent message)
         {
             await _repository
-                .UpdateBooking(
+                .UpdateBookingAsync(
                     message.TenantId,
                     message.BookingId,
                     BookingStatus.Tender,
@@ -67,7 +67,7 @@ namespace Zen.Massage.Application
         public async void Handle(BookingBidEvent message)
         {
             await _repository
-                .AddTherapistBooking(
+                .AddTherapistBookingAsync(
                     message.TenantId,
                     message.BookingId,
                     message.TherapistId,
@@ -86,7 +86,7 @@ namespace Zen.Massage.Application
             if (message.TherapistId != TherapistId.Empty)
             {
                 await _repository
-                    .UpdateTherapistBooking(
+                    .UpdateTherapistBookingAsync(
                         message.TenantId,
                         message.BookingId,
                         message.TherapistId,
@@ -98,7 +98,7 @@ namespace Zen.Massage.Application
             else
             {
                 await _repository
-                    .UpdateBooking(
+                    .UpdateBookingAsync(
                         message.TenantId,
                         message.BookingId,
                         BookingStatus.CancelledByClient,
@@ -116,7 +116,7 @@ namespace Zen.Massage.Application
         public async void Handle(TherapistBookingAcceptedEvent message)
         {
             await _repository
-                .UpdateTherapistBooking(
+                .UpdateTherapistBookingAsync(
                     message.TenantId,
                     message.BookingId,
                     message.TherapistId,
@@ -133,7 +133,7 @@ namespace Zen.Massage.Application
         public async void Handle(TherapistBookingConfirmedEvent message)
         {
             await _repository
-                .UpdateTherapistBooking(
+                .UpdateTherapistBookingAsync(
                     message.TenantId,
                     message.BookingId,
                     message.TherapistId,
@@ -143,7 +143,7 @@ namespace Zen.Massage.Application
                 .ConfigureAwait(false);
 
             await _repository
-                .UpdateBooking(
+                .UpdateBookingAsync(
                     message.TenantId,
                     message.BookingId,
                     BookingStatus.Confirmed,
