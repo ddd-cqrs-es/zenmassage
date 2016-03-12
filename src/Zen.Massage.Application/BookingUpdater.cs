@@ -34,6 +34,7 @@ namespace Zen.Massage.Application
         {
             await _repository
                 .AddBooking(
+                    message.TenantId,
                     message.BookingId,
                     message.CustomerId,
                     message.ProposedTime,
@@ -50,6 +51,7 @@ namespace Zen.Massage.Application
         {
             await _repository
                 .UpdateBooking(
+                    message.TenantId,
                     message.BookingId,
                     BookingStatus.Tender,
                     null,
@@ -66,6 +68,7 @@ namespace Zen.Massage.Application
         {
             await _repository
                 .AddTherapistBooking(
+                    message.TenantId,
                     message.BookingId,
                     message.TherapistId,
                     BookingStatus.BidByTherapist,
@@ -84,6 +87,7 @@ namespace Zen.Massage.Application
             {
                 await _repository
                     .UpdateTherapistBooking(
+                        message.TenantId,
                         message.BookingId,
                         message.TherapistId,
                         BookingStatus.CancelledByTherapist,
@@ -95,6 +99,7 @@ namespace Zen.Massage.Application
             {
                 await _repository
                     .UpdateBooking(
+                        message.TenantId,
                         message.BookingId,
                         BookingStatus.CancelledByClient,
                         null,
@@ -112,6 +117,7 @@ namespace Zen.Massage.Application
         {
             await _repository
                 .UpdateTherapistBooking(
+                    message.TenantId,
                     message.BookingId,
                     message.TherapistId,
                     BookingStatus.AcceptByClient,
@@ -128,6 +134,7 @@ namespace Zen.Massage.Application
         {
             await _repository
                 .UpdateTherapistBooking(
+                    message.TenantId,
                     message.BookingId,
                     message.TherapistId,
                     BookingStatus.Confirmed,
@@ -137,6 +144,7 @@ namespace Zen.Massage.Application
 
             await _repository
                 .UpdateBooking(
+                    message.TenantId,
                     message.BookingId,
                     BookingStatus.Confirmed,
                     null,

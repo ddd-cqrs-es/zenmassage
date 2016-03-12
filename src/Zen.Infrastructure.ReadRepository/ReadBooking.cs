@@ -15,7 +15,7 @@ namespace Zen.Infrastructure.ReadRepository
         {
             _innerBooking = booking;
             BookingId = new BookingId(_innerBooking.BookingId);
-            CustomerId = new CustomerId(_innerBooking.ClientId);
+            CustomerId = new CustomerId(_innerBooking.CustomerId);
 
             TherapistBookings = _innerBooking
                 .TherapistBookings

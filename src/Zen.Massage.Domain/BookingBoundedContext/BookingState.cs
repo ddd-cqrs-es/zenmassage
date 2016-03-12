@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using AggregateSource;
+using Zen.Massage.Domain.GeneralBoundedContext;
 using Zen.Massage.Domain.UserBoundedContext;
 
 namespace Zen.Massage.Domain.BookingBoundedContext
@@ -26,6 +27,8 @@ namespace Zen.Massage.Domain.BookingBoundedContext
 
         public BookingId BookingId { get; private set; }
 
+        public TenantId TenantId { get; private set; }
+
         public CustomerId CustomerId { get; private set; }
 
         public ICollection<ITherapistBooking> AssociatedTherapists =>
@@ -41,6 +44,7 @@ namespace Zen.Massage.Domain.BookingBoundedContext
         private void OnBookingCreated(BookingCreatedEvent eventObject)
         {
             BookingId = eventObject.BookingId;
+            TenantId = eventObject.TenantId;
             CustomerId = eventObject.CustomerId;
             Status = BookingStatus.Provisional;
             ProposedTime = eventObject.ProposedTime;

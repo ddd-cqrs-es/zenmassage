@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Zen.Massage.Domain.GeneralBoundedContext;
 using Zen.Massage.Domain.UserBoundedContext;
 
 namespace Zen.Massage.Domain.BookingBoundedContext
@@ -7,6 +8,8 @@ namespace Zen.Massage.Domain.BookingBoundedContext
     public interface IBooking
     {
         BookingId BookingId { get; }
+
+        TenantId TenantId { get; }
 
         CustomerId CustomerId { get; }
 

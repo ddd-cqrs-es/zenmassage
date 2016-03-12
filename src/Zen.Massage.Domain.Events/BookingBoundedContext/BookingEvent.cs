@@ -1,11 +1,24 @@
 ﻿using System;
+using Zen.Massage.Domain.GeneralBoundedContext;
 
 namespace Zen.Massage.Domain.BookingBoundedContext
 {
     [Serializable]
-    public class BookingEvent
+    public class TenantEvent
     {
-        public BookingEvent(BookingId bookingId)
+        public TenantEvent(TenantId tenantId)
+        {
+            TenantId = tenantId;
+        }
+
+        public TenantId TenantId { get; private set; }
+    }
+
+    [Serializable]
+    public class BookingEvent : TenantEvent
+    {
+        public BookingEvent(TenantId tenantId, BookingId bookingId)
+            : base(tenantId)
         {
             BookingId = bookingId;
         }

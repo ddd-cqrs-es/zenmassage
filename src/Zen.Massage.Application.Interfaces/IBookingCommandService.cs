@@ -1,23 +1,24 @@
 ﻿using System;
 using Zen.Massage.Domain.BookingBoundedContext;
+using Zen.Massage.Domain.GeneralBoundedContext;
 using Zen.Massage.Domain.UserBoundedContext;
 
 namespace Zen.Massage.Application
 {
     public interface IBookingCommandService
     {
-        BookingId Create(CustomerId customerId, DateTime proposedTime, TimeSpan duration);
+        BookingId Create(TenantId tenantId, CustomerId customerId, DateTime proposedTime, TimeSpan duration);
 
-        void Tender(BookingId bookingId, CustomerId customerId);
+        void Tender(TenantId tenantId, BookingId bookingId, CustomerId customerId);
 
-        void PlaceBid(BookingId bookingId, TherapistId therapistId, DateTime? proposedTime);
+        void PlaceBid(TenantId tenantId, BookingId bookingId, TherapistId therapistId, DateTime? proposedTime);
 
-        void AcceptBid(BookingId bookingId, CustomerId customerId, TherapistId therapistId);
+        void AcceptBid(TenantId tenantId, BookingId bookingId, CustomerId customerId, TherapistId therapistId);
 
-        void ConfirmBid(BookingId bookingId, TherapistId therapistId);
+        void ConfirmBid(TenantId tenantId, BookingId bookingId, TherapistId therapistId);
 
-        void Cancel(BookingId bookingId, CustomerId customerId, string reason);
+        void Cancel(TenantId tenantId, BookingId bookingId, CustomerId customerId, string reason);
 
-        void Cancel(BookingId bookingId, TherapistId therapistId, string reason);
+        void Cancel(TenantId tenantId, BookingId bookingId, TherapistId therapistId, string reason);
     }
 }

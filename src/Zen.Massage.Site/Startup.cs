@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNet.Authentication.Cookies;
@@ -17,6 +19,8 @@ namespace Zen.Massage.Site
 {
     public class Startup
     {
+        private bool _foundSwaggerDocumentation;
+
         public Startup(IHostingEnvironment env)
         {
             // Set up configuration sources
@@ -48,59 +52,63 @@ namespace Zen.Massage.Site
             // NOTE: To avoid disclosure of directory structure and ease deployment
             //  fetch doc path from user-secret config (dev env only)
             var documentationPath = Configuration["swagger:xmlpath"];
-            services.AddSwaggerGen();
-            services.ConfigureSwaggerDocument(
-                options =>
-                {
-                    options.SecurityDefinitions["apiKey"] =
-                        new ApiKeyScheme
-                        {
-                            Name = "api-key",
-                            Description = "API Key Authentication",
-                            In = "header",
-                            Type = "apiKey"
-                        };
-                    options.MultipleApiVersions(
-                        new[]
-                        {
-                            new Info
+            if (File.Exists(documentationPath))
+            {
+                _foundSwaggerDocumentation = true;
+                services.AddSwaggerGen();
+                services.ConfigureSwaggerDocument(
+                    options =>
+                    {
+                        options.SecurityDefinitions["apiKey"] =
+                            new ApiKeyScheme
                             {
-                                Version = "v1",
-                                Title = "Zen Massage SDK (v1)",
-                                Description = "Application Programming Interface (API) for interacting with Zen Massage services.",
-                                Contact =
-                                    new Contact
-                                    {
-                                        Name = "Developer Support",
-                                        Email = "support@somedomainorother.com",
-                                        Url = "http://www.somedomainorother.com"
-                                    },
-                                TermsOfService = "None"
-                            }/*,
-                            new Info
+                                Name = "api-key",
+                                Description = "API Key Authentication",
+                                In = "header",
+                                Type = "apiKey"
+                            };
+                        options.MultipleApiVersions(
+                            new[]
                             {
-                                Version = "v2",
-                                Title = "Zen Massage SDK (v2)",
-                                Description = "Application Programming Interface (API) for interacting with Zen Massage services.",
-                                Contact =
-                                    new Contact
-                                    {
-                                        Name = "Developer Support",
-                                        Email = "support@somedomainorother.com",
-                                        Url = "http://www.somedomainorother.com"
-                                    },
-                                TermsOfService = "None"
-                            }*/
-                        },
-                        (apiDesc, version) => apiDesc.GroupName.EndsWith(version, StringComparison.OrdinalIgnoreCase));
-                    options.OperationFilter<SwaggerRemoveCancellationTokenParameterFilter>();
-                    options.OperationFilter(new ApplyXmlActionComments(documentationPath));
-                });
-            services.ConfigureSwaggerSchema(
-                options =>
-                {
-                    options.ModelFilter(new ApplyXmlTypeComments(documentationPath));
-                });
+                                new Info
+                                {
+                                    Version = "v1",
+                                    Title = "Zen Massage SDK (v1)",
+                                    Description = "Application Programming Interface (API) for interacting with Zen Massage services.",
+                                    Contact =
+                                        new Contact
+                                        {
+                                            Name = "Developer Support",
+                                            Email = "support@somedomainorother.com",
+                                            Url = "http://www.somedomainorother.com"
+                                        },
+                                    TermsOfService = "None"
+                                }/*,
+                                new Info
+                                {
+                                    Version = "v2",
+                                    Title = "Zen Massage SDK (v2)",
+                                    Description = "Application Programming Interface (API) for interacting with Zen Massage services.",
+                                    Contact =
+                                        new Contact
+                                        {
+                                            Name = "Developer Support",
+                                            Email = "support@somedomainorother.com",
+                                            Url = "http://www.somedomainorother.com"
+                                        },
+                                    TermsOfService = "None"
+                                }*/
+                            },
+                            (apiDesc, version) => apiDesc.GroupName.EndsWith(version, StringComparison.OrdinalIgnoreCase));
+                        options.OperationFilter<SwaggerRemoveCancellationTokenParameterFilter>();
+                        options.OperationFilter(new ApplyXmlActionComments(documentationPath));
+                    });
+                services.ConfigureSwaggerSchema(
+                    options =>
+                    {
+                        options.ModelFilter(new ApplyXmlTypeComments(documentationPath));
+                    });
+            }
 
             // Setup autofac dependency injection
             var module = new SiteIocModule(Configuration);
@@ -147,7 +155,7 @@ namespace Zen.Massage.Site
                 options =>
                 {
                     options.AutomaticChallenge = true;
-                    options.ClientId = Configuration["Authentication:AzureAd:ClientId"];
+                    options.ClientId = Configuration["Authentication:AzureAd:CustomerId"];
                     options.Authority = Configuration["Authentication:AzureAd:AADInstance"] + Configuration["Authentication:AzureAd:TenantId"];
                     options.PostLogoutRedirectUri = Configuration["Authentication:AzureAd:PostLogoutRedirectUri"];
                     options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -161,8 +169,11 @@ namespace Zen.Massage.Site
                         template: "{controller=Home}/{action=Index}/{id?}");
                 });
 
-            app.UseSwaggerGen();
-            app.UseSwaggerUi();
+            if (_foundSwaggerDocumentation)
+            {
+                app.UseSwaggerGen();
+                app.UseSwaggerUi();
+            }
         }
 
         // Entry point for the application.

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AggregateSource;
 using Zen.Massage.Domain;
 using Zen.Massage.Domain.BookingBoundedContext;
+using Zen.Massage.Domain.GeneralBoundedContext;
 using Zen.Massage.Domain.UserBoundedContext;
 
 namespace Zen.Massage.Application
@@ -22,19 +23,19 @@ namespace Zen.Massage.Application
             _unitOfWorkFactory = unitOfWorkFactory;
         }
 
-        public BookingId Create(CustomerId customerId, DateTime proposedTime, TimeSpan duration)
+        public BookingId Create(TenantId tenantId, CustomerId customerId, DateTime proposedTime, TimeSpan duration)
         {
             using (var uow = _unitOfWorkFactory.CreateSession())
             {
                 // Create booking, add to repo and commit
-                var booking = _bookingFactory.Create(customerId, proposedTime, duration);
+                var booking = _bookingFactory.Create(tenantId, customerId, proposedTime, duration);
                 uow.GetRepository<IBookingWriteRepository>().Add(booking);
                 uow.Commit();
                 return booking.BookingId;
             }
         }
 
-        public void Tender(BookingId bookingId, CustomerId customerId)
+        public void Tender(TenantId tenantId, BookingId bookingId, CustomerId customerId)
         {
             using (var uow = _unitOfWorkFactory.CreateSession())
             {
@@ -56,7 +57,7 @@ namespace Zen.Massage.Application
             }
         }
 
-        public void PlaceBid(BookingId bookingId, TherapistId therapistId, DateTime? proposedTime)
+        public void PlaceBid(TenantId tenantId, BookingId bookingId, TherapistId therapistId, DateTime? proposedTime)
         {
             using (var uow = _unitOfWorkFactory.CreateSession())
             {
@@ -67,7 +68,7 @@ namespace Zen.Massage.Application
             }
         }
 
-        public void AcceptBid(BookingId bookingId, CustomerId customerId, TherapistId therapistId)
+        public void AcceptBid(TenantId tenantId, BookingId bookingId, CustomerId customerId, TherapistId therapistId)
         {
             using (var uow = _unitOfWorkFactory.CreateSession())
             {
@@ -90,7 +91,7 @@ namespace Zen.Massage.Application
             }
         }
 
-        public void ConfirmBid(BookingId bookingId, TherapistId therapistId)
+        public void ConfirmBid(TenantId tenantId, BookingId bookingId, TherapistId therapistId)
         {
             using (var uow = _unitOfWorkFactory.CreateSession())
             {
@@ -102,7 +103,7 @@ namespace Zen.Massage.Application
             }
         }
 
-        public void Cancel(BookingId bookingId, CustomerId customerId, string reason)
+        public void Cancel(TenantId tenantId, BookingId bookingId, CustomerId customerId, string reason)
         {
             using (var uow = _unitOfWorkFactory.CreateSession())
             {
@@ -123,7 +124,7 @@ namespace Zen.Massage.Application
             }
         }
 
-        public void Cancel(BookingId bookingId, TherapistId therapistId, string reason)
+        public void Cancel(TenantId tenantId, BookingId bookingId, TherapistId therapistId, string reason)
         {
             using (var uow = _unitOfWorkFactory.CreateSession())
             {

@@ -11,7 +11,10 @@ namespace Zen.Infrastructure.ReadRepository.DataAccess
         public Guid BookingId { get; set; }
 
         [Required]
-        public Guid ClientId { get; set; }
+        public Guid TenantId { get; set; }
+
+        [Required]
+        public Guid CustomerId { get; set; }
 
         [Required]
         public BookingStatus Status { get; set; }

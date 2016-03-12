@@ -9765,6 +9765,7 @@
       "NanoMessageBus >= 2.0.50",
       "NanoMessageBus.Autofac >= 2.0.50",
       "NEventStore.Persistence.AzureStorage >= 1.0.0-*",
+      "Newtonsoft.Json >= 8.0.2",
       "Swashbuckle >= 6.0.0-rc1-final",
       "Swashbuckle.SwaggerGen >= 6.0.0-rc1-final",
       "Swashbuckle.SwaggerUi >= 6.0.0-rc1-final"

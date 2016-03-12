@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using AggregateSource;
+using Zen.Massage.Domain.GeneralBoundedContext;
 using Zen.Massage.Domain.UserBoundedContext;
 
 namespace Zen.Massage.Domain.BookingBoundedContext
@@ -14,6 +15,8 @@ namespace Zen.Massage.Domain.BookingBoundedContext
         }
 
         public BookingId BookingId => State.BookingId;
+
+        public TenantId TenantId => State.TenantId;
 
         public CustomerId CustomerId => State.CustomerId;
 
@@ -35,7 +38,7 @@ namespace Zen.Massage.Domain.BookingBoundedContext
         /// This method should never be exposed to the IBooking interface and
         /// is only called by the BookingFactory.
         /// </remarks>
-        public void Create(CustomerId customerId, DateTime proposedTime, TimeSpan duration)
+        public void Create(TenantId tenantId, CustomerId customerId, DateTime proposedTime, TimeSpan duration)
         {
             if (BookingId != BookingId.Empty)
             {
@@ -43,7 +46,7 @@ namespace Zen.Massage.Domain.BookingBoundedContext
             }
 
             var bookingId = new BookingId(Guid.NewGuid());
-            ApplyChange(new BookingCreatedEvent(bookingId, customerId, proposedTime, duration));
+            ApplyChange(new BookingCreatedEvent(tenantId, bookingId, customerId, proposedTime, duration));
         }
 
         public void Tender()
@@ -58,21 +61,21 @@ namespace Zen.Massage.Domain.BookingBoundedContext
                 throw new InvalidOperationException("Tender state can only be entered from provisional state.");
             }
 
-            ApplyChange(new BookingTenderEvent(BookingId));
+            ApplyChange(new BookingTenderEvent(TenantId, BookingId));
         }
 
         public void Bid(TherapistId therapistId, DateTime? proposedTime)
         {
             // TODO: Sanity checks
 
-            ApplyChange(new BookingBidEvent(BookingId, therapistId, proposedTime ?? ProposedTime));
+            ApplyChange(new BookingBidEvent(TenantId, BookingId, therapistId, proposedTime ?? ProposedTime));
         }
 
         public void Cancel(string reason)
         {
             // TODO: Sanity checks
 
-            ApplyChange(new BookingCancelledEvent(BookingId, reason));
+            ApplyChange(new BookingCancelledEvent(TenantId, BookingId, reason));
         }
     }
 }

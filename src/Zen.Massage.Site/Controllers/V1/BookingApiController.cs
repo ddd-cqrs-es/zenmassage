@@ -8,6 +8,7 @@ using Microsoft.AspNet.Mvc;
 using Swashbuckle.SwaggerGen.Annotations;
 using Zen.Massage.Application;
 using Zen.Massage.Domain.BookingBoundedContext;
+using Zen.Massage.Domain.GeneralBoundedContext;
 using Zen.Massage.Domain.UserBoundedContext;
 
 namespace Zen.Massage.Site.Controllers.V1
@@ -21,7 +22,7 @@ namespace Zen.Massage.Site.Controllers.V1
     /// as supplied by an OAuth2 claim from our identity server but for now
     /// it is wide open!
     /// </remarks>
-    [Route("api/v1/bookings")]
+    [Route("api/v1")]
     public class BookingApiControllerV1 : Controller
     {
         private readonly IMapper _mapper;
@@ -41,14 +42,15 @@ namespace Zen.Massage.Site.Controllers.V1
         /// <summary>
         /// Gets bookings associated with current logged on user
         /// </summary>
+        /// <param name="tenantId">Tenant identifier</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("/")]
+        [Route("{tenantId:guid}/bookings")]
         [SwaggerOperation("GetBookings")]
         [SwaggerResponse(HttpStatusCode.OK, "Bookings retrieved")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to retrieve bookings")]
-        public async Task<IActionResult> GetBookings(CancellationToken cancellationToken)
+        public async Task<IActionResult> GetBookings(Guid tenantId, CancellationToken cancellationToken)
         {
             try
             {
@@ -66,14 +68,14 @@ namespace Zen.Massage.Site.Controllers.V1
 
                 // Fetch bookings as a customer
                 var bookings = await _bookingReadRepository
-                    .GetFutureBookingsForCustomer(new CustomerId(userId), cutoffDate, cancellationToken)
+                    .GetFutureBookingsForCustomer(new TenantId(tenantId), new CustomerId(userId), cutoffDate, cancellationToken)
                     .ConfigureAwait(true);
 
                 // If user is therapist then fetch bookings as therapist too
                 if (User.HasTherapistClaim())
                 {
                     var therapistBookings = await _bookingReadRepository
-                        .GetFutureBookingsForTherapist(new TherapistId(userId), cutoffDate, cancellationToken)
+                        .GetFutureBookingsForTherapist(new TenantId(tenantId), new TherapistId(userId), cutoffDate, cancellationToken)
                         .ConfigureAwait(true);
 
                     // Amalgamate into single collection
@@ -94,15 +96,16 @@ namespace Zen.Massage.Site.Controllers.V1
         /// <summary>
         /// Gets a single booking using the booking id.
         /// </summary>
-        /// <param name="bookingId"></param>
+        /// <param name="tenantId">Tenant identifier</param>
+        /// <param name="bookingId">Booking identifier</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("{bookingId:guid}")]
+        [Route("{tenantId:guid}/bookings/{bookingId:guid}")]
         [SwaggerOperation("GetBooking")]
         [SwaggerResponse(HttpStatusCode.OK, "Booking retrieved")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to retrieve booking")]
-        public async Task<IActionResult> GetBooking(Guid bookingId, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetBooking(Guid tenantId, Guid bookingId, CancellationToken cancellationToken)
         {
             try
             {
@@ -116,7 +119,7 @@ namespace Zen.Massage.Site.Controllers.V1
 
                 // Get the associated booking
                 var booking = await _bookingReadRepository
-                    .GetBooking(new BookingId(bookingId), true, cancellationToken)
+                    .GetBooking(new TenantId(tenantId), new BookingId(bookingId), true, cancellationToken)
                     .ConfigureAwait(true);
                 if (booking == null)
                 {
@@ -149,6 +152,7 @@ namespace Zen.Massage.Site.Controllers.V1
         /// <summary>
         /// Creates a new booking
         /// </summary>
+        /// <param name="tenantId">Tenant identifier</param>
         /// <param name="booking">The booking information</param>
         /// <returns>
         /// HTTP Created with the booking id.
@@ -158,12 +162,12 @@ namespace Zen.Massage.Site.Controllers.V1
         /// in the location header of the response.
         /// </remarks>
         [HttpPost]
-        [Route("/")]
+        [Route("{tenantId:guid}/bookings")]
         [SwaggerOperation("CreateBooking")]
         [SwaggerResponse(HttpStatusCode.OK, "Booking created")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to create booking")]
         public IActionResult CreateBooking(
-            [FromBody]CreateBookingDto booking)
+            Guid tenantId, [FromBody]CreateBookingDto booking)
         {
             try
             {
@@ -175,10 +179,10 @@ namespace Zen.Massage.Site.Controllers.V1
                     return HttpBadRequest();
                 }
 
-                var bookingId = _bookingCommandService.Create(new CustomerId(userId), booking.ProposedTime, booking.Duration);
+                var bookingId = _bookingCommandService.Create(new TenantId(tenantId), new CustomerId(userId), booking.ProposedTime, booking.Duration);
 
                 // TODO: Fabricate URL with correct domain
-                return Created(new Uri($"http://localhost:1282/api/v1/bookings/{bookingId.Id:D}/"), bookingId.Id);
+                return Created(new Uri($"http://localhost:1282/api/v1/{tenantId:D}/bookings/{bookingId.Id:D}/"), bookingId.Id);
             }
             catch (Exception exception)
             {
@@ -189,14 +193,15 @@ namespace Zen.Massage.Site.Controllers.V1
         /// <summary>
         /// Opens a provisional booking for tender by therapists
         /// </summary>
-        /// <param name="bookingId"></param>
+        /// <param name="tenantId">Tenant identifier</param>
+        /// <param name="bookingId">Booking identifier</param>
         /// <returns></returns>
         [HttpPatch]
-        [Route("{bookingId:guid}/tender")]
+        [Route("{tenantId:guid}/bookings/{bookingId:guid}/tender")]
         [SwaggerOperation("TenderBooking")]
         [SwaggerResponse(HttpStatusCode.OK, "Booking tendered")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to tender booking")]
-        public IActionResult TenderBooking(Guid bookingId)
+        public IActionResult TenderBooking(Guid tenantId, Guid bookingId)
         {
             try
             {
@@ -208,7 +213,7 @@ namespace Zen.Massage.Site.Controllers.V1
                     return HttpBadRequest();
                 }
 
-                _bookingCommandService.Tender(new BookingId(bookingId), new CustomerId(userId));
+                _bookingCommandService.Tender(new TenantId(tenantId), new BookingId(bookingId), new CustomerId(userId));
                 return Ok();
             }
             catch (Exception exception)
@@ -220,15 +225,17 @@ namespace Zen.Massage.Site.Controllers.V1
         /// <summary>
         /// Bids on a tendered booking
         /// </summary>
+        /// <param name="tenantId">Tenant identifier</param>
         /// <param name="bookingId">Booking identifier</param>
         /// <param name="placeBid">Bid placement information</param>
         /// <returns></returns>
         [HttpPatch]
-        [Route("{bookingId:guid}/bid")]
+        [Route("{tenantId:guid}/bookings/{bookingId:guid}/bid")]
         [SwaggerOperation("PlaceBid")]
         [SwaggerResponse(HttpStatusCode.OK, "Bid placed")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to place bid")]
         public IActionResult PlaceBid(
+            Guid tenantId,
             Guid bookingId,
             [FromBody] PlaceBookingBidDto placeBid)
         {
@@ -243,6 +250,7 @@ namespace Zen.Massage.Site.Controllers.V1
                 }
 
                 _bookingCommandService.PlaceBid(
+                    new TenantId(tenantId),
                     new BookingId(bookingId),
                     new TherapistId(userId),
                     placeBid.ProposedTime);
@@ -257,15 +265,17 @@ namespace Zen.Massage.Site.Controllers.V1
         /// <summary>
         /// Accepts a bid offered by a therapist
         /// </summary>
+        /// <param name="tenantId">Tenant identifier</param>
         /// <param name="bookingId">Booking identifier</param>
         /// <param name="therapistId">Therapist identifier</param>
         /// <returns></returns>
         [HttpPatch]
-        [Route("{bookingId:guid}/accept/{therapistId:guid}")]
+        [Route("{tenantId:guid}/bookings/{bookingId:guid}/accept/{therapistId:guid}")]
         [SwaggerOperation("AcceptBid")]
         [SwaggerResponse(HttpStatusCode.OK, "Booking accepted")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to accept bid")]
-        public IActionResult AcceptBid(Guid bookingId, Guid therapistId)
+        public IActionResult AcceptBid(
+            Guid tenantId, Guid bookingId, Guid therapistId)
         {
             try
             {
@@ -278,6 +288,7 @@ namespace Zen.Massage.Site.Controllers.V1
                 }
 
                 _bookingCommandService.AcceptBid(
+                    new TenantId(tenantId),
                     new BookingId(bookingId),
                     new CustomerId(userId), 
                     new TherapistId(therapistId));
@@ -292,14 +303,15 @@ namespace Zen.Massage.Site.Controllers.V1
         /// <summary>
         /// Confirm an accepted bid on a booking
         /// </summary>
+        /// <param name="tenantId">Tenant identifier</param>
         /// <param name="bookingId">Booking identifier</param>
         /// <returns></returns>
         [HttpPatch]
-        [Route("{bookingId:guid}/confirm")]
+        [Route("{tenantId:guid}/bookings/{bookingId:guid}/confirm")]
         [SwaggerOperation("ConfirmedBid")]
         [SwaggerResponse(HttpStatusCode.OK, "Booking confirmed")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to confirm bid")]
-        public IActionResult ConfirmBid(Guid bookingId)
+        public IActionResult ConfirmBid(Guid tenantId, Guid bookingId)
         {
             try
             {
@@ -312,6 +324,7 @@ namespace Zen.Massage.Site.Controllers.V1
                 }
 
                 _bookingCommandService.ConfirmBid(
+                    new TenantId(tenantId),
                     new BookingId(bookingId),
                     new TherapistId(userId));
                 return Ok();
@@ -325,14 +338,15 @@ namespace Zen.Massage.Site.Controllers.V1
         /// <summary>
         /// Cancels a booking (if actioned by customer)
         /// </summary>
+        /// <param name="tenantId">Tenant identifier</param>
         /// <param name="bookingId">Booking identifier</param>
         /// <returns></returns>
         [HttpPatch]
-        [Route("{bookingId:guid}/cancel/customer")]
+        [Route("{tenantId:guid}/bookings/{bookingId:guid}/cancel/customer")]
         [SwaggerOperation("CancelBookingByCustomer")]
         [SwaggerResponse(HttpStatusCode.OK, "Booking cancelled")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to cancel booking")]
-        public IActionResult CancelBookingByCustomer(Guid bookingId)
+        public IActionResult CancelBookingByCustomer(Guid tenantId, Guid bookingId)
         {
             try
             {
@@ -345,6 +359,7 @@ namespace Zen.Massage.Site.Controllers.V1
                 }
 
                 _bookingCommandService.Cancel(
+                    new TenantId(tenantId),
                     new BookingId(bookingId),
                     new CustomerId(userId),
                     string.Empty);
@@ -359,14 +374,15 @@ namespace Zen.Massage.Site.Controllers.V1
         /// <summary>
         /// Cancels a booking (if actioned by therapist)
         /// </summary>
+        /// <param name="tenantId">Tenant identifier</param>
         /// <param name="bookingId">Booking identifier</param>
         /// <returns></returns>
         [HttpPatch]
-        [Route("{bookingId:guid}/cancel/therapist")]
+        [Route("{tenantId:guid}/bookings/{bookingId:guid}/cancel/therapist")]
         [SwaggerOperation("CancelBookingByTherapist")]
         [SwaggerResponse(HttpStatusCode.OK, "Booking cancelled")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Failed to cancel booking")]
-        public IActionResult CancelBookingByTherapist(Guid bookingId)
+        public IActionResult CancelBookingByTherapist(Guid tenantId, Guid bookingId)
         {
             try
             {
@@ -379,6 +395,7 @@ namespace Zen.Massage.Site.Controllers.V1
                 }
 
                 _bookingCommandService.Cancel(
+                    new TenantId(tenantId),
                     new BookingId(bookingId),
                     new TherapistId(userId),
                     string.Empty);

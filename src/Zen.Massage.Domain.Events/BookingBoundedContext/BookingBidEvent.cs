@@ -1,4 +1,5 @@
 using System;
+using Zen.Massage.Domain.GeneralBoundedContext;
 using Zen.Massage.Domain.UserBoundedContext;
 
 namespace Zen.Massage.Domain.BookingBoundedContext
@@ -6,8 +7,8 @@ namespace Zen.Massage.Domain.BookingBoundedContext
     [Serializable]
     public class BookingBidEvent : BookingEvent
     {
-        public BookingBidEvent(BookingId bookingId, TherapistId therapistId, DateTime proposedTime)
-            : base(bookingId)
+        public BookingBidEvent(TenantId tenantId, BookingId bookingId, TherapistId therapistId, DateTime proposedTime)
+            : base(tenantId, bookingId)
         {
             TherapistId = therapistId;
             ProposedTime = proposedTime;

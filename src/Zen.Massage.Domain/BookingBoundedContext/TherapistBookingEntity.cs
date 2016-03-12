@@ -24,21 +24,21 @@ namespace Zen.Massage.Domain.BookingBoundedContext
         {
             // TODO: Sanity checks
 
-            Apply(new TherapistBookingAcceptedEvent(Booking.BookingId, TherapistId));
+            Apply(new TherapistBookingAcceptedEvent(Booking.TenantId, Booking.BookingId, TherapistId));
         }
 
         public void Confirm()
         {
             // TODO: Sanity checks
 
-            Apply(new TherapistBookingConfirmedEvent(Booking.BookingId, TherapistId));
+            Apply(new TherapistBookingConfirmedEvent(Booking.TenantId, Booking.BookingId, TherapistId));
         }
 
         public void Cancel(string reason)
         {
             // TODO: Sanity checks
 
-            Apply(new BookingCancelledEvent(Booking.BookingId, TherapistId, reason));
+            Apply(new BookingCancelledEvent(Booking.TenantId, Booking.BookingId, TherapistId, reason));
         }
     }
 }
