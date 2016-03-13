@@ -32,6 +32,37 @@ namespace Zen.Massage.Application
                     cancellationToken);
         }
 
+        public async Task<IReadBooking> GetBookingScopedForUserAsync(
+            Guid userId,
+            TenantId tenantId,
+            BookingId bookingId,
+            CancellationToken cancellationToken)
+        {
+            // Get the associated booking
+            var booking = await _bookingReadRepository
+                .GetBookingAsync(tenantId, bookingId, true, cancellationToken)
+                .ConfigureAwait(true);
+            if (booking == null)
+            {
+                // Booking not found
+                return null;
+            }
+
+            // Associated user must be customer or therapist
+            if (booking.CustomerId.Id != userId)
+            {
+                // Limit information returned to only therapist data
+                booking = booking.LimitToTherapist(new TherapistId(userId));
+                if (!booking.TherapistBookings.Any())
+                {
+                    // Booking is not known to the current caller as customer or therapist
+                    return null;
+                }
+            }
+
+            return booking;
+        }
+
         public Task<IEnumerable<IReadBooking>> GetFutureOpenBookingsAsync(
             TenantId tenantId,
             DateTime cutoffDate,

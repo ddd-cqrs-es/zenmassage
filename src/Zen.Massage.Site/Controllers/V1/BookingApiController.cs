@@ -118,24 +118,12 @@ namespace Zen.Massage.Site.Controllers.V1
 
                 // Get the associated booking
                 var booking = await _bookingQueryService
-                    .GetBookingAsync(new TenantId(tenantId), new BookingId(bookingId), true, cancellationToken)
+                    .GetBookingScopedForUserAsync(userId, new TenantId(tenantId), new BookingId(bookingId), cancellationToken)
                     .ConfigureAwait(true);
                 if (booking == null)
                 {
                     // Booking not found
                     return HttpNotFound();
-                }
-
-                // Associated user must be customer or therapist
-                if (booking.CustomerId.Id != userId)
-                {
-                    // Limit information returned to only therapist data
-                    booking = booking.LimitToTherapist(new TherapistId(userId));
-                    if (!booking.TherapistBookings.Any())
-                    {
-                        // Booking is not known to the current caller as customer or therapist
-                        return HttpNotFound();
-                    }
                 }
 
                 // Map whatever we have
