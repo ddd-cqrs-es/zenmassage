@@ -17,6 +17,7 @@
     "gulp-debug": "^2.1.2",
     "gulp-environments": "^0.1.1",
     "gulp-inject": "^3.0.0",
+    "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.2.0",
     "gulp-sass-lint": "^1.1.1",
     "gulp-sourcemaps": "^1.6.0",
@@ -33,7 +34,7 @@
   },
   "dependencies": {
     "Slate": "git://github.com/pebble/slate.git",
-    "angular2": "^2.0.0-beta.8",
+    "angular2": "^2.0.0-beta.9",
     "bootstrap": "^4.0.0-alpha.2",
     "es6-promise": "^3.1.2",
     "es6-shim": "^0.35.0",

@@ -10,21 +10,22 @@ var del = require('del'),
     debug = require('gulp-debug'),
     environments = require('gulp-environments'),
     inject = require('gulp-inject'),
-    tsc = require('gulp-typescript'),
     //tslint = require('gulp-tslint'),
-    sourcemaps = require('gulp-sourcemaps'),
-    uglify = require('gulp-uglify'),
+	rename = require('gulp-rename'),
     sass = require('gulp-sass'),
     sassLint = require('gulp-sass-lint'),
+    sourcemaps = require('gulp-sourcemaps'),
+    tsc = require('gulp-typescript'),
+    uglify = require('gulp-uglify'),
     Builder = require('systemjs-builder'),
     Config = require('./gulpfile.config'),
     tsProject = tsc.createProject('./typescript/tsconfig.json');
 
-// Determine runtime environment (default to DEV for now)
+// Determine runtime environment (default to production for now)
 var development = environments.development;
 var production = environments.production;
 if (!development() && !production()) {
-    environments.current(development);
+    environments.current(production);
 }
 
 // Pull configuration
@@ -125,7 +126,9 @@ gulp.task('lint:sass', function () {
         .pipe(sassLint.failOnError());
 });
 
-gulp.task('compile:sass', function () {
+gulp.task('compile:sass', ['compile:sass:expanded', 'compile:sass:compressed']);
+
+gulp.task('compile:sass:expanded', function () {
     var sourceFiles = [
         config.paths.sassAppSelector
     ];
@@ -136,14 +139,32 @@ gulp.task('compile:sass', function () {
     return gulp
         .src(sourceFiles)
         .pipe(sourcemaps.init())
-        .pipe(development(sass({
+        .pipe(sass({
             outputStyle: 'expanded',
             includePaths: includePaths
-        }).on('error', sass.logError)))
-        .pipe(production(sass({
-            outputStyle: 'compressed',
-            includePaths: includePaths
-        }).on('error', sass.logError)))
+        }).on('error', sass.logError))
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest(config.paths.sassOutputPath));
+});
+
+gulp.task('compile:sass:compressed', function () {
+	var sourceFiles = [
+        config.paths.sassAppSelector
+	];
+	var includePaths = [
+        config.paths.nodeModulesRoot + 'bootstrap/scss/',
+        config.paths.nodeModulesRoot + 'tether/src/css/'
+	];
+	return gulp
+        .src(sourceFiles)
+        .pipe(sourcemaps.init())
+        .pipe(sass({
+        	outputStyle: 'compressed',
+        	includePaths: includePaths
+        }).on('error', sass.logError))
+		.pipe(rename({
+			suffix: '.min'
+		}))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(config.paths.sassOutputPath));
 });
