@@ -8,7 +8,6 @@ var del = require('del'),
     copy = require('gulp-copy'),
     cssmin = require('gulp-cssmin'),
     debug = require('gulp-debug'),
-    environments = require('gulp-environments'),
     inject = require('gulp-inject'),
     //tslint = require('gulp-tslint'),
 	rename = require('gulp-rename'),
@@ -20,13 +19,6 @@ var del = require('del'),
     Builder = require('systemjs-builder'),
     Config = require('./gulpfile.config'),
     tsProject = tsc.createProject('./typescript/tsconfig.json');
-
-// Determine runtime environment (default to production for now)
-var development = environments.development;
-var production = environments.production;
-if (!development() && !production()) {
-    environments.current(production);
-}
 
 // Pull configuration
 var config = new Config();
