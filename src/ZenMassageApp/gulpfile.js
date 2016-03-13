@@ -9,7 +9,6 @@ var del = require('del'),
     copy = require('gulp-copy'),
     cssmin = require('gulp-cssmin'),
     debug = require('gulp-debug'),
-    environments = require('gulp-environments'),
     inject = require('gulp-inject'),
     plumber = require('gulp-plumber'),
     tsc = require('gulp-typescript'),
@@ -23,13 +22,6 @@ var del = require('del'),
     teamBuild = require('taco-team-build'),
     Config = require('./gulpfile.config'),
     tsProject = tsc.createProject('./scripts/tsconfig.json');
-
-// Determine runtime environment (default to DEV for now)
-var development = environments.development;
-var production = environments.production;
-if (!development() && !production()) {
-    environments.current(development);
-}
 
 // Pull configuration
 var config = new Config();
@@ -119,7 +111,9 @@ gulp.task('lint:sass', function () {
         .pipe(sassLint.failOnError());
 });
 
-gulp.task('compile:sass', function () {
+gulp.task('compile:sass', ['compile:sass:expanded', 'compile:sass:compressed']);
+
+gulp.task('compile:sass:expanded', function () {
     var sourceFiles = [
         config.paths.sassAppSelector
     ];
@@ -130,14 +124,30 @@ gulp.task('compile:sass', function () {
     return gulp
         .src(sourceFiles)
         .pipe(sourcemaps.init())
-        .pipe(development(sass({
+        .pipe(sass({
             outputStyle: 'expanded',
             includePaths: includePaths
-        }).on('error', sass.logError)))
-        .pipe(production(sass({
-            outputStyle: 'compressed',
-            includePaths: includePaths
-        }).on('error', sass.logError)))
+        }).on('error', sass.logError))
+        .pipe(autoprefixer('> 1%', 'last 2 version', 'ff 12', 'ie 11', 'opera 12', 'chrome 12', 'safari 12', 'android 2'))
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest(config.paths.sassOutputPath));
+});
+
+gulp.task('compile:sass:compressed', function () {
+	var sourceFiles = [
+        config.paths.sassAppSelector
+	];
+	var includePaths = [
+        config.paths.nodeModulesRoot + 'bootstrap/scss/',
+        config.paths.nodeModulesRoot + 'tether/src/css/'
+	];
+	return gulp
+        .src(sourceFiles)
+        .pipe(sourcemaps.init())
+        .pipe(sass({
+        	outputStyle: 'compressed',
+        	includePaths: includePaths
+        }).on('error', sass.logError))
         .pipe(autoprefixer('> 1%', 'last 2 version', 'ff 12', 'ie 11', 'opera 12', 'chrome 12', 'safari 12', 'android 2'))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(config.paths.sassOutputPath));
@@ -181,11 +191,11 @@ gulp.task('compile:ts', function () {
 
 gulp.task('build:android', function () {
     var buildArgs = [];
-    if (development()) {
-        buildArgs.push('--debug');
-    } else {
+    //if (development()) {
+    //    buildArgs.push('--debug');
+    //} else {
         buildArgs.push('--release');
-    }
+    //}
     buildArgs.push('--gradleArg=--no-daemon');
 
     return teamBuild
