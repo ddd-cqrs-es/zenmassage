@@ -87,18 +87,23 @@ namespace NanoMessageBus.Channels
                 throw new InvalidOperationException("Receive is not valid on dispatch only channel.");
             }
 
-            while (!_shutdownToken.IsCancellationRequested)
-            {
-                try
+            _subscriptionClient.OnMessageAsync(
+                async (message) =>
                 {
-                    BrokeredMessage message = _subscriptionClient.PeekAsync().Result;
-                    var result = ReceiveAsync(message, callback).Result;
-                }
-                catch(Exception e)
+                    try
+                    {
+                        var result = await ReceiveAsync(message, callback);
+                    }
+                    catch(Exception e)
+                    {
+                        Log.Warn($"Exception caught in Receive message loop - [{e.Message}]", e);
+                    }
+                },
+                new OnMessageOptions
                 {
-                    Log.Warn($"Exception caught in Receive message loop - [{e.Message}]", e);
-                }
-            }
+                    AutoComplete = false,
+                    MaxConcurrentCalls = 1
+                });
         }
 
         public IDispatchContext PrepareDispatch(object message = null, IMessagingChannel channel = null)
