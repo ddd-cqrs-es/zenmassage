@@ -1,5 +1,5 @@
-﻿import {Http, RequestOptionsArgs} from 'angular2/http';
-import {Observable} from 'rxjs/rx';
+﻿import { Http, RequestOptionsArgs } from 'angular2/http';
+import { Observable } from 'rxjs/rx';
 
 module ZenMassage {
 

@@ -148,6 +148,9 @@ gulp.task('compile:sass:compressed', function () {
         	outputStyle: 'compressed',
         	includePaths: includePaths
         }).on('error', sass.logError))
+        .pipe(rename({
+	        suffix: '.min'
+	    }))
         .pipe(autoprefixer('> 1%', 'last 2 version', 'ff 12', 'ie 11', 'opera 12', 'chrome 12', 'safari 12', 'android 2'))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(config.paths.sassOutputPath));
