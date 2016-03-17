@@ -92,7 +92,8 @@ namespace NanoMessageBus.Channels
                 {
                     try
                     {
-                        var result = await ReceiveAsync(message, callback);
+                        var result = await ReceiveAsync(message, callback)
+                            .ConfigureAwait(true);
                     }
                     catch(Exception e)
                     {
