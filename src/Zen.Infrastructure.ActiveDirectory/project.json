@@ -1,0 +1,17 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "Zen.Infrastructure.ActiveDirectory Class Library",
+  "authors": [ "zen_g" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "dependencies": {
+    "Microsoft.Rest.ClientRuntime.Azure": "3.1.0",
+    "Microsoft.Rest.ClientRuntime.Azure.Authentication": "2.0.1-preview"
+  },
+
+  "frameworks": {
+    "dnx451": { }
+  }
+}

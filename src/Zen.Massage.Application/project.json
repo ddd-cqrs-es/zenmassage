@@ -8,9 +8,9 @@
 
   "dependencies": {
     "NanoMessageBus": "2.0.50",
-    "Zen.Massage.Domain.Interfaces": "1.0.0",
+    "Zen.Massage.Application.Interfaces": "1.0.0-*",
     "Zen.Massage.Domain.Events": "1.0.0",
-    "Zen.Massage.Application.Interfaces": "1.0.0-*"
+    "Zen.Massage.Domain.Interfaces": "1.0.0"
   },
 
   "frameworks": {
