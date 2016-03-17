@@ -45,7 +45,7 @@ var ZenMassageApp;
             // TODO: This application has been reactivated. Restore application state here.
         };
         return ApplicationStartup;
-    })();
+    }());
     ApplicationStartup.$inject = ['$rootScope', '$window', '$cookies', 'currentUser', 'pebbleServices'];
     angular
         .module('app')
