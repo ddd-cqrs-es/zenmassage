@@ -1,7 +1,9 @@
 namespace Zen.Massage.Domain.UserBoundedContext
 {
-    public interface ICustomer : IBaseClient
+    public interface ICustomer
     {
         CustomerId CustomerId { get; }
+
+        IClientBasicInformation BasicInformation { get; }
     }
 }

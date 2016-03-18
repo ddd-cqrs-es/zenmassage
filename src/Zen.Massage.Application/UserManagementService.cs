@@ -21,6 +21,7 @@ namespace Zen.Massage.Application
             // TODO: Armed with user, associate with groups
             // NOTE: We will create group names that incorporate the tenant id
             //  so the same user can have single-sign-on with multiple tenants
+            throw new NotImplementedException();
         }
 
         public Task<TherapistId> SignupTherapist(
@@ -40,6 +41,7 @@ namespace Zen.Massage.Application
             //      added to the account for this tenant.
             //  2. Therapist skills are global (ie: not tenant specific)
             //  3. Veriication claims of therapist skills ARE tenant specific
+            throw new NotImplementedException();
         }
 
         public Task<TenantId> SignupTenant(
@@ -49,7 +51,7 @@ namespace Zen.Massage.Application
             string tenantName,
             string tenantSlug)
         {
-            
+            throw new NotImplementedException();
         }
     }
 }
