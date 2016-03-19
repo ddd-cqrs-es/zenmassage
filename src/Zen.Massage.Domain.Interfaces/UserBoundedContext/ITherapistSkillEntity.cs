@@ -1,4 +1,5 @@
 using System;
+using Zen.Massage.Domain.GeneralBoundedContext;
 
 namespace Zen.Massage.Domain.UserBoundedContext
 {
@@ -8,12 +9,12 @@ namespace Zen.Massage.Domain.UserBoundedContext
 
         TherapistSkillVerificationState VerificationStatus { get; }
 
-        DateTimeOffset DateAcquired { get; }
+        DateTimeOffset AcquisitionDate { get; }
 
-        DateTimeOffset DateApplied { get; }
+        DateTimeOffset ApplicationDate { get; }
 
-        DateTimeOffset? DateVerified { get; }
+        DateTimeOffset? VerificationDate { get; }
 
-        DateTimeOffset? DateExpires { get; }
+        DateTimeOffset? ExpiryDate { get; }
     }
 }

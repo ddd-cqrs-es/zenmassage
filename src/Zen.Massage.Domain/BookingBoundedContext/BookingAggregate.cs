@@ -24,21 +24,25 @@ namespace Zen.Massage.Domain.BookingBoundedContext
 
         public BookingStatus Status => State.Status;
 
-        public DateTime ProposedTime => State.ProposedTime;
+        public TherapyId TherapyId => State.TherapyId;
+
+        public DateTimeOffset ProposedTime => State.ProposedTime;
 
         public TimeSpan Duration => State.Duration;
 
         /// <summary>
         /// Create the booking object
         /// </summary>
-        /// <param name="customerId"></param>
-        /// <param name="proposedTime"></param>
-        /// <param name="duration"></param>
+        /// <param name="tenantId">Tenant identifier to associate booking with</param>
+        /// <param name="customerId">Customer identifier of customer creating booking</param>
+        /// <param name="therapyId">Treatment therapy identifier</param>
+        /// <param name="proposedTime">Proposed date/time for the treatment</param>
+        /// <param name="duration">Duration of the treatment</param>
         /// <remarks>
         /// This method should never be exposed to the IBooking interface and
         /// is only called by the BookingFactory.
         /// </remarks>
-        public void Create(TenantId tenantId, CustomerId customerId, DateTime proposedTime, TimeSpan duration)
+        public void Create(TenantId tenantId, CustomerId customerId, TherapyId therapyId, DateTimeOffset proposedTime, TimeSpan duration)
         {
             if (BookingId != BookingId.Empty)
             {
@@ -46,7 +50,7 @@ namespace Zen.Massage.Domain.BookingBoundedContext
             }
 
             var bookingId = new BookingId(Guid.NewGuid());
-            ApplyChange(new BookingCreatedEvent(tenantId, bookingId, customerId, proposedTime, duration));
+            ApplyChange(new BookingCreatedEvent(tenantId, bookingId, customerId, therapyId, proposedTime, duration));
         }
 
         public void Tender()
@@ -64,7 +68,7 @@ namespace Zen.Massage.Domain.BookingBoundedContext
             ApplyChange(new BookingTenderEvent(TenantId, BookingId));
         }
 
-        public void Bid(TherapistId therapistId, DateTime? proposedTime)
+        public void Bid(TherapistId therapistId, DateTimeOffset? proposedTime)
         {
             // TODO: Sanity checks
 

@@ -23,12 +23,12 @@ namespace Zen.Massage.Application
             _unitOfWorkFactory = unitOfWorkFactory;
         }
 
-        public BookingId Create(TenantId tenantId, CustomerId customerId, DateTime proposedTime, TimeSpan duration)
+        public BookingId Create(TenantId tenantId, CustomerId customerId, TherapyId therapyId, DateTimeOffset proposedTime, TimeSpan duration)
         {
             using (var uow = _unitOfWorkFactory.CreateSession())
             {
                 // Create booking, add to repo and commit
-                var booking = _bookingFactory.Create(tenantId, customerId, proposedTime, duration);
+                var booking = _bookingFactory.Create(tenantId, customerId, therapyId, proposedTime, duration);
                 uow.GetRepository<IBookingWriteRepository>().Add(booking);
                 uow.Commit();
                 return booking.BookingId;

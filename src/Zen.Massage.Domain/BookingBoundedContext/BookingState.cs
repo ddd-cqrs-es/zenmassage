@@ -31,13 +31,15 @@ namespace Zen.Massage.Domain.BookingBoundedContext
 
         public CustomerId CustomerId { get; private set; }
 
+        public TherapyId TherapyId { get; private set; }
+
         public ICollection<ITherapistBooking> AssociatedTherapists =>
             new ReadOnlyCollection<ITherapistBooking>(
                 _therapists.Cast<ITherapistBooking>().ToList());
 
         public BookingStatus Status { get; private set; }
 
-        public DateTime ProposedTime { get; private set; }
+        public DateTimeOffset ProposedTime { get; private set; }
 
         public TimeSpan Duration { get; private set; }
 
@@ -46,6 +48,7 @@ namespace Zen.Massage.Domain.BookingBoundedContext
             BookingId = eventObject.BookingId;
             TenantId = eventObject.TenantId;
             CustomerId = eventObject.CustomerId;
+            TherapyId = eventObject.TherapyId;
             Status = BookingStatus.Provisional;
             ProposedTime = eventObject.ProposedTime;
             Duration = eventObject.Duration;

@@ -7,7 +7,7 @@ namespace Zen.Massage.Application
 {
     public interface IBookingCommandService
     {
-        BookingId Create(TenantId tenantId, CustomerId customerId, DateTime proposedTime, TimeSpan duration);
+        BookingId Create(TenantId tenantId, CustomerId customerId, TherapyId therapyId, DateTimeOffset proposedTime, TimeSpan duration);
 
         void Tender(TenantId tenantId, BookingId bookingId, CustomerId customerId);
 

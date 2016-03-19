@@ -13,7 +13,8 @@ namespace Zen.Massage.Domain.UserBoundedContext
          
         public TherapistState()
         {
-            // TODO: Register event handlers    
+            // Register event handlers
+            Register<TherapistCreatedEvent>(OnTherapistCreated);
         }
 
         public TherapistAggregate Therapist { get; set; }
@@ -27,5 +28,10 @@ namespace Zen.Massage.Domain.UserBoundedContext
         public ICollection<ITherapistSkillEntity> Skills =>
             new ReadOnlyCollection<ITherapistSkillEntity>(
                 _skills.Cast<ITherapistSkillEntity>().ToList());
+
+        private void OnTherapistCreated(TherapistCreatedEvent eventObject)
+        {
+            TherapistId = eventObject.TherapistId;
+        }
     }
 }

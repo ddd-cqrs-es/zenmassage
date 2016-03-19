@@ -13,6 +13,7 @@ using Zen.Infrastructure.WriteRepository;
 using Zen.Massage.Application;
 using Zen.Massage.Domain;
 using Zen.Massage.Domain.BookingBoundedContext;
+using Zen.Massage.Domain.UserBoundedContext;
 using Module = Autofac.Module;
 
 namespace Zen.Massage.Site
@@ -77,6 +78,8 @@ namespace Zen.Massage.Site
             builder.RegisterType<UnitOfWorkSession>();
             builder.RegisterType<BookingFactory>()
                 .As<IBookingFactory>();
+            builder.RegisterType<TherapistFactory>()
+                .As<ITherapistFactory>();
 
             // Register infrastructure types
             builder.RegisterType<BookingReadRepository>()

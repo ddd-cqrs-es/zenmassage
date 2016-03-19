@@ -1,10 +1,12 @@
 namespace Zen.Massage.Domain.UserBoundedContext
 {
-    public class TherapistFactory
+    public class TherapistFactory : ITherapistFactory
     {
         public ITherapist Create(TherapistId therapistId)
         {
-            return new TherapistAggregate();
+            var therapist = new TherapistAggregate();
+            therapist.Create(therapistId);
+            return therapist;
         }
     }
 }

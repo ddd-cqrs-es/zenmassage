@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AggregateSource;
+using Zen.Massage.Domain.GeneralBoundedContext;
 
 namespace Zen.Massage.Domain.UserBoundedContext
 {
@@ -16,6 +17,16 @@ namespace Zen.Massage.Domain.UserBoundedContext
         public TherapistId TherapistId => State.TherapistId;
 
         public ICollection<ITherapistSkillEntity> Skills => State.Skills;
+
+        public void Create(TherapistId therapistId)
+        {
+            if (therapistId == TherapistId.Empty)
+            {
+                throw new ArgumentException("therapist identifier is invalid", nameof(therapistId));
+            }
+
+            ApplyChange(new TherapistCreatedEvent(therapistId));
+        }
 
         public void RegisterSkill(
             TherapyId therapyId, DateTimeOffset acquisitionDate, string supportingInfo)

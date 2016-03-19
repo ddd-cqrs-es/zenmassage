@@ -7,7 +7,7 @@ namespace Zen.Massage.Domain.BookingBoundedContext
     [Serializable]
     public class BookingBidEvent : BookingEvent
     {
-        public BookingBidEvent(TenantId tenantId, BookingId bookingId, TherapistId therapistId, DateTime proposedTime)
+        public BookingBidEvent(TenantId tenantId, BookingId bookingId, TherapistId therapistId, DateTimeOffset proposedTime)
             : base(tenantId, bookingId)
         {
             TherapistId = therapistId;
@@ -16,6 +16,6 @@ namespace Zen.Massage.Domain.BookingBoundedContext
 
         public TherapistId TherapistId { get; private set; }
 
-        public DateTime ProposedTime { get; private set; }
+        public DateTimeOffset ProposedTime { get; private set; }
     }
 }

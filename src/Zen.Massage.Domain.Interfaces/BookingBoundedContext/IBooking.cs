@@ -13,17 +13,19 @@ namespace Zen.Massage.Domain.BookingBoundedContext
 
         CustomerId CustomerId { get; }
 
+        TherapyId TherapyId { get; }
+
         ICollection<ITherapistBooking> TherapistBookings { get; }
 
         BookingStatus Status { get; }
 
-        DateTime ProposedTime { get; }
+        DateTimeOffset ProposedTime { get; }
 
         TimeSpan Duration { get; }
 
         void Tender();
 
-        void Bid(TherapistId therapistId, DateTime? proposedTime);
+        void Bid(TherapistId therapistId, DateTimeOffset? proposedTime);
 
         void Cancel(string reason);
     }

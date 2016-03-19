@@ -19,6 +19,7 @@ namespace Zen.Infrastructure.ActiveDirectory
         public Task SignupAsTenant()
         {
             var context = new AuthenticationContext("https://login.microsoftonline.com/401174ab-9fc9-4c84-ab0d-8ed037398501/");
+            throw new NotImplementedException();
         }
     }
 }

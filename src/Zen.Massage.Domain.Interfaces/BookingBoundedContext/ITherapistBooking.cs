@@ -9,7 +9,7 @@ namespace Zen.Massage.Domain.BookingBoundedContext
 
         TherapistId TherapistId { get; }
 
-        DateTime ProposedTime { get; }
+        DateTimeOffset ProposedTime { get; }
 
         BookingStatus Status { get; }
 

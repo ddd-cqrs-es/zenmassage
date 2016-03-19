@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Zen.Massage.Domain.UserBoundedContext
+namespace Zen.Massage.Domain.GeneralBoundedContext
 {
     /// <summary>
     /// <c>TherapyId</c> simple object to encapsulate a therapy id.

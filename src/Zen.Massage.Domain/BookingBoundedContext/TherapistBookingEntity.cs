@@ -16,7 +16,7 @@ namespace Zen.Massage.Domain.BookingBoundedContext
 
         public TherapistId TherapistId => State.TherapistId;
 
-        public DateTime ProposedTime => State.ProposedTime;
+        public DateTimeOffset ProposedTime => State.ProposedTime;
 
         public BookingStatus Status => State.Status;
 

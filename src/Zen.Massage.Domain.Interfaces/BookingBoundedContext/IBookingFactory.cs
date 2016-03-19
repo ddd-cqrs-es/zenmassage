@@ -6,6 +6,6 @@ namespace Zen.Massage.Domain.BookingBoundedContext
 {
     public interface IBookingFactory
     {
-        IBooking Create(TenantId tenantId, CustomerId customerId, DateTime proposedTime, TimeSpan duration);
+        IBooking Create(TenantId tenantId, CustomerId customerId, TherapyId therapyId, DateTimeOffset proposedTime, TimeSpan duration);
     }
 }
